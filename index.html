@@ -277,6 +277,85 @@
             transform: translateY(-2px);
             box-shadow: 0 5px 15px rgba(40,167,69,0.3);
         }
+        .generator-section {
+            padding: 20px;
+            background: #e7f3ff;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            border-left: 4px solid #007BE2;
+        }
+        .generator-section h4 {
+            color: #007BE2;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .generator-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        .generator-option {
+            padding: 12px;
+            background: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 13px;
+            text-align: center;
+        }
+        .generator-option:hover {
+            border-color: #007BE2;
+            background: #f0f7ff;
+            transform: translateY(-2px);
+        }
+        .generator-option.selected {
+            background: #007BE2;
+            color: white;
+            border-color: #007BE2;
+        }
+        .generated-vp {
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #28a745;
+            margin-bottom: 10px;
+        }
+        .generated-vp p {
+            margin: 0;
+            color: #333;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .generate-btn {
+            background: #007BE2;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .generate-btn:hover {
+            background: #0056b3;
+        }
+        .copy-btn {
+            background: #28a745;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+        .copy-btn:hover {
+            background: #218838;
+        }
         .score-section {
             text-align: center;
             padding: 40px;
@@ -434,7 +513,7 @@
                     <div id="timer">90:00</div>
                 </div>
 
-                <div class="task-counter" id="taskCounter">Aufgabe 1 von 3</div>
+                <div class="task-counter" id="taskCounter">Aufgabe 1 von 4</div>
 
                 <!-- Aufgabe 1 -->
                 <div class="exercise active" id="exercise1">
@@ -485,17 +564,17 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von IKEA.</label>
+                        <label>Was ist das zentrale Nutzenversprechen von IKEA?</label>
                         <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM). Geben Sie drei konkrete Beispiele.</label>
+                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie drei konkrete Beispiele.</label>
                         <textarea id="ex2q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Ist IKEA eher produktorientiert, kundenorientiert oder serviceorientiert. Begründen Sie kurz.</label>
+                        <label>Ist IKEA eher produktorientiert, kundenorientiert oder serviceorientiert? Begründen Sie kurz.</label>
                         <textarea id="ex2q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -508,28 +587,88 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von Starbucks.</label>
+                        <label>Was ist das zentrale Nutzenversprechen von Starbucks?</label>
                         <textarea id="ex3q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren. Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
+                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
                         <textarea id="ex3q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung.</label>
+                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung?</label>
                         <textarea id="ex3q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten.</label>
+                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten?</label>
                         <textarea id="ex3q4" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein.</label>
+                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein?</label>
                         <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Aufgabe 4 - NEUE AUFGABE -->
+                <div class="exercise" id="exercise4">
+                    <h3>Aufgabe 4 – Das Fitnessstudio "Train4U"</h3>
+                    <div class="exercise-description">
+                        Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Wenn Kunden sich einschreiben, kommen sie schnell nicht mehr und melden sich ab. Prinzipiell sind die Kunden aber mit dem guten Service und dem Angebot zufrieden. Sie sind der CEO dieses Unternehmens und überlegen sich, was Sie tun könnten.
+                    </div>
+
+                    <!-- Frage 1: Value Proposition Generator -->
+                    <div class="question-block">
+                        <label>Wie könnte das Nutzenversprechen dieses Fitnessstudios lauten.</label>
+                        
+                        <div class="generator-section">
+                            <h4>💡 Value Proposition Generator</h4>
+                            <p style="font-size: 13px; color: #666; margin-bottom: 15px;">Wählen Sie Optionen aus und generieren Sie mögliche Nutzenversprechen für Train4U:</p>
+                            
+                            <p style="font-size: 13px; font-weight: bold; color: #333; margin-bottom: 8px;">Wer ist die Zielgruppe?</p>
+                            <div class="generator-options" id="targetGroup">
+                                <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Berufstätige</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Anfänger</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Frauen</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Über 50 Jahre</div>
+                            </div>
+
+                            <p style="font-size: 13px; font-weight: bold; color: #333; margin-bottom: 8px; margin-top: 15px;">Welches Problem löst das Studio?</p>
+                            <div class="generator-options" id="problem">
+                                <div class="generator-option" onclick="toggleOption(this, 'problem')">Zeitmangel</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Motivation</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'problem')">Einsamkeit</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Expertise</div>
+                            </div>
+
+                            <p style="font-size: 13px; font-weight: bold; color: #333; margin-bottom: 8px; margin-top: 15px;">Welcher Mehrwert?</p>
+                            <div class="generator-options" id="value">
+                                <div class="generator-option" onclick="toggleOption(this, 'value')">Gemeinschaft</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'value')">Flexibilität</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'value')">Persönliche Betreuung</div>
+                                <div class="generator-option" onclick="toggleOption(this, 'value')">Resultate sichtbar</div>
+                            </div>
+
+                            <button class="generate-btn" onclick="generateVP()">🎯 Nutzenversprechen generieren</button>
+                            <div id="generatedVP"></div>
+                        </div>
+
+                        <label style="margin-top: 20px;">Ihre Antwort:</label>
+                        <textarea id="ex4q1" placeholder="Geben Sie Ihre Antwort hier ein oder nutzen Sie den Generator..."></textarea>
+                    </div>
+
+                    <!-- Frage 2: Konkrete Maßnahmen -->
+                    <div class="question-block">
+                        <label>Welche konkreten Maßnahmen könnte das Studio unternehmen, damit die Kunden wieder in das Studio kommen.</label>
+                        <textarea id="ex4q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
+                    </div>
+
+                    <!-- Frage 3: Werbestrategie -->
+                    <div class="question-block">
+                        <label>Welche konkrete Werbestrategie würden Sie hier empfehlen.</label>
+                        <textarea id="ex4q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
 
@@ -577,6 +716,11 @@
         let currentExercise = 0;
         let timeRemaining = 90 * 60;
         let timerInterval;
+        let selectedOptions = {
+            targetGroup: [],
+            problem: [],
+            value: []
+        };
 
         const feedbackData = {
             exercise1: {
@@ -622,6 +766,11 @@
                 q3: "Kundenbindung: Loyalty-Programm (Rewards), Mobile App mit Bezahlung und Personalisierung, regelmäßige limitierte Produkte, konsistentes Kundenerlebnis weltweit.",
                 q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.",
                 q5: "In Italien weniger erfolgreich, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italiens Café ist soziales Ritual mit kurzer, intensiver Interaktion, nicht 'Third Place', (3) Preiswettbewerb mit lokalen Bars, (4) Ablehnung von amerikanischer 'Massification' von Kultur."
+            },
+            exercise4: {
+                q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern eine Gemeinschaft für Gesundheit und persönliche Transformation. Beispiel: 'Dein Weg zu einem fitteren, glücklicheren Ich - mit Menschen an deiner Seite, die dich verstehen und unterstützen.'",
+                q2: "Konkrete Maßnahmen: (1) Buddy-System - neue Mitglieder werden mit erfahrenen Mitgliedern gepaart, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen, (3) Wöchentliche Gruppen-Challenges mit Preisen, (4) Mobile App mit Trainings-Tracking und Community, (5) Flexible Öffnungszeiten und Online-Kurse, (6) Regelmäßige Erfolgsgeschichten von Mitgliedern teilen, (7) Cost-per-Visit Modell statt Abo.",
+                q3: "Werbestrategie: (1) Authentische Success Stories auf Instagram/TikTok - echte Transformationen zeigen, (2) Facebook-Werbung zielgerichtet auf 'Anfänger' und 'Fitness-Interessierte', (3) Lokale Influencer-Kooperationen, (4) Grassroots-Marketing: Kostenlose Schnupperkurse in Parks, (5) Referral-Programm - Mitglieder bekommen Bonus wenn sie Freunde werben, (6) Google Ads für 'Fitnessstudio in [Stadt]' mit starkem CTA."
             }
         };
 
@@ -642,8 +791,63 @@
                 q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards', 'instrument', 'bindung'],
                 q4: ['service-dominant', 'sdl', 'service', 'wert', 'ergebnis', 'interaktion', 'beziehung'],
                 q5: ['italien', 'kultur', 'café', 'bar', 'espresso', 'erfolgreich', 'unterschied', 'lokal']
+            },
+            exercise4: {
+                q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'unterstützung', 'transformation', 'kundenerlebnis', 'abbruch', 'motivation', 'beziehung'],
+                q2: ['buddy', 'training', 'community', 'flexibel', 'app', 'erfolg', 'engagement', 'herausforderung', 'support'],
+                q3: ['instagram', 'influencer', 'lokal', 'referral', 'anfänger', 'transformation', 'social media', 'werbung', 'zielgruppe']
             }
         };
+
+        function toggleOption(element, category) {
+            element.classList.toggle('selected');
+            const text = element.textContent.trim();
+            const index = selectedOptions[category].indexOf(text);
+            
+            if (index > -1) {
+                selectedOptions[category].splice(index, 1);
+            } else {
+                selectedOptions[category].push(text);
+            }
+        }
+
+        function generateVP() {
+            if (selectedOptions.targetGroup.length === 0 || selectedOptions.problem.length === 0 || selectedOptions.value.length === 0) {
+                alert('Bitte wählen Sie aus jeder Kategorie mindestens eine Option aus!');
+                return;
+            }
+
+            const targetGroup = selectedOptions.targetGroup.join(', ');
+            const problem = selectedOptions.problem.join(', ');
+            const value = selectedOptions.value.join(', ');
+
+            const vps = [
+                `Train4U ist dein Studio für ${targetGroup}, die ${problem} haben. Wir bieten ${value} - damit du nicht allein bist.`,
+                `${targetGroup}? ${problem}? Train4U löst beides mit ${value} und echter Gemeinschaft.`,
+                `Wir verstehen dich: Du bist ${targetGroup} und kämpfst mit ${problem}. Train4U bietet ${value} - das ist dein neuer Standard.`,
+                `Dein Studio für Erfolg: Für ${targetGroup} mit ${problem}. Wir garantieren ${value} oder dein Geld zurück.`,
+                `Train4U = Fitness ohne Druck. Für ${targetGroup}, gegen ${problem}, mit ${value}.`
+            ];
+
+            const randomVP = vps[Math.floor(Math.random() * vps.length)];
+
+            let html = `
+                <div class="generated-vp">
+                    <p><strong>Generiertes Nutzenversprechen:</strong></p>
+                    <p>"${randomVP}"</p>
+                    <button class="copy-btn" onclick="copyToTextarea('ex4q1', '${randomVP.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button>
+                </div>
+            `;
+
+            document.getElementById('generatedVP').innerHTML = html;
+        }
+
+        function copyToTextarea(textareaId, text) {
+            const textarea = document.getElementById(textareaId);
+            textarea.value = text;
+            textarea.focus();
+            alert('Nutzenversprechen in die Antwort kopiert!');
+        }
 
         function getRating(text, exerciseType, questionType) {
             const wordCount = text.trim().split(/\s+/).length;
@@ -724,11 +928,11 @@
                 div.innerHTML = `
                     <h4 style="color: #007BE2; margin-bottom: 15px; font-size: 16px;">${company}</h4>
                     <div class="question-block">
-                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden.</label>
+                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden?</label>
                         <textarea id="ex1_${idx}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
-                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}.</label>
+                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}?</label>
                         <textarea id="ex1_${idx}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
@@ -758,7 +962,7 @@
                 backBtn.style.display = 'none';
                 nextBtn.style.display = 'block';
                 submitBtn.style.display = 'none';
-            } else if (currentExercise === 1 || currentExercise === 2) {
+            } else if (currentExercise === 1 || currentExercise === 2 || currentExercise === 3) {
                 backBtn.style.display = 'block';
                 nextBtn.style.display = 'block';
                 submitBtn.style.display = 'none';
@@ -774,13 +978,15 @@
                 saveExercise2Data();
             } else if (currentExercise === 2) {
                 saveExercise3Data();
+            } else if (currentExercise === 3) {
+                saveExercise4Data();
             }
 
             currentExercise--;
             document.querySelectorAll('.exercise').forEach((ex, i) => {
                 ex.classList.toggle('active', i === currentExercise);
             });
-            document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 3`;
+            document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 4`;
             updateButtonVisibility();
         }
 
@@ -794,18 +1000,20 @@
                 saveExercise1Data();
             } else if (currentExercise === 1) {
                 saveExercise2Data();
+            } else if (currentExercise === 2) {
+                saveExercise3Data();
             }
 
             document.getElementById('companyError').style.display = 'none';
             currentExercise++;
 
-            if (currentExercise < 3) {
+            if (currentExercise < 4) {
                 document.querySelectorAll('.exercise').forEach((ex, i) => {
                     ex.classList.toggle('active', i === currentExercise);
                 });
-                document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 3`;
+                document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 4`;
             } else {
-                saveExercise3Data();
+                saveExercise4Data();
             }
 
             updateButtonVisibility();
@@ -843,6 +1051,12 @@
             localStorage.setItem('ex3q5', document.getElementById('ex3q5').value);
         }
 
+        function saveExercise4Data() {
+            localStorage.setItem('ex4q1', document.getElementById('ex4q1').value);
+            localStorage.setItem('ex4q2', document.getElementById('ex4q2').value);
+            localStorage.setItem('ex4q3', document.getElementById('ex4q3').value);
+        }
+
         function loadData() {
             const checkboxes = document.querySelectorAll('input[name="companies"]');
             checkboxes.forEach(cb => {
@@ -858,6 +1072,10 @@
             document.getElementById('ex3q3').value = localStorage.getItem('ex3q3') || '';
             document.getElementById('ex3q4').value = localStorage.getItem('ex3q4') || '';
             document.getElementById('ex3q5').value = localStorage.getItem('ex3q5') || '';
+
+            document.getElementById('ex4q1').value = localStorage.getItem('ex4q1') || '';
+            document.getElementById('ex4q2').value = localStorage.getItem('ex4q2') || '';
+            document.getElementById('ex4q3').value = localStorage.getItem('ex4q3') || '';
         }
 
         function generateFeedback() {
@@ -995,6 +1213,41 @@
             </div>`;
             feedbackHTML += '</div>';
 
+            // Exercise 4 Feedback
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Aufgabe 4 – Train4U Fitnessstudio:</h4>';
+            const e4q1 = document.getElementById('ex4q1').value;
+            const e4q2 = document.getElementById('ex4q2').value;
+            const e4q3 = document.getElementById('ex4q3').value;
+            
+            const e4r1 = getRating(e4q1, 'exercise4', 'q1');
+            const e4r2 = getRating(e4q2, 'exercise4', 'q2');
+            const e4r3 = getRating(e4q3, 'exercise4', 'q3');
+            
+            feedbackHTML += `<div class="rating-container">
+                <div class="traffic-light ${e4r1.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Nutzenversprechen (${e4r1.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise4.q1}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e4r2.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Konkrete Maßnahmen (${e4r2.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise4.q2}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e4r3.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Werbestrategie (${e4r3.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise4.q3}</p>
+                </div>
+            </div>`;
+            feedbackHTML += '</div>';
+
             return feedbackHTML;
         }
 
@@ -1002,6 +1255,7 @@
             saveExercise1Data();
             saveExercise2Data();
             saveExercise3Data();
+            saveExercise4Data();
             
             clearInterval(timerInterval);
             
