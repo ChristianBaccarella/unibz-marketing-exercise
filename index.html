@@ -66,6 +66,23 @@
         .landing-page {
             text-align: center;
         }
+        .landing-page-image {
+            width: 250px;
+            height: 300px;
+            margin: 0 auto 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .landing-page-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
         .landing-page h2 {
             font-size: 28px;
             color: #333;
@@ -273,17 +290,6 @@
             color: #333;
             margin-bottom: 20px;
         }
-        .score-display {
-            font-size: 48px;
-            font-weight: bold;
-            color: #28a745;
-            margin: 20px 0;
-        }
-        .score-section p {
-            font-size: 16px;
-            color: #666;
-            line-height: 1.6;
-        }
         .feedback-section {
             margin-top: 40px;
             padding: 25px;
@@ -297,21 +303,89 @@
             font-size: 20px;
         }
         .feedback-item {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             padding: 15px;
             background: white;
             border-radius: 8px;
             border-left: 4px solid #ffc107;
+            text-align: left;
         }
         .feedback-item h4 {
             color: #333;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             font-size: 16px;
         }
         .feedback-item p {
             color: #666;
             line-height: 1.6;
             font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .rating-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        .traffic-light {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+        }
+        .traffic-light.green {
+            background: #28a745;
+        }
+        .traffic-light.yellow {
+            background: #ffc107;
+            color: #333;
+        }
+        .traffic-light.red {
+            background: #d9534f;
+        }
+        .rating-text {
+            font-size: 14px;
+            color: #666;
+            flex: 1;
+        }
+        .rating-label {
+            font-weight: bold;
+            color: #333;
+            font-size: 15px;
+        }
+        .traffic-legend {
+            margin-top: 25px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 5px solid #007BE2;
+        }
+        .traffic-legend h4 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+        .legend-item .traffic-light {
+            width: 30px;
+            height: 30px;
+            font-size: 16px;
+        }
+        .legend-item p {
+            margin: 0;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.4;
         }
         .footer {
             text-align: center;
@@ -342,6 +416,9 @@
         <div class="content">
             <!-- Landing Page -->
             <div id="landing" class="landing-page">
+                <div class="landing-page-image">
+                    <img src="https://github.com/ChristianBaccarella/unibz-marketing-exercise/raw/main/professor.jpg" alt="Professor">
+                </div>
                 <h2>Willkommen zur Marketing-Übung</h2>
                 <p><strong>Heute probieren wir etwas anderes.</strong></p>
                 <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
@@ -408,17 +485,17 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von IKEA?</label>
+                        <label>Was ist das zentrale Nutzenversprechen von IKEA.</label>
                         <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie drei konkrete Beispiele.</label>
+                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM). Geben Sie drei konkrete Beispiele.</label>
                         <textarea id="ex2q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Ist IKEA eher produktorientiert, kundenorientiert oder serviceorientiert? Begründen Sie kurz.</label>
+                        <label>Ist IKEA eher produktorientiert, kundenorientiert oder serviceorientiert. Begründen Sie kurz.</label>
                         <textarea id="ex2q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -431,27 +508,27 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von Starbucks?</label>
+                        <label>Was ist das zentrale Nutzenversprechen von Starbucks.</label>
                         <textarea id="ex3q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
+                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren. Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
                         <textarea id="ex3q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung?</label>
+                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung.</label>
                         <textarea id="ex3q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten?</label>
+                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten.</label>
                         <textarea id="ex3q4" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein?</label>
+                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein.</label>
                         <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -466,13 +543,27 @@
             <!-- Score Section with Feedback -->
             <div id="scoreSection" class="score-section">
                 <h2>🎉 Vielen Dank für Ihre Teilnahme!</h2>
-                <div class="score-display" id="score">0 Punkte</div>
-                <p>Ihre Antworten wurden gespeichert.</p>
-                <p style="margin-top: 20px; font-size: 18px;">Wir besprechen die Ergebnisse gleich zusammen.</p>
+                <p style="font-size: 18px; margin-bottom: 20px;">Wir besprechen die Ergebnisse gleich zusammen.</p>
 
                 <div class="feedback-section">
-                    <h3>📝 Automatisches Feedback zu Ihren Antworten</h3>
+                    <h3>📊 Bewertung Ihrer Antworten</h3>
                     <div id="feedbackContainer"></div>
+                    
+                    <div class="traffic-legend">
+                        <h4>🚦 Ampel-Bedeutung:</h4>
+                        <div class="legend-item">
+                            <div class="traffic-light green">●</div>
+                            <p><strong>🟢 Grün:</strong> Ausführliche und relevante Antwort - sehr gutes Verständnis des Inhalts nachgewiesen.</p>
+                        </div>
+                        <div class="legend-item">
+                            <div class="traffic-light yellow">●</div>
+                            <p><strong>🟡 Gelb:</strong> Antwort vorhanden, aber teilweise zu kurz oder nicht ganz auf den Punkt - mehr Details würden helfen.</p>
+                        </div>
+                        <div class="legend-item">
+                            <div class="traffic-light red">●</div>
+                            <p><strong>🔴 Rot:</strong> Sehr kurze oder fehlende Antwort - mehr Ausführlichkeit notwendig um das Verständnis zu zeigen.</p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -485,7 +576,6 @@
     <script>
         let currentExercise = 0;
         let timeRemaining = 90 * 60;
-        let score = 0;
         let timerInterval;
 
         const feedbackData = {
@@ -534,6 +624,51 @@
                 q5: "In Italien weniger erfolgreich, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italiens Café ist soziales Ritual mit kurzer, intensiver Interaktion, nicht 'Third Place', (3) Preiswettbewerb mit lokalen Bars, (4) Ablehnung von amerikanischer 'Massification' von Kultur."
             }
         };
+
+        const keywords = {
+            exercise1: {
+                problem: ['problem', 'löst', 'bedürfnis', 'bedarf', 'schwierigkeit', 'herausforderung'],
+                value: ['nutzen', 'versprechen', 'vorteil', 'wert', 'differenzierung', 'unterschied'],
+                example: ['beispiel', 'konkret', 'zeigt', 'zeigt sich', 'etwa', 'z.b']
+            },
+            exercise2: {
+                q1: ['nutzen', 'versprechen', 'wert', 'design', 'erschwinglich', 'erschwinglichkeit', 'demokrat'],
+                q2: ['crm', 'kundenbindung', 'family', 'programm', 'loyalty', 'beispiel', 'instrument'],
+                q3: ['orientiert', 'produkt', 'kunden', 'service', 'geschäftsmodell', 'selbstbedienung', 'montage']
+            },
+            exercise3: {
+                q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft', 'premium', 'kaffee'],
+                q2: ['erlebnis', 'atmosphäre', 'beispiel', 'besuch', 'name', 'personalisier', 'wohlig', 'gemütlich'],
+                q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards', 'instrument', 'bindung'],
+                q4: ['service-dominant', 'sdl', 'service', 'wert', 'ergebnis', 'interaktion', 'beziehung'],
+                q5: ['italien', 'kultur', 'café', 'bar', 'espresso', 'erfolgreich', 'unterschied', 'lokal']
+            }
+        };
+
+        function getRating(text, exerciseType, questionType) {
+            const wordCount = text.trim().split(/\s+/).length;
+            
+            let keywordCount = 0;
+            const keywordList = keywords[exerciseType] ? keywords[exerciseType][questionType] : [];
+            
+            if (keywordList) {
+                keywordList.forEach(keyword => {
+                    if (text.toLowerCase().includes(keyword.toLowerCase())) {
+                        keywordCount++;
+                    }
+                });
+            }
+            
+            const relevanceScore = keywordList.length > 0 ? keywordCount / keywordList.length : 0;
+            
+            if (wordCount > 100 && relevanceScore > 0.5) {
+                return { rating: 'green', label: 'Ausführlich & Relevant', words: wordCount };
+            } else if ((wordCount > 50 && relevanceScore > 0.25) || wordCount > 80) {
+                return { rating: 'yellow', label: 'Teilweise ausführlich', words: wordCount };
+            } else {
+                return { rating: 'red', label: 'Zu kurz oder unvollständig', words: wordCount };
+            }
+        }
 
         function startExercises() {
             document.getElementById('landing').style.display = 'none';
@@ -589,11 +724,11 @@
                 div.innerHTML = `
                     <h4 style="color: #007BE2; margin-bottom: 15px; font-size: 16px;">${company}</h4>
                     <div class="question-block">
-                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden?</label>
+                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden.</label>
                         <textarea id="ex1_${idx}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
-                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}?</label>
+                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}.</label>
                         <textarea id="ex1_${idx}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
@@ -728,34 +863,136 @@
         function generateFeedback() {
             let feedbackHTML = '';
 
-            // Exercise 1 Feedback
-            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 1 – Nutzenversprechen:</h4>';
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Aufgabe 1 – Nutzenversprechen:</h4>';
             const selectedCompanies = Array.from(document.querySelectorAll('input[name="companies"]:checked'))
                 .map(cb => cb.value);
             
             selectedCompanies.forEach((company, idx) => {
-                feedbackHTML += `<p><strong>${company}:</strong></p><ul style="margin-left: 20px; margin-bottom: 10px;">`;
-                feedbackHTML += `<li><strong>Problem:</strong> ${feedbackData.exercise1[company].problem}</li>`;
-                feedbackHTML += `<li><strong>Nutzenversprechen:</strong> ${feedbackData.exercise1[company].value}</li>`;
-                feedbackHTML += `<li><strong>Beispiel:</strong> ${feedbackData.exercise1[company].example}</li>`;
-                feedbackHTML += `</ul>`;
+                const q1Text = document.getElementById(`ex1_${idx}_q1`).value;
+                const q2Text = document.getElementById(`ex1_${idx}_q2`).value;
+                const q3Text = document.getElementById(`ex1_${idx}_q3`).value;
+                
+                const r1 = getRating(q1Text, 'exercise1', 'problem');
+                const r2 = getRating(q2Text, 'exercise1', 'value');
+                const r3 = getRating(q3Text, 'exercise1', 'example');
+                
+                feedbackHTML += `<p style="margin-top: 15px; margin-bottom: 10px;"><strong>${company}:</strong></p>`;
+                feedbackHTML += `<div style="margin-left: 15px; margin-bottom: 15px;">`;
+                
+                feedbackHTML += `<div class="rating-container">
+                    <div class="traffic-light ${r1.rating}">●</div>
+                    <div class="rating-text">
+                        <div class="rating-label">Problem/Bedürfnis (${r1.words} Wörter)</div>
+                        <p>Musterlösung: ${feedbackData.exercise1[company].problem}</p>
+                    </div>
+                </div>`;
+                
+                feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                    <div class="traffic-light ${r2.rating}">●</div>
+                    <div class="rating-text">
+                        <div class="rating-label">Nutzenversprechen (${r2.words} Wörter)</div>
+                        <p>Musterlösung: ${feedbackData.exercise1[company].value}</p>
+                    </div>
+                </div>`;
+                
+                feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                    <div class="traffic-light ${r3.rating}">●</div>
+                    <div class="rating-text">
+                        <div class="rating-label">Konkretes Beispiel (${r3.words} Wörter)</div>
+                        <p>Musterlösung: ${feedbackData.exercise1[company].example}</p>
+                    </div>
+                </div>`;
+                
+                feedbackHTML += `</div>`;
             });
             feedbackHTML += '</div>';
 
-            // Exercise 2 Feedback
-            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 2 – IKEA Case Study:</h4>';
-            feedbackHTML += `<p><strong>Nutzenversprechen:</strong> ${feedbackData.exercise2.q1}</p>`;
-            feedbackHTML += `<p><strong>CRM-Instrumente:</strong> ${feedbackData.exercise2.q2}</p>`;
-            feedbackHTML += `<p><strong>Orientierung:</strong> ${feedbackData.exercise2.q3}</p>`;
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Aufgabe 2 – IKEA Case Study:</h4>';
+            const q1Text = document.getElementById('ex2q1').value;
+            const q2Text = document.getElementById('ex2q2').value;
+            const q3Text = document.getElementById('ex2q3').value;
+            
+            const r1 = getRating(q1Text, 'exercise2', 'q1');
+            const r2 = getRating(q2Text, 'exercise2', 'q2');
+            const r3 = getRating(q3Text, 'exercise2', 'q3');
+            
+            feedbackHTML += `<div class="rating-container">
+                <div class="traffic-light ${r1.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Nutzenversprechen (${r1.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise2.q1}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${r2.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">CRM-Instrumente (${r2.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise2.q2}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${r3.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Orientierung (${r3.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise2.q3}</p>
+                </div>
+            </div>`;
             feedbackHTML += '</div>';
 
-            // Exercise 3 Feedback
-            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 3 – Starbucks Fallanalyse:</h4>';
-            feedbackHTML += `<p><strong>Nutzenversprechen:</strong> ${feedbackData.exercise3.q1}</p>`;
-            feedbackHTML += `<p><strong>Kundenerlebnis:</strong> ${feedbackData.exercise3.q2}</p>`;
-            feedbackHTML += `<p><strong>Kundenbindung:</strong> ${feedbackData.exercise3.q3}</p>`;
-            feedbackHTML += `<p><strong>Service-Dominant Logic:</strong> ${feedbackData.exercise3.q4}</p>`;
-            feedbackHTML += `<p><strong>Italien-Kontext:</strong> ${feedbackData.exercise3.q5}</p>`;
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Aufgabe 3 – Starbucks Fallanalyse:</h4>';
+            const e3q1 = document.getElementById('ex3q1').value;
+            const e3q2 = document.getElementById('ex3q2').value;
+            const e3q3 = document.getElementById('ex3q3').value;
+            const e3q4 = document.getElementById('ex3q4').value;
+            const e3q5 = document.getElementById('ex3q5').value;
+            
+            const e3r1 = getRating(e3q1, 'exercise3', 'q1');
+            const e3r2 = getRating(e3q2, 'exercise3', 'q2');
+            const e3r3 = getRating(e3q3, 'exercise3', 'q3');
+            const e3r4 = getRating(e3q4, 'exercise3', 'q4');
+            const e3r5 = getRating(e3q5, 'exercise3', 'q5');
+            
+            feedbackHTML += `<div class="rating-container">
+                <div class="traffic-light ${e3r1.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Nutzenversprechen (${e3r1.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise3.q1}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e3r2.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Kundenerlebnis (${e3r2.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise3.q2}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e3r3.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Kundenbindung (${e3r3.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise3.q3}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e3r4.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Service-Dominant Logic (${e3r4.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise3.q4}</p>
+                </div>
+            </div>`;
+            
+            feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
+                <div class="traffic-light ${e3r5.rating}">●</div>
+                <div class="rating-text">
+                    <div class="rating-label">Italien-Kontext (${e3r5.words} Wörter)</div>
+                    <p>Musterlösung: ${feedbackData.exercise3.q5}</p>
+                </div>
+            </div>`;
             feedbackHTML += '</div>';
 
             return feedbackHTML;
@@ -766,29 +1003,10 @@
             saveExercise2Data();
             saveExercise3Data();
             
-            let filledAnswers = 0;
-            
-            const selected = Array.from(document.querySelectorAll('input[name="companies"]')).filter(cb => cb.checked).length;
-            filledAnswers += selected * 3;
-            
-            if (document.getElementById('ex2q1').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex2q2').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex2q3').value.trim()) filledAnswers += 1;
-            
-            if (document.getElementById('ex3q1').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex3q2').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex3q3').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex3q4').value.trim()) filledAnswers += 1;
-            if (document.getElementById('ex3q5').value.trim()) filledAnswers += 1;
-            
-            score = filledAnswers * 10;
-            localStorage.setItem('score', score);
-            
             clearInterval(timerInterval);
             
             document.getElementById('exerciseSection').style.display = 'none';
             document.getElementById('scoreSection').classList.add('active');
-            document.getElementById('score').textContent = score + ' Punkte';
             document.getElementById('feedbackContainer').innerHTML = generateFeedback();
         }
 
