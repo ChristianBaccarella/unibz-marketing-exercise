@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lehrendes Dashboard – unibz Marketing</title>
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="stylesheet" href="assets/teacher-dashboard.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Session Setup Page
+══════════════════════════════════════════════════════════════ -->
+<div id="session-setup">
+  <div class="setup-page">
+    <div class="setup-card">
+      <div class="setup-card__logo">👩‍🏫</div>
+      <h1>Lehrendes Dashboard</h1>
+      <p>Erstelle eine neue Unterrichtssitzung, um den Fortschritt deiner Studierenden in Echtzeit zu verfolgen.</p>
+
+      <form id="create-session-form">
+        <div class="form-group">
+          <label class="form-label" for="teacher-name-input">Dein Name</label>
+          <input type="text" id="teacher-name-input" placeholder="Prof. Mustermann" value="Lehrperson" required>
+        </div>
+        <button type="submit" class="btn btn--primary btn--lg">
+          🚀 Neue Sitzung starten
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Main Dashboard
+══════════════════════════════════════════════════════════════ -->
+<div id="dashboard" class="hidden">
+
+  <!-- Header -->
+  <header class="dashboard-header">
+    <div class="dashboard-header__title">
+      <span>👩‍🏫</span>
+      <span>Lehrendes Dashboard – unibz Marketing</span>
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span>Live</span>
+      </div>
+    </div>
+    <div class="dashboard-header__actions">
+      <button id="new-session-btn" class="btn btn--sm btn--outline" style="color:#fff;border-color:rgba(255,255,255,.5);">
+        ➕ Neue Sitzung
+      </button>
+      <button id="export-csv" class="btn btn--sm btn--primary">
+        📊 CSV Export
+      </button>
+      <button id="export-json-teacher" class="btn btn--sm btn--outline" style="color:#fff;border-color:rgba(255,255,255,.5);">
+        📄 JSON
+      </button>
+    </div>
+  </header>
+
+  <div style="padding:1.5rem;max-width:1400px;margin:0 auto;">
+
+    <!-- Stats strip -->
+    <div class="stats-strip">
+      <div class="stat-card">
+        <div class="stat-card__value" id="stat-total">0</div>
+        <div class="stat-card__label">Studierende verbunden</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value" id="stat-completed">0</div>
+        <div class="stat-card__label">Alle Übungen abgeschlossen</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-card__value" id="stat-avg-score">0</div>
+        <div class="stat-card__label">Durchschnittliche Punkte</div>
+      </div>
+    </div>
+
+    <!-- Session info + QR -->
+    <div class="dashboard-grid dashboard-grid--wide">
+
+      <!-- Session info -->
+      <div class="card">
+        <div class="card__header">🔑 Aktuelle Sitzung</div>
+        <div class="card__body">
+          <div class="session-code-box">
+            <div>
+              <div class="session-code-box__label">Sitzungscode für Studierende:</div>
+              <div class="session-code" id="session-code-display">------</div>
+            </div>
+            <button id="copy-student-link" class="btn btn--primary">
+              📋 Link kopieren
+            </button>
+          </div>
+          <div class="session-code-box__label" style="margin-bottom:.4rem;">Studierenden-Link:</div>
+          <div class="student-link-box" id="student-link">–</div>
+          <p style="font-size:.85rem;color:#666;">
+            Studierende öffnen den Link und geben den Sitzungscode ein.
+            Ihre Fortschritte erscheinen automatisch in der Tabelle unten.
+          </p>
+        </div>
+      </div>
+
+      <!-- QR Code -->
+      <div class="card">
+        <div class="card__header">📱 QR-Code</div>
+        <div class="card__body">
+          <div class="qr-section">
+            <div id="session-qr">
+              <div style="width:180px;height:180px;background:#f0f0f0;display:flex;align-items:center;justify-content:center;border-radius:8px;color:#999;font-size:.85rem;">
+                QR-Code wird geladen...
+              </div>
+            </div>
+            <p>Studierende scannen diesen QR-Code, um direkt zur Übung zu gelangen.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Progress Chart + Student Table -->
+    <div class="dashboard-grid">
+
+      <!-- Chart -->
+      <div class="chart-container">
+        <h3>📊 Fortschrittsverteilung</h3>
+        <canvas id="progress-chart" width="400" height="200"></canvas>
+      </div>
+
+      <!-- Legend -->
+      <div class="card">
+        <div class="card__header">ℹ️ Legende</div>
+        <div class="card__body">
+          <div style="display:flex;flex-direction:column;gap:.75rem;">
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span class="status-badge status-badge--waiting">Bereit</span>
+              <span style="font-size:.85rem;color:#555;">Verbunden, noch keine Antwort</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span class="status-badge status-badge--active">Aktiv</span>
+              <span style="font-size:.85rem;color:#555;">Beantwortet Fragen</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:.75rem;">
+              <span class="status-badge status-badge--done">Fertig</span>
+              <span style="font-size:.85rem;color:#555;">Alle 3 Übungen abgeschlossen</span>
+            </div>
+          </div>
+          <hr style="margin:1rem 0;border-color:#eee;">
+          <p style="font-size:.85rem;color:#555;">
+            Die Tabelle aktualisiert sich automatisch alle <strong>5 Sekunden</strong>.
+            Studierende müssen denselben Browser/Gerät verwenden.
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Student Table -->
+    <div class="card">
+      <div class="card__header">👥 Studierende</div>
+      <div class="card__body" style="padding:0;">
+        <div class="student-table-wrapper">
+          <table class="student-table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Fortschritt</th>
+                <th>Punkte</th>
+                <th>Status</th>
+                <th>Zuletzt aktiv</th>
+              </tr>
+            </thead>
+            <tbody id="student-tbody">
+              <tr>
+                <td colspan="5" style="text-align:center;color:#666;padding:2rem;">
+                  Noch keine Studierenden verbunden
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /padding div -->
+</div><!-- /dashboard -->
+
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/teacher.js"></script>
+
+</body>
+</html>

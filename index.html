@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marketing Grundlagen – unibz</title>
+  <link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Name / Session Modal
+══════════════════════════════════════════════════════════════ -->
+<div id="name-modal" class="modal-overlay">
+  <div class="modal">
+    <h2>🎓 Willkommen!</h2>
+    <p>Bitte gib deinen Namen ein, um mit der Übung zu beginnen.<br>
+       Du hast <strong>90 Minuten</strong> Zeit.</p>
+    <form id="name-form">
+      <div class="form-group">
+        <label class="form-label" for="student-name-input">Dein Name</label>
+        <input type="text" id="student-name-input" placeholder="Vor- und Nachname" required autocomplete="name">
+      </div>
+      <div class="form-group">
+        <label class="form-label" for="session-code-input">Sitzungscode (optional)</label>
+        <input type="text" id="session-code-input" placeholder="z. B. AB12CD" maxlength="8"
+               style="text-transform:uppercase;letter-spacing:.1em;">
+      </div>
+      <button type="submit" class="btn btn--primary btn--lg" style="width:100%;justify-content:center;">
+        ▶ Übung starten
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     Timer-End Modal
+══════════════════════════════════════════════════════════════ -->
+<div id="timer-end-modal" class="modal-overlay hidden">
+  <div class="modal text-center">
+    <div style="font-size:3rem;margin-bottom:.5rem;">⏰</div>
+    <h2>Zeit abgelaufen!</h2>
+    <p>Deine Antworten wurden automatisch gespeichert.<br>
+       Bitte exportiere deine Ergebnisse.</p>
+    <button class="btn btn--primary" onclick="document.getElementById('timer-end-modal').classList.add('hidden');
+      document.getElementById('exercise-export').scrollIntoView({behavior:'smooth'});">
+      📥 Ergebnisse exportieren
+    </button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     QR Code Modal
+══════════════════════════════════════════════════════════════ -->
+<div id="qr-modal" class="modal-overlay hidden">
+  <div class="modal text-center">
+    <h2>📱 Dein QR-Code</h2>
+    <p>Scanne diesen Code, um deine Ergebnisse zu teilen.</p>
+    <div id="qr-container" style="margin:1rem auto;"></div>
+    <button id="qr-close" class="btn btn--secondary">Schließen</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     App Header
+══════════════════════════════════════════════════════════════ -->
+<header class="app-header">
+  <div class="app-header__logo">
+    <span style="font-size:1.5rem;">🎓</span>
+    <div class="app-header__logo-text">
+      unibz <span>Marketing Grundlagen</span>
+    </div>
+  </div>
+  <div class="app-header__right">
+    <div class="points-widget">
+      ⭐ <span id="points-display">0</span> Punkte
+    </div>
+    <div class="timer-widget">
+      <span id="timer-display">90:00</span>
+      <div class="timer-controls">
+        <button id="timer-pause" title="Pausieren">⏸</button>
+        <button id="timer-resume" class="hidden" title="Fortsetzen">▶</button>
+      </div>
+    </div>
+    <div class="student-info" id="student-name-header"></div>
+  </div>
+</header>
+
+<!-- Progress bar -->
+<div class="progress-bar-container">
+  <span style="font-size:.85rem;color:#555;white-space:nowrap;">Gesamtfortschritt:</span>
+  <div class="progress-bar-track">
+    <div class="progress-bar-fill" id="progress-bar" style="width:0%"></div>
+  </div>
+  <span class="progress-label" id="progress-text">0%</span>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     App Body
+══════════════════════════════════════════════════════════════ -->
+<div class="app-body">
+
+  <!-- Sidebar Navigation -->
+  <nav class="sidebar">
+    <div class="sidebar__section-title">Übungen</div>
+    <button class="nav-btn nav-btn--active" data-exercise="1">
+      <span class="nav-btn__icon">📋</span>
+      <span>Übung 1</span>
+      <span class="nav-btn__status" data-exercise-status="1"></span>
+    </button>
+    <button class="nav-btn" data-exercise="2">
+      <span class="nav-btn__icon">🛒</span>
+      <span>Übung 2 – IKEA</span>
+      <span class="nav-btn__status" data-exercise-status="2"></span>
+    </button>
+    <button class="nav-btn" data-exercise="3">
+      <span class="nav-btn__icon">☕</span>
+      <span>Übung 3 – Starbucks</span>
+      <span class="nav-btn__status" data-exercise-status="3"></span>
+    </button>
+
+    <div class="sidebar__section-title" style="margin-top:1rem;">Badges</div>
+    <div id="badges-container" style="padding:.5rem;"></div>
+  </nav>
+
+  <!-- Main Content -->
+  <main class="content">
+
+    <!-- ══════════════════════════════════════════════════════
+         ÜBUNG 1: Nutzenversprechen
+    ══════════════════════════════════════════════════════ -->
+    <div id="exercise-1" class="exercise-panel">
+      <h1 class="exercise-title">📋 Übung 1: Nutzenversprechen</h1>
+      <p class="exercise-subtitle">
+        Analysiere das Nutzenversprechen der folgenden Unternehmen.
+        Beschreibe, welchen konkreten Nutzen das Unternehmen seinen Kunden bietet
+        und wie es sich damit von der Konkurrenz abhebt.
+      </p>
+
+      <div class="company-grid">
+
+        <!-- Apple -->
+        <div class="company-card">
+          <div class="company-card__name">🍎 Apple</div>
+          <div class="form-group">
+            <label class="form-label" for="q_apple_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_apple_nutzen" data-question="q_apple_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von Apple? (z. B. Premium-Erlebnis, Ökosystem, Design...)"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_apple_segment">Zielgruppe</label>
+            <textarea id="q_apple_segment" data-question="q_apple_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+        <!-- Spotify -->
+        <div class="company-card">
+          <div class="company-card__name">🎵 Spotify</div>
+          <div class="form-group">
+            <label class="form-label" for="q_spotify_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_spotify_nutzen" data-question="q_spotify_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von Spotify?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_spotify_segment">Zielgruppe</label>
+            <textarea id="q_spotify_segment" data-question="q_spotify_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+        <!-- dm -->
+        <div class="company-card">
+          <div class="company-card__name">🧴 dm</div>
+          <div class="form-group">
+            <label class="form-label" for="q_dm_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_dm_nutzen" data-question="q_dm_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von dm?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_dm_segment">Zielgruppe</label>
+            <textarea id="q_dm_segment" data-question="q_dm_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+        <!-- Ryanair -->
+        <div class="company-card">
+          <div class="company-card__name">✈️ Ryanair</div>
+          <div class="form-group">
+            <label class="form-label" for="q_ryanair_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_ryanair_nutzen" data-question="q_ryanair_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von Ryanair?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_ryanair_segment">Zielgruppe</label>
+            <textarea id="q_ryanair_segment" data-question="q_ryanair_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+        <!-- Airbnb -->
+        <div class="company-card">
+          <div class="company-card__name">🏠 Airbnb</div>
+          <div class="form-group">
+            <label class="form-label" for="q_airbnb_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_airbnb_nutzen" data-question="q_airbnb_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von Airbnb?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_airbnb_segment">Zielgruppe</label>
+            <textarea id="q_airbnb_segment" data-question="q_airbnb_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+        <!-- IKEA -->
+        <div class="company-card">
+          <div class="company-card__name">🛒 IKEA</div>
+          <div class="form-group">
+            <label class="form-label" for="q_ikea_nutzen">
+              Nutzenversprechen <span class="points-hint">(+10-20 Punkte)</span>
+            </label>
+            <textarea id="q_ikea_nutzen" data-question="q_ikea_nutzen"
+              placeholder="Was ist das zentrale Nutzenversprechen von IKEA?"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="q_ikea_segment">Zielgruppe</label>
+            <textarea id="q_ikea_segment" data-question="q_ikea_segment" style="min-height:60px;"
+              placeholder="Wer sind die primären Kunden?"></textarea>
+          </div>
+        </div>
+
+      </div><!-- /company-grid -->
+
+      <div style="text-align:right;margin-top:1rem;">
+        <button class="btn btn--success" data-complete-exercise="1">
+          ✅ Übung 1 abschließen (+50 Punkte)
+        </button>
+      </div>
+    </div><!-- /exercise-1 -->
+
+    <!-- ══════════════════════════════════════════════════════
+         ÜBUNG 2: IKEA Mini-Fallstudie
+    ══════════════════════════════════════════════════════ -->
+    <div id="exercise-2" class="exercise-panel hidden">
+      <h1 class="exercise-title">🛒 Übung 2: IKEA Mini-Fallstudie</h1>
+      <p class="exercise-subtitle">
+        Analysiere das Geschäftsmodell und die Kundenorientierung von IKEA
+        anhand der folgenden Fragen.
+      </p>
+
+      <div class="card">
+        <div class="card__header">Geschäftsmodell & Kundenorientierung</div>
+        <div class="card__body">
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">1</span>
+              Beschreibe das Geschäftsmodell von IKEA. Wie verdient IKEA Geld und was sind die wichtigsten Kostenblöcke?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_geschaeftsmodell"
+              placeholder="Erläutere das Geschäftsmodell: Einnahmequellen, Kostenstruktur, Schlüsselaktivitäten..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">2</span>
+              Wie setzt IKEA das Konzept der Kundenorientierung um? Nenne mindestens drei konkrete Beispiele.
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_kundenorientierung"
+              placeholder="Beispiele: Self-Service, Kinderbetreuung, Restaurant, Aufbauanleitung..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">3</span>
+              Erkläre den „IKEA-Effekt": Welche psychologische Wirkung hat das Selbstmontieren auf die Kundenbindung?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_effekt"
+              placeholder="Beschreibe den Zusammenhang zwischen Eigenleistung und Wertschätzung des Produkts..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">4</span>
+              Wie nutzt IKEA den stationären Handel (Filiale) als Marketinginstrument? Welche Erlebnisse schafft IKEA im Store?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_store"
+              placeholder="Erlebnisorientierung im Store: Showrooms, Wegführung, Duft, Restaurant..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">5</span>
+              Welche digitalen Kanäle nutzt IKEA zur Kundengewinnung und -bindung? Wie integriert IKEA Online- und Offline-Kanäle?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_digital"
+              placeholder="App, Website, Augmented Reality, Click & Collect, Social Media..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">6</span>
+              Wie positioniert sich IKEA in Bezug auf Nachhaltigkeit? Welche Marketingaussagen macht IKEA zu diesem Thema?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_ikea_nachhaltigkeit"
+              placeholder="Kreislaufwirtschaft, Secondhand-Möbel, erneuerbare Energie, People & Planet Positive..."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="text-align:right;">
+        <button class="btn btn--success" data-complete-exercise="2">
+          ✅ Übung 2 abschließen (+50 Punkte)
+        </button>
+      </div>
+    </div><!-- /exercise-2 -->
+
+    <!-- ══════════════════════════════════════════════════════
+         ÜBUNG 3: Starbucks Fallanalyse
+    ══════════════════════════════════════════════════════ -->
+    <div id="exercise-3" class="exercise-panel hidden">
+      <h1 class="exercise-title">☕ Übung 3: Starbucks Fallanalyse</h1>
+      <p class="exercise-subtitle">
+        Analysiere das erlebnisorientierte Marketing und die CRM-Instrumente von Starbucks.
+      </p>
+
+      <div class="card">
+        <div class="card__header">Erlebnisorientiertes Marketing</div>
+        <div class="card__body">
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">1</span>
+              Was versteht man unter „erlebnisorientiertem Marketing"? Erkläre das Konzept und nenne Kernelemente.
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_erlebnis_def"
+              placeholder="Erlebnismarketing: sensorische, emotionale, kognitive und verhaltensbezogene Stimuli..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">2</span>
+              Wie setzt Starbucks erlebnisorientiertes Marketing konkret um? Beschreibe mindestens vier Beispiele aus der Praxis.
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_erlebnis_praxis"
+              placeholder="Kaffeeduft, Namensbeschriftung, Musik, Interieur, Farbgestaltung, Barista-Interaktion..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">3</span>
+              Warum sind Kunden bereit, bei Starbucks einen deutlich höheren Preis zu zahlen als bei Konkurrenten?
+              Welche Faktoren rechtfertigen den Premiumpreis?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_preis"
+              placeholder="Preisbereitschaft: Marke, Erlebnis, Personalisierung, Third Place, Status..."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card__header">CRM (Customer Relationship Management)</div>
+        <div class="card__body">
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">4</span>
+              Beschreibe das Starbucks Rewards-Programm. Welche CRM-Instrumente werden eingesetzt?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_crm_rewards"
+              placeholder="Rewards-Punkte, Kundenstufen (Green/Gold), personalisierte Angebote, App, Geburtstagskaffee..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">5</span>
+              Wie nutzt Starbucks Daten und Technologie zur Personalisierung des Kundenerlebnisses?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_data"
+              placeholder="App-Daten, Kaufhistorie, Personalisierung, Mobile Order & Pay, KI-gestützte Empfehlungen..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">6</span>
+              Welche Rolle spielt die Starbucks App im Gesamtmarketingkonzept? Wie verbindet sie online und offline?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_app"
+              placeholder="Mobile Payment, Vorbestellung, Push-Nachrichten, Rewards-Verwaltung, Gamification..."></textarea>
+          </div>
+
+          <div class="question-block">
+            <div class="question-text">
+              <span class="question-number">7</span>
+              Welche Kritik gibt es am Starbucks-Konzept (gesellschaftlich, ökologisch, ethisch)?
+              Wie reagiert Starbucks darauf?
+              <span class="points-hint" style="font-size:.8rem;color:var(--blue);">(+10-20 Punkte)</span>
+            </div>
+            <textarea data-question="q_sb_kritik"
+              placeholder="Steuervermeidung, Plastik, Lieferkette, Greenwashing, Arbeitsbedingungen..."></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="text-align:right;">
+        <button class="btn btn--success" data-complete-exercise="3">
+          ✅ Übung 3 abschließen (+50 Punkte)
+        </button>
+      </div>
+    </div><!-- /exercise-3 -->
+
+    <!-- ══════════════════════════════════════════════════════
+         Export Section
+    ══════════════════════════════════════════════════════ -->
+    <div id="exercise-export" class="card" style="margin-top:1.5rem;">
+      <div class="card__header">📥 Ergebnisse exportieren</div>
+      <div class="card__body">
+        <p class="mb-2">Exportiere deine Antworten in verschiedenen Formaten:</p>
+        <div class="export-grid">
+          <button id="export-pdf" class="btn btn--secondary">
+            🖨️ Als PDF drucken
+          </button>
+          <button id="export-json" class="btn btn--outline">
+            📄 Als JSON herunterladen
+          </button>
+          <button id="export-qr" class="btn btn--outline">
+            📱 QR-Code generieren
+          </button>
+          <button id="export-link" class="btn btn--outline">
+            🔗 Link kopieren
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div><!-- /app-body -->
+
+<!-- Mobile bottom nav -->
+<nav class="mobile-nav">
+  <button class="nav-btn" data-exercise="1">
+    <span class="nav-btn__icon">📋</span>
+    <span>Übung 1</span>
+  </button>
+  <button class="nav-btn" data-exercise="2">
+    <span class="nav-btn__icon">🛒</span>
+    <span>Übung 2</span>
+  </button>
+  <button class="nav-btn" data-exercise="3">
+    <span class="nav-btn__icon">☕</span>
+    <span>Übung 3</span>
+  </button>
+</nav>
+
+<script src="js/config.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/gamification.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
