@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teacher Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        #sessionForm { margin: 20px; }
+        #studentMonitoring, #statistics { margin: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Teacher Dashboard</h1>
+    <div id="sessionForm">
+        <h2>Create New Session</h2>
+        <form>
+            <div class="form-group">
+                <label for="sessionName">Session Name</label>
+                <input type="text" class="form-control" id="sessionName" required>
+            </div>
+            <div class="form-group">
+                <label for="sessionDate">Date</label>
+                <input type="date" class="form-control" id="sessionDate" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Create Session</button>
+        </form>
+    </div>
+
+    <div id="studentMonitoring">
+        <h2>Live Student Monitoring</h2>
+        <ul class="list-group">
+            <li class="list-group-item">Student 1: Active</li>
+            <li class="list-group-item">Student 2: Inactive</li>
+            <li class="list-group-item">Student 3: Active</li>
+        </ul>
+    </div>
+
+    <div id="statistics">
+        <h2>Statistics Display</h2>
+        <canvas id="attendanceChart" width="400" height="200"></canvas>
+        <script>
+            var ctx = document.getElementById('attendanceChart').getContext('2d');
+            var attendanceChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Session 1', 'Session 2', 'Session 3'],
+                    datasets: [{
+                        label: 'Attendance',
+                        data: [12, 19, 3],
+                        backgroundColor: 'rgba(75, 192, 192, 0.6)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+</div>
+</body>
+</html>
