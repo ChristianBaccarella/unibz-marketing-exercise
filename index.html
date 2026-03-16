@@ -49,7 +49,7 @@
         
         /* Header */
         .header {
-            padding: 24px 20px;
+            padding: 20px 20px;
             border-bottom: 1px solid var(--gray-100);
             display: flex;
             align-items: center;
@@ -61,12 +61,12 @@
         }
         
         .header-logo {
-            height: 50px;
+            height: 45px;
             display: flex;
             align-items: center;
         }
         
-        .header-logo img {
+        .header-logo svg {
             height: 100%;
             object-fit: contain;
         }
@@ -604,7 +604,11 @@
         <!-- Header -->
         <div class="header">
             <div class="header-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Free_University_of_Bozen-Bolzano_logo.svg/1200px-Free_University_of_Bozen-Bolzano_logo.svg.png" alt="Freie Universität Bozen">
+                <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- unibz Logo -->
+                    <text x="30" y="280" font-size="200" font-weight="bold" fill="#0066CC">unibz</text>
+                    <rect x="300" y="370" width="200" height="20" fill="#0066CC"/>
+                </svg>
             </div>
         </div>
         
@@ -859,7 +863,6 @@
             exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'unterstützung', 'transformation'], q2: ['buddy', 'training', 'community', 'flexibel', 'app'], q3: ['instagram', 'influencer', 'lokal', 'referral', 'social media'] }
         };
 
-        // Intelligenterer VP Generator
         const vpTemplates = {
             'Berufstätige-Zeitmangel-Gemeinschaft': "Train4U ist dein Studio für Berufstätige mit wenig Zeit. Kurze, effiziente Trainings in einer unterstützenden Gemeinschaft – Fitness die in deinen Alltag passt.",
             'Berufstätige-Zeitmangel-Flexibilität': "Fitness ohne Kompromisse: Train4U bietet maximale Flexibilität für Berufstätige. Trainiere wann du willst – vor Arbeit, mittags oder abends.",
