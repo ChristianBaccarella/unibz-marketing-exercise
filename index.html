@@ -220,6 +220,7 @@
             gap: 15px;
             margin-top: 30px;
             justify-content: center;
+            flex-wrap: wrap;
         }
         button {
             padding: 15px 40px;
@@ -231,6 +232,15 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+        }
+        .btn-back {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-back:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108,117,125,0.3);
         }
         .btn-next {
             background: #007BE2;
@@ -273,6 +283,35 @@
             font-size: 16px;
             color: #666;
             line-height: 1.6;
+        }
+        .feedback-section {
+            margin-top: 40px;
+            padding: 25px;
+            background: #f0f7ff;
+            border-radius: 10px;
+            border-left: 5px solid #007BE2;
+        }
+        .feedback-section h3 {
+            color: #007BE2;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        .feedback-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+        }
+        .feedback-item h4 {
+            color: #333;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+        .feedback-item p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 14px;
         }
         .footer {
             text-align: center;
@@ -369,7 +408,7 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von IKEA?</label>
+                        <label>Was ist das zentrale Nutzenversprechen von IKEA.</label>
                         <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
@@ -418,17 +457,23 @@
                 </div>
 
                 <div class="button-section">
-                    <button class="btn-next" onclick="nextExercise()" id="nextBtn">NÄCHSTE AUFGABE</button>
+                    <button class="btn-back" onclick="previousExercise()" id="backBtn" style="display: none;">← ZURÜCK</button>
+                    <button class="btn-next" onclick="nextExercise()" id="nextBtn">NÄCHSTE AUFGABE →</button>
                     <button class="btn-submit" onclick="submitAll()" id="submitBtn" style="display: none;">ALLE EINREICHEN</button>
                 </div>
             </div>
 
-            <!-- Score Section -->
+            <!-- Score Section with Feedback -->
             <div id="scoreSection" class="score-section">
                 <h2>🎉 Vielen Dank für Ihre Teilnahme!</h2>
                 <div class="score-display" id="score">0 Punkte</div>
                 <p>Ihre Antworten wurden gespeichert.</p>
                 <p style="margin-top: 20px; font-size: 18px;">Wir besprechen die Ergebnisse gleich zusammen.</p>
+
+                <div class="feedback-section">
+                    <h3>📝 Automatisches Feedback zu Ihren Antworten</h3>
+                    <div id="feedbackContainer"></div>
+                </div>
             </div>
         </div>
 
@@ -443,12 +488,60 @@
         let score = 0;
         let timerInterval;
 
+        const feedbackData = {
+            exercise1: {
+                Apple: {
+                    problem: "Apple löst das Problem der technologischen Kompliziertheit und macht intuitive, benutzerfreundliche Technologie zugänglich.",
+                    value: "Premium-Design, Ökosystem-Integration, Status und Innovation.",
+                    example: "Das iPhone vereinfacht komplexe Technologie durch ein einfaches Interface, nicht nur ein Telefon."
+                },
+                Spotify: {
+                    problem: "Löst das Problem, Musik überall und in großer Vielfalt verfügbar zu haben, anstatt CDs zu kaufen.",
+                    value: "Unbegrenzter Musikzugang, Personalisierung, Convenience und Affordabilität.",
+                    example: "Personalisierte Playlists und Recommendations lösen das Problem, neue Musik zu entdecken."
+                },
+                dm: {
+                    problem: "Macht Drogerie- und Gesundheitsprodukte convenient und beratbar zugänglich.",
+                    value: "Vielfalt, Beratung, Convenience und Preiswertigkeit bei Drogerie- und Hygieneartikeln.",
+                    example: "Fachberatung vor Ort löst das Problem, die richtigen Produkte für persönliche Bedürfnisse zu finden."
+                },
+                Ryanair: {
+                    problem: "Macht Flugverkehr für breite Bevölkerung erschwinglich und demokratisiert das Reisen.",
+                    value: "Günstige Flüge, häufige Verbindungen, Kostentransparenz.",
+                    example: "Billige Flüge ermöglichen Reisen, die sich Millionen sonst nicht leisten könnten."
+                },
+                Airbnb: {
+                    problem: "Bietet Alternative zu Hotels - authentische, lokale Unterkünfte zu besseren Preisen.",
+                    value: "Authentische Erfahrungen, Kosteneinsparung, Flexibilität und lokale Verbindung.",
+                    example: "Ein Zimmer bei einem Locals zu mieten löst das Problem, echte Orte zu erleben, nicht nur Hotels."
+                },
+                IKEA: {
+                    problem: "Macht Möbel und Wohnen erschwinglich für Menschen mit kleinem Budget.",
+                    value: "Demokratisierung von Design, Erschwinglichkeit, DIY-Aspekt, Inspiration.",
+                    example: "Flach verpackte, erschwingliche Möbel lösen das Problem, dass Wohnen günstiger sein kann."
+                }
+            },
+            exercise2: {
+                q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.",
+                q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.",
+                q3: "IKEA ist kundenorientiert: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume) ist völlig auf Kundenbedürfnisse ausgerichtet. Das zeigt sich in der ganzen Wertschöpfung."
+            },
+            exercise3: {
+                q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.",
+                q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.",
+                q3: "Kundenbindung: Loyalty-Programm (Rewards), Mobile App mit Bezahlung und Personalisierung, regelmäßige limitierte Produkte, konsistentes Kundenerlebnis weltweit.",
+                q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.",
+                q5: "In Italien weniger erfolgreich, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italiens Café ist soziales Ritual mit kurzer, intensiver Interaktion, nicht 'Third Place', (3) Preiswettbewerb mit lokalen Bars, (4) Ablehnung von amerikanischer 'Massification' von Kultur."
+            }
+        };
+
         function startExercises() {
             document.getElementById('landing').style.display = 'none';
             document.getElementById('exerciseSection').style.display = 'block';
             startTimer();
             loadData();
             renderCompanyQuestions();
+            updateButtonVisibility();
         }
 
         function startTimer() {
@@ -521,6 +614,41 @@
             });
         }
 
+        function updateButtonVisibility() {
+            const backBtn = document.getElementById('backBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const submitBtn = document.getElementById('submitBtn');
+
+            if (currentExercise === 0) {
+                backBtn.style.display = 'none';
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            } else if (currentExercise === 1 || currentExercise === 2) {
+                backBtn.style.display = 'block';
+                nextBtn.style.display = 'block';
+                submitBtn.style.display = 'none';
+            } else {
+                backBtn.style.display = 'block';
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'block';
+            }
+        }
+
+        function previousExercise() {
+            if (currentExercise === 1) {
+                saveExercise2Data();
+            } else if (currentExercise === 2) {
+                saveExercise3Data();
+            }
+
+            currentExercise--;
+            document.querySelectorAll('.exercise').forEach((ex, i) => {
+                ex.classList.toggle('active', i === currentExercise);
+            });
+            document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 3`;
+            updateButtonVisibility();
+        }
+
         function nextExercise() {
             if (currentExercise === 0) {
                 const selected = document.querySelectorAll('input[name="companies"]:checked');
@@ -542,10 +670,10 @@
                 });
                 document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 3`;
             } else {
-                document.getElementById('nextBtn').style.display = 'none';
-                document.getElementById('submitBtn').style.display = 'block';
                 saveExercise3Data();
             }
+
+            updateButtonVisibility();
         }
 
         function saveExercise1Data() {
@@ -597,6 +725,42 @@
             document.getElementById('ex3q5').value = localStorage.getItem('ex3q5') || '';
         }
 
+        function generateFeedback() {
+            let feedbackHTML = '';
+
+            // Exercise 1 Feedback
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 1 – Nutzenversprechen:</h4>';
+            const selectedCompanies = Array.from(document.querySelectorAll('input[name="companies"]:checked'))
+                .map(cb => cb.value);
+            
+            selectedCompanies.forEach((company, idx) => {
+                feedbackHTML += `<p><strong>${company}:</strong></p><ul style="margin-left: 20px; margin-bottom: 10px;">`;
+                feedbackHTML += `<li><strong>Problem:</strong> ${feedbackData.exercise1[company].problem}</li>`;
+                feedbackHTML += `<li><strong>Nutzenversprechen:</strong> ${feedbackData.exercise1[company].value}</li>`;
+                feedbackHTML += `<li><strong>Beispiel:</strong> ${feedbackData.exercise1[company].example}</li>`;
+                feedbackHTML += `</ul>`;
+            });
+            feedbackHTML += '</div>';
+
+            // Exercise 2 Feedback
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 2 – IKEA Case Study:</h4>';
+            feedbackHTML += `<p><strong>Nutzenversprechen:</strong> ${feedbackData.exercise2.q1}</p>`;
+            feedbackHTML += `<p><strong>CRM-Instrumente:</strong> ${feedbackData.exercise2.q2}</p>`;
+            feedbackHTML += `<p><strong>Orientierung:</strong> ${feedbackData.exercise2.q3}</p>`;
+            feedbackHTML += '</div>';
+
+            // Exercise 3 Feedback
+            feedbackHTML += '<div class="feedback-item"><h4>📊 Zu Aufgabe 3 – Starbucks Fallanalyse:</h4>';
+            feedbackHTML += `<p><strong>Nutzenversprechen:</strong> ${feedbackData.exercise3.q1}</p>`;
+            feedbackHTML += `<p><strong>Kundenerlebnis:</strong> ${feedbackData.exercise3.q2}</p>`;
+            feedbackHTML += `<p><strong>Kundenbindung:</strong> ${feedbackData.exercise3.q3}</p>`;
+            feedbackHTML += `<p><strong>Service-Dominant Logic:</strong> ${feedbackData.exercise3.q4}</p>`;
+            feedbackHTML += `<p><strong>Italien-Kontext:</strong> ${feedbackData.exercise3.q5}</p>`;
+            feedbackHTML += '</div>';
+
+            return feedbackHTML;
+        }
+
         function submitAll() {
             saveExercise1Data();
             saveExercise2Data();
@@ -625,6 +789,7 @@
             document.getElementById('exerciseSection').style.display = 'none';
             document.getElementById('scoreSection').classList.add('active');
             document.getElementById('score').textContent = score + ' Punkte';
+            document.getElementById('feedbackContainer').innerHTML = generateFeedback();
         }
 
         document.addEventListener('input', (e) => {
