@@ -348,26 +348,32 @@
         
         .generated-vp {
             margin-top: 12px;
-            padding: 12px;
+            padding: 14px;
             background: white;
             border-radius: 10px;
             border-left: 4px solid var(--success);
             font-size: 14px;
             color: var(--text-primary);
-            line-height: 1.5;
+            line-height: 1.6;
         }
         
         .copy-btn {
-            margin-top: 10px;
-            padding: 8px 12px;
+            display: block;
+            margin-top: 12px;
+            padding: 10px 16px;
             background: var(--success);
             color: white;
             border: none;
             border-radius: 8px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
+            width: 100%;
+        }
+        
+        .copy-btn:active {
+            transform: scale(0.98);
         }
         
         /* Buttons */
@@ -797,15 +803,15 @@
                         <div class="legend-title">🚦 Ampel-Bedeutung:</div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--success);">●</div>
-                            <div><strong>Grün:</strong> Ausführliche und relevante Antwort - sehr gutes Verständnis des Inhalts nachgewiesen.</div>
+                            <div><strong>Grün:</strong> Ausführliche und relevante Antwort</div>
                         </div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--warning);">●</div>
-                            <div><strong>Gelb:</strong> Antwort vorhanden, aber teilweise zu kurz oder nicht ganz auf den Punkt - mehr Details würden helfen.</div>
+                            <div><strong>Gelb:</strong> Teilweise ausführlich</div>
                         </div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--danger);">●</div>
-                            <div><strong>Rot:</strong> Sehr kurze oder fehlende Antwort - mehr Ausführlichkeit notwendig um das Verständnis zu zeigen.</div>
+                            <div><strong>Rot:</strong> Zu kurz oder unvollständig</div>
                         </div>
                     </div>
                 </div>
@@ -853,31 +859,45 @@
             exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'unterstützung', 'transformation'], q2: ['buddy', 'training', 'community', 'flexibel', 'app'], q3: ['instagram', 'influencer', 'lokal', 'referral', 'social media'] }
         };
 
-        function toggleOption(element, category) {
-            element.classList.toggle('selected');
-            const text = element.textContent.trim();
-            const index = selectedOptions[category].indexOf(text);
-            if (index > -1) selectedOptions[category].splice(index, 1);
-            else selectedOptions[category].push(text);
-        }
+        // Intelligenterer VP Generator
+        const vpTemplates = {
+            'Berufstätige-Zeitmangel-Gemeinschaft': "Train4U ist dein Studio für Berufstätige mit wenig Zeit. Kurze, effiziente Trainings in einer unterstützenden Gemeinschaft – Fitness die in deinen Alltag passt.",
+            'Berufstätige-Zeitmangel-Flexibilität': "Fitness ohne Kompromisse: Train4U bietet maximale Flexibilität für Berufstätige. Trainiere wann du willst – vor Arbeit, mittags oder abends.",
+            'Berufstätige-Keine Motivation-Gemeinschaft': "Train4U ist mehr als ein Fitnessstudio – es ist eine Community von Berufstätigen, die sich gegenseitig motivieren. Allein trainieren war gestern.",
+            'Anfänger-Keine Motivation-Persönliche Betreuung': "Du findest allein keinen Einstieg? Train4U begleitet dich persönlich. Professionelle Trainer, anfängerfreundliche Kurse, Menschen die an deinem Erfolg interessiert sind.",
+            'Anfänger-Keine Expertise-Persönliche Betreuung': "Keine Angst vor dem ersten Tag. Train4U macht Fitness einfach: Kostenlose Einführungen, Trainer die Zeit für dich haben, und Anfänger-Kurse die wirklich funktionieren.",
+            'Frauen-Keine Motivation-Gemeinschaft': "Train4U ist ein Ort für Frauen, die gemeinsam trainieren. Motiviert durch andere, ohne Druck – mit Menschen die dich verstehen.",
+            'Frauen-Einsamkeit-Gemeinschaft': "Fitness sollte Spaß machen. Train4U ist ein Treffpunkt für Frauen, die sich fit und verbunden fühlen wollen. Trainieren mit Freundinnen.",
+            'Über 50 Jahre-Flexibilität-Persönliche Betreuung': "Train4U verstärkt deine Gesundheit im besten Alter. Flexible Zeiten, altersgerechte Trainings und Trainer die deine Bedürfnisse kennen.",
+            'Über 50 Jahre-Keine Expertise-Resultate sichtbar': "Du wolltest immer fitter sein? Train4U zeigt dir wie. Gezielte Programme für dein Alter, sichtbare Fortschritte, professionelle Begleitung."
+        };
 
         function generateVP() {
             if (!selectedOptions.targetGroup.length || !selectedOptions.problem.length || !selectedOptions.value.length) {
                 alert('Bitte wählen Sie aus jeder Kategorie mindestens eine Option aus!');
                 return;
             }
-            const tg = selectedOptions.targetGroup.join(', ');
-            const pb = selectedOptions.problem.join(', ');
-            const vl = selectedOptions.value.join(', ');
-            const vps = [
-                `Train4U ist dein Studio für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit du nicht allein bist.`,
-                `${tg}? ${pb}? Train4U löst beides mit ${vl} und echter Gemeinschaft.`,
-                `Wir verstehen dich: Du bist ${tg} und kämpfst mit ${pb}. Train4U bietet ${vl} - das ist dein neuer Standard.`,
-                `Dein Studio für Erfolg: Für ${tg} mit ${pb}. Wir garantieren ${vl} oder dein Geld zurück.`,
-                `Train4U = Fitness ohne Druck. Für ${tg}, gegen ${pb}, mit ${vl}.`
-            ];
-            const vp = vps[Math.floor(Math.random() * vps.length)];
+
+            const tg = selectedOptions.targetGroup[0];
+            const pb = selectedOptions.problem[0];
+            const vl = selectedOptions.value[0];
+            const key = `${tg}-${pb}-${vl}`;
+            
+            let vp = vpTemplates[key];
+            
+            if (!vp) {
+                vp = `Train4U ist für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit Fitness wirklich funktioniert.`;
+            }
+            
             document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
+        }
+
+        function toggleOption(element, category) {
+            element.classList.toggle('selected');
+            const text = element.textContent.trim();
+            const index = selectedOptions[category].indexOf(text);
+            if (index > -1) selectedOptions[category].splice(index, 1);
+            else selectedOptions[category].push(text);
         }
 
         function copyToTextarea(id, text) {
@@ -889,9 +909,9 @@
             const kw = keywords[type]?.[q] || [];
             let count = kw.filter(k => text.toLowerCase().includes(k.toLowerCase())).length;
             const score = kw.length > 0 ? count / kw.length : 0;
-            if (words > 100 && score > 0.5) return { rating: 'green', icon: '✓', words };
-            if ((words > 50 && score > 0.25) || words > 80) return { rating: 'yellow', icon: '○', words };
-            return { rating: 'red', icon: '✕', words };
+            if (words > 100 && score > 0.5) return { rating: 'green', icon: '✓' };
+            if ((words > 50 && score > 0.25) || words > 80) return { rating: 'yellow', icon: '○' };
+            return { rating: 'red', icon: '✕' };
         }
 
         function startExercises() {
@@ -1033,7 +1053,7 @@
                     const text = document.getElementById(`ex1_${i}_${q}`).value;
                     const r = getRating(text, 'exercise1', 'problem');
                     const titles = ['Problem', 'Nutzenversprechen', 'Konkretes Beispiel'];
-                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>${titles[idx]} (${r.words}w)</strong>${feedbackData.exercise1[c][['problem', 'value', 'example'][idx]]}</div></div>`;
+                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>${titles[idx]}</strong>${feedbackData.exercise1[c][['problem', 'value', 'example'][idx]]}</div></div>`;
                 });
                 html += '</div>';
             });
@@ -1045,7 +1065,7 @@
                 questions.forEach(q => {
                     const text = document.getElementById(`ex${ex}${q}`).value;
                     const r = getRating(text, `exercise${ex}`, q);
-                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>Frage ${q.substring(1)} (${r.words}w)</strong>${feedbackData[`exercise${ex}`][q]}</div></div>`;
+                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>Frage ${q.substring(1)}</strong>${feedbackData[`exercise${ex}`][q]}</div></div>`;
                 });
                 html += '</div>';
             });
