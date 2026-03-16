@@ -65,11 +65,15 @@
         }
         .landing-page {
             text-align: center;
+            position: relative;
+            min-height: 400px;
         }
         .landing-page-image {
-            width: 250px;
-            height: 300px;
-            margin: 0 auto 30px;
+            width: 150px;
+            height: 180px;
+            position: absolute;
+            bottom: 0;
+            right: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             overflow: hidden;
@@ -82,6 +86,9 @@
             width: 100%;
             height: 100%;
             object-fit: cover;
+        }
+        .landing-page-content {
+            padding-right: 200px;
         }
         .landing-page h2 {
             font-size: 28px;
@@ -107,6 +114,7 @@
             transition: all 0.3s ease;
             text-transform: uppercase;
             letter-spacing: 1px;
+            display: inline-block;
         }
         .start-button:hover {
             transform: translateY(-2px);
@@ -498,12 +506,14 @@
                 <div class="landing-page-image">
                     <img src="https://github.com/ChristianBaccarella/unibz-marketing-exercise/raw/main/professor.jpg" alt="Professor">
                 </div>
-                <h2>Willkommen zur Marketing-Übung</h2>
-                <p><strong>Heute probieren wir etwas anderes.</strong></p>
-                <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
-                <p>Danach besprechen wir die Ergebnisse.</p>
-                <p style="font-size: 24px; margin-top: 20px;"><strong>Viel Spaß! 🎯</strong></p>
-                <button class="start-button" onclick="startExercises()">AUFGABEN STARTEN</button>
+                <div class="landing-page-content">
+                    <h2>Willkommen zur Marketing-Übung</h2>
+                    <p><strong>Heute probieren wir etwas anderes.</strong></p>
+                    <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
+                    <p>Danach besprechen wir die Ergebnisse.</p>
+                    <p style="font-size: 24px; margin-top: 20px;"><strong>Viel Spaß! 🎯</strong></p>
+                    <button class="start-button" onclick="startExercises()">AUFGABEN STARTEN</button>
+                </div>
             </div>
 
             <!-- Exercise Section -->
@@ -564,17 +574,17 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von IKEA?</label>
+                        <label>Was ist das zentrale Nutzenversprechen von IKEA.</label>
                         <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie drei konkrete Beispiele.</label>
+                        <label>Welche Instrumente nutzt IKEA zur Kundenbindung (CRM). Geben Sie drei konkrete Beispiele.</label>
                         <textarea id="ex2q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Ist IKEA eher produktorientiert, kundenorientiert oder serviceorientiert? Begründen Sie kurz.</label>
+                        <label>Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung. Warum.</label>
                         <textarea id="ex2q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -587,27 +597,27 @@
                     </div>
 
                     <div class="question-block">
-                        <label>Was ist das zentrale Nutzenversprechen von Starbucks?</label>
+                        <label>Was ist das zentrale Nutzenversprechen von Starbucks.</label>
                         <textarea id="ex3q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
+                        <label>Wie versucht Starbucks, ein Kundenerlebnis zu kreieren. Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
                         <textarea id="ex3q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung?</label>
+                        <label>Welche Instrumente nutzt Starbucks zur Kundenbindung.</label>
                         <textarea id="ex3q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten?</label>
+                        <label>Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten.</label>
                         <textarea id="ex3q4" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
 
                     <div class="question-block">
-                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein?</label>
+                        <label>Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein.</label>
                         <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -616,7 +626,7 @@
                 <div class="exercise" id="exercise4">
                     <h3>Aufgabe 4 – Das Fitnessstudio "Train4U"</h3>
                     <div class="exercise-description">
-                        Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Wenn Kunden sich einschreiben, kommen sie schnell nicht mehr und melden sich ab. Prinzipiell sind die Kunden aber mit dem guten Service und dem Angebot zufrieden. Sie sind der CEO dieses Unternehmens und überlegen sich, was Sie tun könnten.
+                        Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Wenn Kunden sich einschreiben, kommen sie schnell nicht mehr und melden sich ab. Sie sind der CEO dieses Unternehmens und überlegen sich, was Sie tun könnten.
                     </div>
 
                     <!-- Frage 1: Value Proposition Generator -->
@@ -674,7 +684,6 @@
 
                 <div class="button-section">
                     <button class="btn-back" onclick="previousExercise()" id="backBtn" style="display: none;">← ZURÜCK</button>
-                    <button class="btn-next" onclick="nextExercise()" id="nextBtn">NÄCHSTE AUFGABE →</button>
                     <button class="btn-submit" onclick="submitAll()" id="submitBtn" style="display: none;">ALLE EINREICHEN</button>
                 </div>
             </div>
@@ -758,7 +767,7 @@
             exercise2: {
                 q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.",
                 q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.",
-                q3: "IKEA ist kundenorientiert: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume) ist völlig auf Kundenbedürfnisse ausgerichtet. Das zeigt sich in der ganzen Wertschöpfung."
+                q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe. Der Fokus liegt auf Kundenerlebnis und langfristiger Beziehung."
             },
             exercise3: {
                 q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.",
@@ -783,7 +792,7 @@
             exercise2: {
                 q1: ['nutzen', 'versprechen', 'wert', 'design', 'erschwinglich', 'erschwinglichkeit', 'demokrat'],
                 q2: ['crm', 'kundenbindung', 'family', 'programm', 'loyalty', 'beispiel', 'instrument'],
-                q3: ['orientiert', 'produkt', 'kunden', 'service', 'geschäftsmodell', 'selbstbedienung', 'montage']
+                q3: ['marketing', 'orientierung', 'kunde', 'kundenbedürfnis', 'geschäftsmodell', 'erlebnis', 'beziehung']
             },
             exercise3: {
                 q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft', 'premium', 'kaffee'],
@@ -928,11 +937,11 @@
                 div.innerHTML = `
                     <h4 style="color: #007BE2; margin-bottom: 15px; font-size: 16px;">${company}</h4>
                     <div class="question-block">
-                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden?</label>
+                        <label>Welches Problem löst ${company} für seine Kundinnen und Kunden.</label>
                         <textarea id="ex1_${idx}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
-                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}?</label>
+                        <label>Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${company}.</label>
                         <textarea id="ex1_${idx}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-block">
@@ -955,20 +964,13 @@
 
         function updateButtonVisibility() {
             const backBtn = document.getElementById('backBtn');
-            const nextBtn = document.getElementById('nextBtn');
             const submitBtn = document.getElementById('submitBtn');
 
-            if (currentExercise === 0) {
+            if (currentExercise === 0 || currentExercise === 1 || currentExercise === 2) {
                 backBtn.style.display = 'none';
-                nextBtn.style.display = 'block';
                 submitBtn.style.display = 'none';
-            } else if (currentExercise === 1 || currentExercise === 2 || currentExercise === 3) {
+            } else if (currentExercise === 3) {
                 backBtn.style.display = 'block';
-                nextBtn.style.display = 'block';
-                submitBtn.style.display = 'none';
-            } else {
-                backBtn.style.display = 'block';
-                nextBtn.style.display = 'none';
                 submitBtn.style.display = 'block';
             }
         }
@@ -987,35 +989,6 @@
                 ex.classList.toggle('active', i === currentExercise);
             });
             document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 4`;
-            updateButtonVisibility();
-        }
-
-        function nextExercise() {
-            if (currentExercise === 0) {
-                const selected = document.querySelectorAll('input[name="companies"]:checked');
-                if (selected.length !== 2) {
-                    document.getElementById('companyError').style.display = 'block';
-                    return;
-                }
-                saveExercise1Data();
-            } else if (currentExercise === 1) {
-                saveExercise2Data();
-            } else if (currentExercise === 2) {
-                saveExercise3Data();
-            }
-
-            document.getElementById('companyError').style.display = 'none';
-            currentExercise++;
-
-            if (currentExercise < 4) {
-                document.querySelectorAll('.exercise').forEach((ex, i) => {
-                    ex.classList.toggle('active', i === currentExercise);
-                });
-                document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 4`;
-            } else {
-                saveExercise4Data();
-            }
-
             updateButtonVisibility();
         }
 
@@ -1153,7 +1126,7 @@
             feedbackHTML += `<div class="rating-container" style="margin-top: 10px;">
                 <div class="traffic-light ${r3.rating}">●</div>
                 <div class="rating-text">
-                    <div class="rating-label">Orientierung (${r3.words} Wörter)</div>
+                    <div class="rating-label">Verkaufs- vs. Marketingorientierung (${r3.words} Wörter)</div>
                     <p>Musterlösung: ${feedbackData.exercise2.q3}</p>
                 </div>
             </div>`;
@@ -1264,10 +1237,55 @@
             document.getElementById('feedbackContainer').innerHTML = generateFeedback();
         }
 
+        // Simplified navigation - no nextExercise for last exercise
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set up exercise navigation
+            const exercises = document.querySelectorAll('.exercise');
+            exercises.forEach((ex, idx) => {
+                if (idx > 0) {
+                    // Hide all but first exercise
+                    ex.classList.remove('active');
+                }
+            });
+        });
+
+        // Manual exercise navigation instead of nextExercise button
+        function goToExercise(num) {
+            if (num === 0) {
+                const selected = document.querySelectorAll('input[name="companies"]:checked');
+                if (selected.length !== 2) {
+                    document.getElementById('companyError').style.display = 'block';
+                    return;
+                }
+                saveExercise1Data();
+            } else if (num === 1) {
+                saveExercise2Data();
+            } else if (num === 2) {
+                saveExercise3Data();
+            }
+
+            document.getElementById('companyError').style.display = 'none';
+            currentExercise = num;
+            document.querySelectorAll('.exercise').forEach((ex, i) => {
+                ex.classList.toggle('active', i === currentExercise);
+            });
+            document.getElementById('taskCounter').textContent = `Aufgabe ${currentExercise + 1} von 4`;
+            updateButtonVisibility();
+        }
+
         document.addEventListener('input', (e) => {
             if (e.target.tagName === 'TEXTAREA') {
                 const id = e.target.id;
                 localStorage.setItem(id, e.target.value);
+            }
+        });
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' && currentExercise < 3) {
+                goToExercise(currentExercise + 1);
+            } else if (e.key === 'ArrowLeft' && currentExercise > 0) {
+                previousExercise();
             }
         });
     </script>
