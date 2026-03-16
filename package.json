@@ -1,0 +1,13 @@
+{
+  "name": "unibz-marketing-exercise",
+  "version": "1.0.0",
+  "description": "Interactive Marketing Fundamentals learning app for unibz students",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx serve .",
+    "dev": "npx live-server ."
+  },
+  "keywords": ["marketing", "education", "unibz", "gamification"],
+  "author": "unibz",
+  "license": "MIT"
+}
