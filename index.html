@@ -53,7 +53,7 @@
             border-bottom: 1px solid var(--gray-100);
             display: flex;
             align-items: center;
-            justify-content: space-between;
+            justify-content: center;
             background: white;
             position: sticky;
             top: 0;
@@ -61,7 +61,7 @@
         }
         
         .header-logo {
-            height: 40px;
+            height: 50px;
             display: flex;
             align-items: center;
         }
@@ -69,18 +69,6 @@
         .header-logo img {
             height: 100%;
             object-fit: contain;
-        }
-        
-        .header-title {
-            flex: 1;
-            text-align: center;
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-        }
-        
-        .header-placeholder {
-            width: 40px;
         }
         
         /* Timer */
@@ -384,7 +372,7 @@
         
         /* Buttons */
         .button-section {
-            display: flex;
+            display: none;
             gap: 12px;
             margin-top: 32px;
             padding: 0 20px 24px;
@@ -392,6 +380,10 @@
             bottom: 0;
             background: white;
             border-top: 1px solid var(--gray-100);
+        }
+        
+        .button-section.active {
+            display: flex;
         }
         
         .btn {
@@ -462,6 +454,7 @@
             margin-top: 32px;
             padding-top: 32px;
             border-top: 1px solid var(--gray-200);
+            text-align: left;
         }
         
         .feedback-title {
@@ -539,6 +532,7 @@
             background: var(--gray-50);
             border-radius: 12px;
             border: 1px solid var(--gray-200);
+            text-align: left;
         }
         
         .legend-title {
@@ -606,8 +600,6 @@
             <div class="header-logo">
                 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Free_University_of_Bozen-Bolzano_logo.svg/1200px-Free_University_of_Bozen-Bolzano_logo.svg.png" alt="Freie Universität Bozen">
             </div>
-            <div class="header-title">Marketing-Übung</div>
-            <div class="header-placeholder"></div>
         </div>
         
         <!-- Timer -->
@@ -622,23 +614,24 @@
                 <!-- Landing Page -->
                 <div id="landing" class="landing-page">
                     <div class="landing-icon">🎓</div>
-                    <h1>Willkommen!</h1>
-                    <p>Heute probieren wir etwas <span class="highlight">anderes</span></p>
-                    <p style="margin-bottom: 24px;">Bitte die Aufgaben hier lesen und direkt in die App eintragen. Danach besprechen wir die Ergebnisse.</p>
-                    <p style="color: var(--primary); font-weight: 600; font-size: 18px;">Viel Spaß! 🚀</p>
+                    <h1>Willkommen zur Marketing-Übung</h1>
+                    <p><span class="highlight">Heute probieren wir etwas anderes.</span></p>
+                    <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
+                    <p>Danach besprechen wir die Ergebnisse.</p>
+                    <p style="color: var(--primary); font-weight: 600; font-size: 18px; margin-top: 20px;">Viel Spaß! 🚀</p>
                     <button class="start-button" onclick="startExercises()">Los geht's</button>
                 </div>
                 
                 <!-- Exercise 1 -->
-                <div class="exercise active" id="exercise1">
+                <div class="exercise" id="exercise1">
                     <div class="task-counter">Aufgabe 1 / 4</div>
-                    <h2>Nutzenversprechen</h2>
+                    <h2>Nutzenversprechen verschiedener Unternehmen</h2>
                     <div class="exercise-description">
-                        Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei aus.
+                        Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei Unternehmen aus der Liste.
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Wählen Sie zwei Unternehmen</label>
+                        <label class="question-label">Wählen Sie zwei Unternehmen:</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
                                 <input type="checkbox" id="company1" name="companies" value="Apple">
@@ -674,145 +667,145 @@
                 <!-- Exercise 2 -->
                 <div class="exercise" id="exercise2">
                     <div class="task-counter">Aufgabe 2 / 4</div>
-                    <h2>IKEA Case Study</h2>
+                    <h2>Mini Case Study: IKEA</h2>
                     <div class="exercise-description">
-                        IKEA ist einer der weltweit größten Möbelhändler. Das Unternehmen verfolgt das Ziel, gutes Design und funktionale Möbel für viele Menschen erschwinglich zu machen.
+                        IKEA ist einer der weltweit größten Möbelhändler. Das Unternehmen verfolgt das Ziel, gutes Design und funktionale Möbel für viele Menschen erschwinglich zu machen. Das Geschäftsmodell basiert unter anderem auf flach verpackten Möbeln, Selbstbedienung im Lager und Eigenmontage durch Kundinnen und Kunden. In den Einrichtungshäusern werden komplette Wohnwelten gezeigt, die Kundinnen und Kunden Inspiration für ihr Zuhause geben. Zusätzlich bietet IKEA digitale Services wie Planungstools, Online-Shopping, Click-and-Collect und das Kundenprogramm IKEA Family.
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Was ist das zentrale Nutzenversprechen von IKEA.</label>
-                        <textarea id="ex2q1" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche Instrumente nutzt IKEA zur Kundenbindung (CRM). Geben Sie drei konkrete Beispiele.</label>
-                        <textarea id="ex2q2" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex2q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung. Warum.</label>
-                        <textarea id="ex2q3" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex2q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
                 
                 <!-- Exercise 3 -->
                 <div class="exercise" id="exercise3">
                     <div class="task-counter">Aufgabe 3 / 4</div>
-                    <h2>Starbucks Analyse</h2>
+                    <h2>Fallanalyse: Starbucks</h2>
                     <div class="exercise-description">
-                        Starbucks ist eine internationale Kaffeehauskette. Das Unternehmen versucht nicht nur Kaffee zu verkaufen, sondern ein besonderes Kundenerlebnis zu schaffen.
+                        Starbucks ist eine internationale Kaffeehauskette. Das Unternehmen versucht nicht nur Kaffee zu verkaufen, sondern ein besonderes Kundenerlebnis zu schaffen. Häufig wird Starbucks als Beispiel für Erlebnisorientierung und Relationship Marketing genannt.
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Was ist das zentrale Nutzenversprechen von Starbucks.</label>
-                        <textarea id="ex3q1" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex3q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Wie versucht Starbucks, ein Kundenerlebnis zu kreieren. Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
-                        <textarea id="ex3q2" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex3q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche Instrumente nutzt Starbucks zur Kundenbindung.</label>
-                        <textarea id="ex3q3" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex3q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten.</label>
-                        <textarea id="ex3q4" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex3q4" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein.</label>
-                        <textarea id="ex3q5" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
                 
                 <!-- Exercise 4 -->
                 <div class="exercise" id="exercise4">
                     <div class="task-counter">Aufgabe 4 / 4</div>
-                    <h2>Train4U Fitnessstudio</h2>
+                    <h2>Das Fitnessstudio "Train4U"</h2>
                     <div class="exercise-description">
-                        Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Wenn Kunden sich einschreiben, kommen sie schnell nicht mehr und melden sich ab.
+                        Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Wenn Kunden sich einschreiben, kommen sie schnell nicht mehr und melden sich ab. Sie sind der CEO dieses Unternehmens und überlegen sich, was Sie tun könnten.
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Wie könnte das Nutzenversprechen lauten.</label>
+                        <label class="question-label">Wie könnte das Nutzenversprechen dieses Fitnessstudios lauten.</label>
                         
                         <div class="generator-section">
                             <div class="generator-title">💡 Value Proposition Generator</div>
                             
                             <div style="margin-bottom: 12px;">
-                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Zielgruppe</div>
+                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
                                 <div class="generator-options" id="targetGroup">
                                     <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Berufstätige</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Anfänger</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Frauen</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Über 50</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Über 50 Jahre</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
-                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Problem</div>
+                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welches Problem löst das Studio?</div>
                                 <div class="generator-options" id="problem">
                                     <div class="generator-option" onclick="toggleOption(this, 'problem')">Zeitmangel</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Motivation</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Motivation</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'problem')">Einsamkeit</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Expertise</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Expertise</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
-                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Mehrwert</div>
+                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welcher Mehrwert?</div>
                                 <div class="generator-options" id="value">
                                     <div class="generator-option" onclick="toggleOption(this, 'value')">Gemeinschaft</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'value')">Flexibilität</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Betreuung</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Resultate</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Persönliche Betreuung</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Resultate sichtbar</div>
                                 </div>
                             </div>
                             
-                            <button class="generate-btn" onclick="generateVP()">Generieren</button>
+                            <button class="generate-btn" onclick="generateVP()">🎯 Nutzenversprechen generieren</button>
                             <div id="generatedVP"></div>
                         </div>
                         
-                        <textarea id="ex4q1" placeholder="Ihre Antwort..."></textarea>
+                        <textarea id="ex4q1" placeholder="Geben Sie Ihre Antwort hier ein oder nutzen Sie den Generator..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche konkreten Maßnahmen könnte das Studio unternehmen.</label>
-                        <textarea id="ex4q2" placeholder="Ihre Antwort..."></textarea>
+                        <label class="question-label">Welche konkreten Maßnahmen könnte das Studio unternehmen, damit die Kunden wieder in das Studio kommen.</label>
+                        <textarea id="ex4q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche konkrete Werbestrategie würden Sie empfehlen.</label>
-                        <textarea id="ex4q3" placeholder="Ihre Antwort..."></textarea>
+                        <label class="question-label">Welche konkrete Werbestrategie würden Sie hier empfehlen.</label>
+                        <textarea id="ex4q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
                 
                 <!-- Score Section -->
                 <div class="score-section" id="scoreSection">
                     <div class="score-icon">✅</div>
-                    <h2>Vielen Dank!</h2>
+                    <h2>Vielen Dank für Ihre Teilnahme!</h2>
                     <p>Ihre Antworten wurden gespeichert.</p>
                     <p>Wir besprechen die Ergebnisse gleich zusammen.</p>
                     
                     <div class="feedback-section" id="feedbackSection"></div>
                     
                     <div class="traffic-legend">
-                        <div class="legend-title">🚦 Ampel-Bedeutung</div>
+                        <div class="legend-title">🚦 Ampel-Bedeutung:</div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--success);">●</div>
-                            <div><strong>Grün:</strong> Ausführliche & relevante Antwort</div>
+                            <div><strong>Grün:</strong> Ausführliche und relevante Antwort - sehr gutes Verständnis des Inhalts nachgewiesen.</div>
                         </div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--warning);">●</div>
-                            <div><strong>Gelb:</strong> Teilweise ausführlich</div>
+                            <div><strong>Gelb:</strong> Antwort vorhanden, aber teilweise zu kurz oder nicht ganz auf den Punkt - mehr Details würden helfen.</div>
                         </div>
                         <div class="legend-item">
                             <div class="legend-icon" style="background: var(--danger);">●</div>
-                            <div><strong>Rot:</strong> Zu kurz oder unvollständig</div>
+                            <div><strong>Rot:</strong> Sehr kurze oder fehlende Antwort - mehr Ausführlichkeit notwendig um das Verständnis zu zeigen.</div>
                         </div>
                     </div>
                 </div>
@@ -820,7 +813,7 @@
         </div>
         
         <!-- Button Section -->
-        <div class="button-section" id="buttonSection" style="display: none;">
+        <div class="button-section" id="buttonSection">
             <button class="btn btn-secondary" onclick="previousExercise()" id="backBtn" style="display: none;">
                 <i class="fas fa-chevron-left"></i> Zurück
             </button>
@@ -848,16 +841,16 @@
                 Airbnb: { problem: "Bietet Alternative zu Hotels - authentische, lokale Unterkünfte zu besseren Preisen.", value: "Authentische Erfahrungen, Kosteneinsparung, Flexibilität und lokale Verbindung.", example: "Ein Zimmer bei einem Locals zu mieten löst das Problem, echte Orte zu erleben, nicht nur Hotels." },
                 IKEA: { problem: "Macht Möbel und Wohnen erschwinglich für Menschen mit kleinem Budget.", value: "Demokratisierung von Design, Erschwinglichkeit, DIY-Aspekt, Inspiration.", example: "Flach verpackte, erschwingliche Möbel lösen das Problem, dass Wohnen günstiger sein kann." }
             },
-            exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen'", q2: "CRM-Instrumente: (1) IKEA Family Programm, (2) Planungstools, (3) Click-and-Collect", q3: "IKEA verfolgt eine Marketingorientierung - das Geschäftsmodell ist völlig auf Kundenbedürfnisse ausgerichtet." },
-            exercise3: { q1: "Third Place-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft und Komfort.", q2: "Atmosphäre, Personal, Personalisierung (Name auf Cup), Musik, WLAN.", q3: "Loyalty-Programm, Mobile App, limitierte Produkte, konsistentes Erlebnis.", q4: "Verkauft Service & Erlebnis, nicht nur Produkt.", q5: "Starke Café-Kultur, kurze Interaktionen, lokale Bars, Ablehnung von Amerikanisierung." },
-            exercise4: { q1: "Gemeinschaft für Gesundheit und persönliche Transformation.", q2: "Buddy-System, Personal Training, Gruppen-Challenges, Mobile App, flexible Zeiten.", q3: "Success Stories, Facebook-Werbung, Influencer, Referral-Programm, Google Ads." }
+            exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
+            exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: Loyalty-Programm (Rewards), Mobile App mit Bezahlung und Personalisierung, regelmäßige limitierte Produkte, konsistentes Kundenerlebnis weltweit.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien weniger erfolgreich, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italiens Café ist soziales Ritual mit kurzer, intensiver Interaktion, nicht 'Third Place', (3) Preiswettbewerb mit lokalen Bars, (4) Ablehnung von amerikanischer 'Massification' von Kultur." },
+            exercise4: { q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern eine Gemeinschaft für Gesundheit und persönliche Transformation. Beispiel: 'Dein Weg zu einem fitteren, glücklicheren Ich - mit Menschen an deiner Seite, die dich verstehen und unterstützen.'", q2: "Konkrete Maßnahmen: (1) Buddy-System - neue Mitglieder werden mit erfahrenen Mitgliedern gepaart, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen, (3) Wöchentliche Gruppen-Challenges mit Preisen, (4) Mobile App mit Trainings-Tracking und Community, (5) Flexible Öffnungszeiten und Online-Kurse, (6) Regelmäßige Erfolgsgeschichten von Mitgliedern teilen, (7) Cost-per-Visit Modell statt Abo.", q3: "Werbestrategie: (1) Authentische Success Stories auf Instagram/TikTok - echte Transformationen zeigen, (2) Facebook-Werbung zielgerichtet auf 'Anfänger' und 'Fitness-Interessierte', (3) Lokale Influencer-Kooperationen, (4) Grassroots-Marketing: Kostenlose Schnupperkurse in Parks, (5) Referral-Programm - Mitglieder bekommen Bonus wenn sie Freunde werben, (6) Google Ads für 'Fitnessstudio in [Stadt]' mit starkem CTA." }
         };
 
         const keywords = {
-            exercise1: { problem: ['problem', 'löst', 'bedürfnis'], value: ['nutzen', 'versprechen', 'vorteil'], example: ['beispiel', 'konkret', 'zeigt'] },
-            exercise2: { q1: ['nutzen', 'versprechen', 'design'], q2: ['crm', 'kundenbindung', 'family'], q3: ['marketing', 'orientierung', 'kunde'] },
-            exercise3: { q1: ['nutzen', 'versprechen', 'erlebnis'], q2: ['erlebnis', 'atmosphäre', 'beispiel'], q3: ['kundenbindung', 'loyalty', 'app'], q4: ['service', 'wert'], q5: ['italien', 'kultur', 'café'] },
-            exercise4: { q1: ['fitnessstudio', 'gemeinschaft'], q2: ['buddy', 'training', 'community'], q3: ['instagram', 'influencer', 'referral'] }
+            exercise1: { problem: ['problem', 'löst', 'bedürfnis', 'bedarf', 'schwierigkeit'], value: ['nutzen', 'versprechen', 'vorteil', 'wert', 'differenzierung'], example: ['beispiel', 'konkret', 'zeigt', 'etwa', 'z.b'] },
+            exercise2: { q1: ['nutzen', 'versprechen', 'wert', 'design', 'erschwinglich'], q2: ['crm', 'kundenbindung', 'family', 'programm', 'loyalty'], q3: ['marketing', 'orientierung', 'kunde', 'kundenbedürfnis', 'geschäftsmodell'] },
+            exercise3: { q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft'], q2: ['erlebnis', 'atmosphäre', 'beispiel', 'besuch', 'name'], q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards'], q4: ['service-dominant', 'service', 'wert', 'erlebnis', 'beziehung'], q5: ['italien', 'kultur', 'café', 'bar', 'espresso'] },
+            exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'unterstützung', 'transformation'], q2: ['buddy', 'training', 'community', 'flexibel', 'app'], q3: ['instagram', 'influencer', 'lokal', 'referral', 'social media'] }
         };
 
         function toggleOption(element, category) {
@@ -870,11 +863,21 @@
 
         function generateVP() {
             if (!selectedOptions.targetGroup.length || !selectedOptions.problem.length || !selectedOptions.value.length) {
-                alert('Bitte wählen Sie aus jeder Kategorie mindestens eine Option!');
+                alert('Bitte wählen Sie aus jeder Kategorie mindestens eine Option aus!');
                 return;
             }
-            const vp = `Train4U ist für ${selectedOptions.targetGroup.join(', ')} mit ${selectedOptions.problem.join(', ')}. Wir bieten ${selectedOptions.value.join(', ')}.`;
-            document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 Kopieren</button></div>`;
+            const tg = selectedOptions.targetGroup.join(', ');
+            const pb = selectedOptions.problem.join(', ');
+            const vl = selectedOptions.value.join(', ');
+            const vps = [
+                `Train4U ist dein Studio für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit du nicht allein bist.`,
+                `${tg}? ${pb}? Train4U löst beides mit ${vl} und echter Gemeinschaft.`,
+                `Wir verstehen dich: Du bist ${tg} und kämpfst mit ${pb}. Train4U bietet ${vl} - das ist dein neuer Standard.`,
+                `Dein Studio für Erfolg: Für ${tg} mit ${pb}. Wir garantieren ${vl} oder dein Geld zurück.`,
+                `Train4U = Fitness ohne Druck. Für ${tg}, gegen ${pb}, mit ${vl}.`
+            ];
+            const vp = vps[Math.floor(Math.random() * vps.length)];
+            document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
         }
 
         function copyToTextarea(id, text) {
@@ -883,9 +886,9 @@
 
         function getRating(text, type, q) {
             const words = text.trim().split(/\s+/).length;
-            const keywords = keywords[type]?.[q] || [];
-            let count = keywords.filter(k => text.toLowerCase().includes(k.toLowerCase())).length;
-            const score = count / keywords.length;
+            const kw = keywords[type]?.[q] || [];
+            let count = kw.filter(k => text.toLowerCase().includes(k.toLowerCase())).length;
+            const score = kw.length > 0 ? count / kw.length : 0;
             if (words > 100 && score > 0.5) return { rating: 'green', icon: '✓', words };
             if ((words > 50 && score > 0.25) || words > 80) return { rating: 'yellow', icon: '○', words };
             return { rating: 'red', icon: '✕', words };
@@ -893,7 +896,8 @@
 
         function startExercises() {
             document.getElementById('landing').style.display = 'none';
-            document.getElementById('buttonSection').style.display = 'flex';
+            document.getElementById('exercise1').classList.add('active');
+            document.getElementById('buttonSection').classList.add('active');
             document.getElementById('timerBar').style.display = 'flex';
             startTimer();
             loadData();
@@ -929,16 +933,16 @@
                 div.innerHTML = `
                     <h3 style="font-size: 16px; font-weight: 600; color: var(--primary); margin: 20px 0 12px;">${c}</h3>
                     <div class="question-group">
-                        <label class="question-label">Problem für Kunden</label>
-                        <textarea id="ex1_${i}_q1" placeholder="Ihre Antwort..."></textarea>
+                        <label class="question-label">Welches Problem löst ${c} für seine Kundinnen und Kunden.</label>
+                        <textarea id="ex1_${i}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Nutzenversprechen</label>
-                        <textarea id="ex1_${i}_q2" placeholder="Ihre Antwort..."></textarea>
+                        <label class="question-label">Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${c}.</label>
+                        <textarea id="ex1_${i}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Konkretes Beispiel</label>
-                        <textarea id="ex1_${i}_q3" placeholder="Ihre Antwort..."></textarea>
+                        <label class="question-label">Geben Sie ein konkretes Beispiel, woran man sieht, dass ${c} ein Problem löst und nicht nur ein beliebiges Produkt bereitstellt.</label>
+                        <textarea id="ex1_${i}_q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 `;
                 container.appendChild(div);
@@ -961,16 +965,18 @@
         }
 
         function previousExercise() {
-            [saveEx1, () => {
+            if (currentExercise === 1) {
                 localStorage.setItem('ex2q1', document.getElementById('ex2q1').value);
                 localStorage.setItem('ex2q2', document.getElementById('ex2q2').value);
                 localStorage.setItem('ex2q3', document.getElementById('ex2q3').value);
-            }, () => {
-                for (let i = 1; i <= 5; i++) localStorage.setItem(`ex3q${i}`, document.getElementById(`ex3q${i}`)?.value || '');
-            }, () => {
-                for (let i = 1; i <= 3; i++) localStorage.setItem(`ex4q${i}`, document.getElementById(`ex4q${i}`)?.value || '');
-            }][currentExercise]?.();
-            document.querySelectorAll('.exercise').forEach((e, i) => e.classList.toggle('active', i === --currentExercise));
+            } else if (currentExercise === 2) {
+                for (let i = 1; i <= 5; i++) localStorage.setItem(`ex3q${i}`, document.getElementById(`ex3q${i}`).value);
+            } else if (currentExercise === 3) {
+                for (let i = 1; i <= 3; i++) localStorage.setItem(`ex4q${i}`, document.getElementById(`ex4q${i}`).value);
+            }
+            document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
+            document.getElementById(`exercise${--currentExercise + 1}`).classList.add('active');
+            document.getElementById('companyError').style.display = 'none';
             updateButtonVisibility();
         }
 
@@ -980,24 +986,27 @@
                     document.getElementById('companyError').style.display = 'block';
                     return;
                 }
-                saveEx1();
-            } else previousExercise.call({}, true);
-            document.getElementById('companyError').style.display = 'none';
-            if (currentExercise < 3) {
-                document.querySelectorAll('.exercise').forEach((e, i) => e.classList.toggle('active', i === ++currentExercise));
+                const checkboxes = document.querySelectorAll('input[name="companies"]');
+                checkboxes.forEach(cb => localStorage.setItem(`company_${cb.value}`, cb.checked));
+                Array.from(checkboxes).filter(cb => cb.checked).forEach((cb, i) => {
+                    ['q1', 'q2', 'q3'].forEach(q => localStorage.setItem(`ex1_${i}_${q}`, document.getElementById(`ex1_${i}_${q}`).value));
+                });
+            } else if (currentExercise === 1) {
+                localStorage.setItem('ex2q1', document.getElementById('ex2q1').value);
+                localStorage.setItem('ex2q2', document.getElementById('ex2q2').value);
+                localStorage.setItem('ex2q3', document.getElementById('ex2q3').value);
+            } else if (currentExercise === 2) {
+                for (let i = 1; i <= 5; i++) localStorage.setItem(`ex3q${i}`, document.getElementById(`ex3q${i}`).value);
             }
+            document.getElementById('companyError').style.display = 'none';
+            document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
+            document.getElementById(`exercise${++currentExercise + 1}`).classList.add('active');
             updateButtonVisibility();
         }
 
-        function saveEx1() {
-            document.querySelectorAll('input[name="companies"]').forEach(cb => localStorage.setItem(`company_${cb.value}`, cb.checked));
-            Array.from(document.querySelectorAll('input[name="companies"]:checked')).forEach((cb, i) => {
-                ['q1', 'q2', 'q3'].forEach(q => localStorage.setItem(`ex1_${i}_${q}`, document.getElementById(`ex1_${i}_${q}`).value));
-            });
-        }
-
         function loadData() {
-            document.querySelectorAll('input[name="companies"]').forEach(cb => cb.checked = localStorage.getItem(`company_${cb.value}`) === 'true');
+            const checkboxes = document.querySelectorAll('input[name="companies"]');
+            checkboxes.forEach(cb => cb.checked = localStorage.getItem(`company_${cb.value}`) === 'true');
             for (let i = 1; i <= 4; i++) {
                 for (let j = 1; j <= 5; j++) {
                     const el = document.getElementById(`ex${i}q${j}`);
@@ -1007,27 +1016,45 @@
         }
 
         function submitAll() {
+            for (let i = 1; i <= 3; i++) localStorage.setItem(`ex4q${i}`, document.getElementById(`ex4q${i}`).value);
             clearInterval(timerInterval);
-            document.querySelector('.content-inner > div[style*="display: none"]')?.style.removeProperty('display');
-            document.getElementById('exercise4').style.display = 'none';
+            document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
             document.getElementById('scoreSection').classList.add('active');
-            document.getElementById('buttonSection').style.display = 'none';
+            document.getElementById('buttonSection').classList.remove('active');
+            document.getElementById('timerBar').style.display = 'none';
             
-            let html = '<div class="feedback-title">📊 Ihre Ergebnisse</div>';
+            let html = '<div class="feedback-title">📊 Bewertung Ihrer Antworten</div>';
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
+            
+            html += '<div class="feedback-item"><h4>Aufgabe 1</h4>';
             selected.forEach((c, i) => {
-                html += '<div class="feedback-item"><h4>' + c + '</h4>';
-                ['q1', 'q2', 'q3'].forEach(q => {
+                html += `<div style="margin-bottom: 16px;"><strong>${c}</strong>`;
+                ['q1', 'q2', 'q3'].forEach((q, idx) => {
                     const text = document.getElementById(`ex1_${i}_${q}`).value;
                     const r = getRating(text, 'exercise1', 'problem');
-                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>${['Problem', 'Nutzenversprechen', 'Beispiel'][['q1', 'q2', 'q3'].indexOf(q)]} (${r.words}w)</strong>${feedbackData.exercise1[c][q]}</div></div>`;
+                    const titles = ['Problem', 'Nutzenversprechen', 'Konkretes Beispiel'];
+                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>${titles[idx]} (${r.words}w)</strong>${feedbackData.exercise1[c][['problem', 'value', 'example'][idx]]}</div></div>`;
+                });
+                html += '</div>';
+            });
+            html += '</div>';
+            
+            ['2', '3', '4'].forEach((ex, idx) => {
+                const questions = ex === '2' ? ['q1', 'q2', 'q3'] : ex === '3' ? ['q1', 'q2', 'q3', 'q4', 'q5'] : ['q1', 'q2', 'q3'];
+                html += `<div class="feedback-item"><h4>Aufgabe ${parseInt(ex)}</h4>`;
+                questions.forEach(q => {
+                    const text = document.getElementById(`ex${ex}${q}`).value;
+                    const r = getRating(text, `exercise${ex}`, q);
+                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>Frage ${q.substring(1)} (${r.words}w)</strong>${feedbackData[`exercise${ex}`][q]}</div></div>`;
                 });
                 html += '</div>';
             });
             document.getElementById('feedbackSection').innerHTML = html;
         }
 
-        document.addEventListener('input', e => e.target.tagName === 'TEXTAREA' && localStorage.setItem(e.target.id, e.target.value));
+        document.addEventListener('input', e => {
+            if (e.target.tagName === 'TEXTAREA') localStorage.setItem(e.target.id, e.target.value);
+        });
     </script>
 </body>
 </html>
