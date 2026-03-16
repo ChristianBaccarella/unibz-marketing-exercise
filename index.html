@@ -1,1 +1,285 @@
-<!DOCTYPE html><html><head><meta charset="UTF-8"><title>Student</title><style>body{font-family:Arial;background:#f4f4f4;padding:20px}h1{text-align:center}.container{max-width:600px;margin:auto;background:white;padding:20px;border-radius:8px}textarea{width:100%;height:80px;margin:10px 0;border:1px solid #ccc}#timer{font-size:2em;text-align:center;color:red}button{width:100%;padding:10px;background:#28a745;color:white;border:none;cursor:pointer}</style></head><body><div class="container"><h1>Student Exercise</h1><div id="timer">90:00</div><textarea id="ex1" placeholder="Exercise 1"></textarea><textarea id="ex2" placeholder="Exercise 2"></textarea><textarea id="ex3" placeholder="Exercise 3"></textarea><button onclick="alert('Saved!')">Save</button></div><script>let t=90*60;setInterval(()=>{let m=Math.floor(t/60);let s=t%60;document.getElementById("timer").textContent=m+":"+(s<10?"0":"")+s;if(t>0)t--},1000)</script></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketing Exercise - Student Interface</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+        .header {
+            background: linear-gradient(135deg, #007BE2 0%, #0056b3 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        .header h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        .content {
+            padding: 40px 30px;
+        }
+        .timer-section {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #d9534f;
+        }
+        .timer-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        #timer {
+            font-size: 48px;
+            font-weight: bold;
+            color: #d9534f;
+            font-family: 'Courier New', monospace;
+        }
+        .exercise {
+            margin-bottom: 35px;
+            padding: 25px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-left: 5px solid #007BE2;
+            transition: all 0.3s ease;
+        }
+        .exercise:hover {
+            box-shadow: 0 4px 15px rgba(0,123,226,0.1);
+            transform: translateY(-2px);
+        }
+        .exercise h3 {
+            font-size: 18px;
+            color: #007BE2;
+            margin-bottom: 8px;
+        }
+        .exercise p {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        textarea {
+            width: 100%;
+            padding: 12px;
+            font-size: 14px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Segoe UI', sans-serif;
+            resize: vertical;
+            min-height: 100px;
+            transition: border-color 0.3s ease;
+        }
+        textarea:focus {
+            outline: none;
+            border-color: #007BE2;
+            box-shadow: 0 0 8px rgba(0,123,226,0.2);
+        }
+        .score-section {
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #007BE2 0%, #0056b3 100%);
+            color: white;
+            border-radius: 10px;
+            margin: 30px 0;
+        }
+        .score-label {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 5px;
+        }
+        #score {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        .button-section {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        button {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .btn-submit {
+            background: #28a745;
+            color: white;
+        }
+        .btn-submit:hover {
+            background: #218838;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(40,167,69,0.3);
+        }
+        .btn-reset {
+            background: #6c757d;
+            color: white;
+        }
+        .btn-reset:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108,117,125,0.3);
+        }
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f8f9fa;
+            color: #666;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Marketing Fundamentals</h1>
+            <p>Student Exercise Interface</p>
+        </div>
+
+        <div class="content">
+            <div class="timer-section">
+                <div class="timer-label">Time Remaining</div>
+                <div id="timer">90:00</div>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 1: Value Proposition</h3>
+                <p>Describe the value proposition of a product or service. What unique benefits does it offer to customers? Why would someone choose this over competitors?</p>
+                <textarea id="ex1" placeholder="Enter your answer here..."></textarea>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 2: IKEA Case Study Analysis</h3>
+                <p>Analyze IKEA's marketing strategy. Consider their positioning, target market, pricing strategy, and how they differentiate themselves in the furniture industry.</p>
+                <textarea id="ex2" placeholder="Enter your answer here..."></textarea>
+            </div>
+
+            <div class="exercise">
+                <h3>Exercise 3: Starbucks Brand Analysis</h3>
+                <p>Evaluate Starbucks' brand identity and marketing approach. How does Starbucks create customer loyalty? What are their key marketing channels and messaging?</p>
+                <textarea id="ex3" placeholder="Enter your answer here..."></textarea>
+            </div>
+
+            <div class="score-section">
+                <div class="score-label">Your Score</div>
+                <div id="score">0 points</div>
+            </div>
+
+            <div class="button-section">
+                <button class="btn-submit" onclick="submitAnswers()">Submit Answers</button>
+                <button class="btn-reset" onclick="resetAll()">Reset All</button>
+            </div>
+        </div>
+
+        <div class="footer">
+            Your answers are automatically saved to your browser. Timer counts down - submit before time runs out!
+        </div>
+    </div>
+
+    <script>
+        let timeRemaining = 90 * 60;
+        let score = 0;
+
+        function updateTimer() {
+            const minutes = Math.floor(timeRemaining / 60);
+            const seconds = timeRemaining % 60;
+            document.getElementById('timer').textContent = 
+                minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+            
+            if (timeRemaining > 0) {
+                timeRemaining--;
+            } else {
+                clearInterval(timerInterval);
+                alert('Time is up! Your score: ' + score);
+            }
+        }
+
+        const timerInterval = setInterval(updateTimer, 1000);
+
+        function autoSave() {
+            localStorage.setItem('ex1', document.getElementById('ex1').value);
+            localStorage.setItem('ex2', document.getElementById('ex2').value);
+            localStorage.setItem('ex3', document.getElementById('ex3').value);
+            localStorage.setItem('score', score);
+            localStorage.setItem('timeRemaining', timeRemaining);
+        }
+
+        function loadData() {
+            document.getElementById('ex1').value = localStorage.getItem('ex1') || '';
+            document.getElementById('ex2').value = localStorage.getItem('ex2') || '';
+            document.getElementById('ex3').value = localStorage.getItem('ex3') || '';
+            score = parseInt(localStorage.getItem('score')) || 0;
+            updateScoreDisplay();
+        }
+
+        function updateScoreDisplay() {
+            document.getElementById('score').textContent = score + ' points';
+        }
+
+        function submitAnswers() {
+            const answers = [
+                document.getElementById('ex1').value,
+                document.getElementById('ex2').value,
+                document.getElementById('ex3').value
+            ];
+            
+            const filledCount = answers.filter(a => a.trim().length > 0).length;
+            score += filledCount * 10;
+            updateScoreDisplay();
+            autoSave();
+            alert('Answers submitted! You earned ' + (filledCount * 10) + ' points.\nTotal Score: ' + score);
+        }
+
+        function resetAll() {
+            if (confirm('Are you sure you want to reset everything?')) {
+                document.getElementById('ex1').value = '';
+                document.getElementById('ex2').value = '';
+                document.getElementById('ex3').value = '';
+                score = 0;
+                updateScoreDisplay();
+                localStorage.clear();
+                alert('All data cleared!');
+            }
+        }
+
+        document.getElementById('ex1').addEventListener('input', autoSave);
+        document.getElementById('ex2').addEventListener('input', autoSave);
+        document.getElementById('ex3').addEventListener('input', autoSave);
+
+        window.addEventListener('load', loadData);
+    </script>
+</body>
+</html>
