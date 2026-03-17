@@ -316,6 +316,7 @@
             font-size: 14px;
             color: var(--text-primary);
             line-height: 1.6;
+            min-height: 60px;
         }
         
         .copy-btn {
@@ -575,27 +576,27 @@
                         <label class="question-label">Wählen Sie zwei Unternehmen:</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company1" name="companies" value="Apple">
+                                <input type="checkbox" id="company1" name="companies" value="Apple" onchange="handleCompanyChange()">
                                 <label for="company1" class="checkbox-label">Apple</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company2" name="companies" value="Spotify">
+                                <input type="checkbox" id="company2" name="companies" value="Spotify" onchange="handleCompanyChange()">
                                 <label for="company2" class="checkbox-label">Spotify</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company3" name="companies" value="dm">
+                                <input type="checkbox" id="company3" name="companies" value="dm" onchange="handleCompanyChange()">
                                 <label for="company3" class="checkbox-label">dm</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company4" name="companies" value="Ryanair">
+                                <input type="checkbox" id="company4" name="companies" value="Ryanair" onchange="handleCompanyChange()">
                                 <label for="company4" class="checkbox-label">Ryanair</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company5" name="companies" value="Airbnb">
+                                <input type="checkbox" id="company5" name="companies" value="Airbnb" onchange="handleCompanyChange()">
                                 <label for="company5" class="checkbox-label">Airbnb</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company6" name="companies" value="Netflix">
+                                <input type="checkbox" id="company6" name="companies" value="Netflix" onchange="handleCompanyChange()">
                                 <label for="company6" class="checkbox-label">Netflix</label>
                             </div>
                         </div>
@@ -677,30 +678,30 @@
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
                                 <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'tg')">Berufstätige</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg')">Anfänger</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg')">Frauen</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg')">Über 50 Jahre</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'tg')">Berufstätige</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'tg')">Anfänger</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'tg')">Frauen</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'tg')">Über 50 Jahre</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welches Problem?</div>
                                 <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'pb')">Zeitmangel</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb')">Keine Motivation</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb')">Keine Expertise</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb')">Keine Erfolge</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'pb')">Zeitmangel</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Motivation</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Expertise</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Erfolge</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welcher Mehrwert?</div>
                                 <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'vl')">Gemeinschaft</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl')">Flexibilität</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl')">Personal Trainer</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl')">Garantierte Ergebnisse</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'vl')">Gemeinschaft</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'vl')">Flexibilität</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'vl')">Personal Trainer</div>
+                                    <div class="generator-option" onclick="selectGenOption(this, 'vl')">Garantierte Ergebnisse</div>
                                 </div>
                             </div>
                             
@@ -774,7 +775,6 @@
         let timeRemaining = 90 * 60;
         let timerInterval;
         let genOptions = { tg: '', pb: '', vl: '' };
-        let usedSlogans = new Set(); // Verhindert doppelte Slogans
 
         // MASSIVE DATENBANK MIT PROFESSIONELLEN SLOGANS
         const vpLibrary = {
@@ -1124,7 +1124,17 @@
             }
         };
 
-        function selectOption(elem, category) {
+        function handleCompanyChange() {
+            const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked'));
+            if (selected.length > 2) {
+                // Deselektiere das zuletzt geänderte Element
+                selected[selected.length - 1].checked = false;
+            }
+            renderCompanyQuestions();
+            saveAll();
+        }
+
+        function selectGenOption(elem, category) {
             // Entferne ALLE Selektionen in dieser Kategorie
             elem.parentElement.querySelectorAll('.generator-option').forEach(el => {
                 el.classList.remove('selected');
@@ -1132,8 +1142,6 @@
             // Setze neue Auswahl
             elem.classList.add('selected');
             genOptions[category] = elem.textContent.trim();
-            // Zurücksetzen des Used-Slogans wenn neuer Generator-Set gewählt wird
-            usedSlogans.clear();
         }
 
         function generateVP() {
@@ -1142,30 +1150,13 @@
                 return;
             }
 
-            const generateBtn = document.getElementById('generateBtn');
-            const generatedVP = document.getElementById('generatedVP');
+            const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
+            const templates = vpLibrary[key] || ['Train4U: Fitness, die funktioniert.'];
             
-            generateBtn.disabled = true;
-            generatedVP.innerHTML = '<div class="generated-vp" style="justify-content: center;">⏳ Generiere Slogan...</div>';
-
-            // Kleine Verzögerung für visuelles Feedback
-            setTimeout(() => {
-                const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
-                const templates = vpLibrary[key] || ['Train4U: Fitness, die funktioniert.'];
-                
-                // Finde einen Slogan, der noch nicht verwendet wurde
-                let vp;
-                let attempts = 0;
-                do {
-                    vp = templates[Math.floor(Math.random() * templates.length)];
-                    attempts++;
-                } while (usedSlogans.has(vp) && attempts < 10);
-                
-                usedSlogans.add(vp);
-                
-                generatedVP.innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyText('ex4q1', '${vp.replace(/'/g, "\\'")}')">📋 In Antwort kopieren</button></div>`;
-                generateBtn.disabled = false;
-            }, 300);
+            // Zufällig einen anderen Slogan jedes Mal
+            const vp = templates[Math.floor(Math.random() * templates.length)];
+            
+            document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyText('ex4q1', '${vp.replace(/'/g, "\\'")}')">📋 In Antwort kopieren</button></div>`;
         }
 
         function copyText(id, text) {
@@ -1199,15 +1190,7 @@
         function renderCompanyQuestions() {
             const container = document.getElementById('companyAnswers');
             container.innerHTML = '';
-            const checkboxes = document.querySelectorAll('input[name="companies"]');
-            checkboxes.forEach(cb => {
-                cb.addEventListener('change', () => {
-                    if (document.querySelectorAll('input[name="companies"]:checked').length > 2) cb.checked = false;
-                    renderCompanyQuestions();
-                    saveAll();
-                });
-            });
-            const selected = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value);
+            const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             selected.forEach((c, i) => {
                 const div = document.createElement('div');
                 div.innerHTML = `
@@ -1320,9 +1303,9 @@
             
             html += '<div class="feedback-item"><h4>Aufgabe 1 - Nutzenversprechen</h4>';
             selected.forEach((c, i) => {
-                const text1 = document.getElementById(`ex1_${i}_q1`).value;
-                const text2 = document.getElementById(`ex1_${i}_q2`).value;
-                const text3 = document.getElementById(`ex1_${i}_q3`).value;
+                const text1 = document.getElementById(`ex1_${i}_q1`)?.value || '';
+                const text2 = document.getElementById(`ex1_${i}_q2`)?.value || '';
+                const text3 = document.getElementById(`ex1_${i}_q3`)?.value || '';
                 
                 const r1 = getRating(text1);
                 const r2 = getRating(text2);
@@ -1344,7 +1327,7 @@
             exercises.forEach(ex => {
                 html += `<div class="feedback-item"><h4>${ex.title}</h4>`;
                 ex.questions.forEach((q, idx) => {
-                    const text = document.getElementById(`ex${ex.id}${q}`).value;
+                    const text = document.getElementById(`ex${ex.id}${q}`)?.value || '';
                     const r = getRating(text);
                     html += `<div class="rating-row"><div class="rating-icon ${r}">●</div><div class="rating-text"><strong>Frage ${idx + 1}:</strong> ${feedbackData[`exercise${ex.id}`][q]}</div></div>`;
                 });
@@ -1393,30 +1376,30 @@
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             selected.forEach((c, i) => {
                 addText(`${c}:`, true);
-                addText(`Problem: ${document.getElementById(`ex1_${i}_q1`).value || '-'}`);
-                addText(`Nutzenversprechen: ${document.getElementById(`ex1_${i}_q2`).value || '-'}`);
-                addText(`Beispiel: ${document.getElementById(`ex1_${i}_q3`).value || '-'}`);
+                addText(`Problem: ${document.getElementById(`ex1_${i}_q1`)?.value || '-'}`);
+                addText(`Nutzenversprechen: ${document.getElementById(`ex1_${i}_q2`)?.value || '-'}`);
+                addText(`Beispiel: ${document.getElementById(`ex1_${i}_q3`)?.value || '-'}`);
                 yPos += 3;
             });
             
             addText('AUFGABE 2: IKEA', true);
-            addText(`Nutzenversprechen: ${document.getElementById('ex2q1').value || '-'}`);
-            addText(`CRM: ${document.getElementById('ex2q2').value || '-'}`);
-            addText(`Orientierung: ${document.getElementById('ex2q3').value || '-'}`);
+            addText(`Nutzenversprechen: ${document.getElementById('ex2q1')?.value || '-'}`);
+            addText(`CRM: ${document.getElementById('ex2q2')?.value || '-'}`);
+            addText(`Orientierung: ${document.getElementById('ex2q3')?.value || '-'}`);
             yPos += 3;
             
             addText('AUFGABE 3: Starbucks', true);
-            addText(`Nutzenversprechen: ${document.getElementById('ex3q1').value || '-'}`);
-            addText(`Kundenerlebnis: ${document.getElementById('ex3q2').value || '-'}`);
-            addText(`Kundenbindung: ${document.getElementById('ex3q3').value || '-'}`);
-            addText(`Service-Dominant Logic: ${document.getElementById('ex3q4').value || '-'}`);
-            addText(`Italien: ${document.getElementById('ex3q5').value || '-'}`);
+            addText(`Nutzenversprechen: ${document.getElementById('ex3q1')?.value || '-'}`);
+            addText(`Kundenerlebnis: ${document.getElementById('ex3q2')?.value || '-'}`);
+            addText(`Kundenbindung: ${document.getElementById('ex3q3')?.value || '-'}`);
+            addText(`Service-Dominant Logic: ${document.getElementById('ex3q4')?.value || '-'}`);
+            addText(`Italien: ${document.getElementById('ex3q5')?.value || '-'}`);
             yPos += 3;
             
             addText('AUFGABE 4: Train4U', true);
-            addText(`Slogan: ${document.getElementById('ex4q1').value || '-'}`);
-            addText(`Maßnahmen: ${document.getElementById('ex4q2').value || '-'}`);
-            addText(`Werbestrategie: ${document.getElementById('ex4q3').value || '-'}`);
+            addText(`Slogan: ${document.getElementById('ex4q1')?.value || '-'}`);
+            addText(`Maßnahmen: ${document.getElementById('ex4q2')?.value || '-'}`);
+            addText(`Werbestrategie: ${document.getElementById('ex4q3')?.value || '-'}`);
             
             doc.save('Marketing-Übung-Antworten.pdf');
         }
