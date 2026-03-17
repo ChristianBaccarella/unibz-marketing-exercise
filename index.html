@@ -59,7 +59,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 .rating-text strong { color: #111827; display: block; margin-bottom: 4px; }
 .export { margin-top: 24px; padding: 20px; background: #F9FAFB; border: 2px solid #10B981; border-radius: 12px; text-align: center; }
 .export-btn { padding: 14px 32px; background: #10B981; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
-.buttons { padding: 20px 24px; border-top: 1px solid #E5E7EB; display: none; gap: 12px; }
+.buttons { padding: 20px 24px; border-top: 1px solid #E5E7EB; display: none; gap: 12px; position: sticky; bottom: 0; background: white; }
 .buttons.show { display: flex; }
 .btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-primary { background: #1F7FD4; color: white; }
@@ -86,7 +86,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
         <div id="task1" class="page">
             <div class="task-title">Aufgabe 1 / 4</div>
             <div class="task-h">Nutzenversprechen verschiedener Unternehmen</div>
-            <div class="task-desc">Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei beliebige Unternehmen und analysieren Sie diese ausführlich. Beschreiben Sie jeweils: Welches Problem wird gelöst? Was ist das Nutzenversprechen? Geben Sie ein konkretes Beispiel.</div>
+            <div class="task-desc">Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei beliebige Unternehmen und analysieren Sie diese ausführlich.</div>
             
             <div class="q-group">
                 <div class="q-label"><strong>Unternehmen 1:</strong></div>
@@ -101,15 +101,15 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             </div>
 
             <div class="q-group">
-                <div class="q-label">Für <strong id="comp1name">Unternehmen 1</strong> - Welches Problem wird gelöst?</div>
+                <div class="q-label">Für <strong id="comp1name">Unternehmen 1</strong> - Welches Kundenproblem wird gelöst?</div>
                 <textarea id="c1problem"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Was ist das Nutzenversprechen? (Design, Ökosystem, Innovation, etc.)</div>
+                <div class="q-label">Wie könnte man einen typischen Kunden kurz beschreiben?</div>
                 <textarea id="c1value"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Geben Sie ein konkretes Beispiel:</div>
+                <div class="q-label">Wie sticht das Unternehmen heraus? Was macht es besser als andere?</div>
                 <textarea id="c1example"></textarea>
             </div>
 
@@ -128,15 +128,15 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             </div>
 
             <div class="q-group">
-                <div class="q-label">Für <strong id="comp2name">Unternehmen 2</strong> - Welches Problem wird gelöst?</div>
+                <div class="q-label">Für <strong id="comp2name">Unternehmen 2</strong> - Welches Kundenproblem wird gelöst?</div>
                 <textarea id="c2problem"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Was ist das Nutzenversprechen?</div>
+                <div class="q-label">Wie könnte man einen typischen Kunden kurz beschreiben?</div>
                 <textarea id="c2value"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Geben Sie ein konkretes Beispiel:</div>
+                <div class="q-label">Wie sticht das Unternehmen heraus? Was macht es besser als andere?</div>
                 <textarea id="c2example"></textarea>
             </div>
         </div>
@@ -144,10 +144,10 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
         <div id="task2" class="page">
             <div class="task-title">Aufgabe 2 / 4</div>
             <div class="task-h">Mini Case Study: IKEA</div>
-            <div class="task-desc">IKEA ist einer der weltweit größten Möbelhändler. Das Unternehmen verfolgt das Ziel, gutes Design und funktionale Möbel für viele Menschen erschwinglich zu machen. Analysieren Sie das Geschäftsmodell und die Kundenorientierung.</div>
+            <div class="task-desc">IKEA ist einer der weltweit größten Möbelhändler. Analysieren Sie kurz die Gründe für den Erfolg.</div>
             
             <div class="q-group">
-                <div class="q-label">Was ist das zentrale Nutzenversprechen von IKEA? Erklären Sie, wie IKEA den Markt verändert hat.</div>
+                <div class="q-label">Was ist das zentrale Nutzenversprechen von IKEA?</div>
                 <textarea id="e2q1"></textarea>
             </div>
             <div class="q-group">
@@ -155,7 +155,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <textarea id="e2q2"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung? Begründen Sie Ihre Antwort mit konkreten Beispielen aus dem Geschäftsmodell.</div>
+                <div class="q-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung? Begründen Sie Ihre Antwort.</div>
                 <textarea id="e2q3"></textarea>
             </div>
         </div>
@@ -163,7 +163,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
         <div id="task3" class="page">
             <div class="task-title">Aufgabe 3 / 4</div>
             <div class="task-h">Fallanalyse: Starbucks</div>
-            <div class="task-desc">Starbucks ist eine internationale Kaffeehauskette. Das Unternehmen versucht nicht nur Kaffee zu verkaufen, sondern ein besonderes Kundenerlebnis zu schaffen. Der Ort wird als "Third Place" zwischen Zuhause und Arbeit positioniert.</div>
+            <div class="task-desc">Starbucks ist eine internationale Kaffeehauskette. Das Unternehmen versucht nicht nur Kaffee zu verkaufen, sondern ein besonderes Kundenerlebnis zu schaffen.</div>
             
             <div class="q-group">
                 <div class="q-label">Was ist das zentrale Nutzenversprechen von Starbucks? (Nicht: Kaffee!)</div>
@@ -178,11 +178,11 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <textarea id="e3q3"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten? Erklären Sie den Unterschied zwischen Produkt und Service.</div>
+                <div class="q-label">Warum könnte Starbucks als Beispiel für eine Service-Dominant Logic gelten?</div>
                 <textarea id="e3q4"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten? Nennen Sie mindestens zwei Gründe.</div>
+                <div class="q-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten?</div>
                 <textarea id="e3q5"></textarea>
             </div>
         </div>
@@ -190,10 +190,10 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
         <div id="task4" class="page">
             <div class="task-title">Aufgabe 4 / 4</div>
             <div class="task-h">Das Fitnessstudio "Train4U"</div>
-            <div class="task-desc">Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Sie sind der CEO und überlegen sich, was Sie tun könnten, um das Studio zu retten. Nutzen Sie den Slogan-Generator, um ein Nutzenversprechen zu entwickeln.</div>
+            <div class="task-desc">Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Sie sind der CEO und überlegen sich, was Sie tun könnten, um das Studio zu retten. Nutzen Sie den Slogan-Generator, um sich inspirieren zu lassen.</div>
             
             <div class="q-group">
-                <div class="q-label">Wie könnte der Slogan dieses Fitnessstudios lauten? Nutzen Sie den Generator unten!</div>
+                <div class="q-label">Wie könnte der Slogan dieses Fitnessstudios lauten? Nutzen Sie den Generator!</div>
                 <div class="gen-section">
                     <div class="gen-title">💡 Slogan-Generator</div>
                     
@@ -235,11 +235,11 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             </div>
             
             <div class="q-group">
-                <div class="q-label">Welche konkreten Maßnahmen würde das Studio unternehmen, um Kunden zu gewinnen und zu halten? (Buddy-System, Events, App, etc.)</div>
+                <div class="q-label">Welche konkreten Maßnahmen könnte das Studio unternehmen, um Kunden zu gewinnen und vor allem zu halten?</div>
                 <textarea id="e4q2"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Welche Werbestrategie würden Sie empfehlen? (Social Media, Influencer, Local Ads, etc.)</div>
+                <div class="q-label">Welche Werbestrategie würden Sie empfehlen?</div>
                 <textarea id="e4q3"></textarea>
             </div>
         </div>
@@ -279,35 +279,55 @@ let step = 0, time = 5400, timer, gen = {g:'', p:'', v:''};
 
 const solutions = {
     Apple: {
-        p: 'Apple löst das Problem der technologischen Komplexität. Das Unternehmen übersetzt hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte, die für jeden zugänglich sind. Technologie wird zum Lifestyle-Objekt.',
-        v: 'Das Nutzenversprechen von Apple besteht aus Premium-Design, nahtloser Ökosystem-Integration zwischen Geräten, und Innovation, die das Leben einfacher macht. Apple schafft nicht nur Produkte, sondern Lifestyle-Objekte, die Menschen Identität und Status geben.',
-        e: 'Das iPhone ist ein perfektes Beispiel: Es vereinfacht Technologie durch klare Bedienung und intuitive Interfaces. Es ist nicht einfach nur ein Telefon mit vielen technischen Funktionen, sondern ein System, das funktioniert, bevor man die Bedienungsanleitung liest.'
+        p: 'Apple löst das Problem der technologischen Komplexität. Das Unternehmen übersetzt hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte, die für jeden zugänglich sind.',
+        v: 'Ein typischer Apple-Kunde ist jemand, der Qualität, Design und einfache Bedienbarkeit schätzt. Oft ist es eine Person mit höherem Einkommen, die bereit ist, mehr zu zahlen für ein Premium-Erlebnis.',
+        e: 'Apple sticht heraus durch minimalistisches Design, nahtlose Integration zwischen Geräten (Ökosystem) und die Philosophie, dass Technologie das Leben einfacher machen sollte – nicht komplizierter.'
     },
     Spotify: {
-        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit. Statt CDs einzeln zu kaufen oder auf begrenzte Radioübertragungen zu warten, hat jeder Zugang zu fast aller Musik der Welt - sofort und überall.',
-        v: 'Das Nutzenversprechen besteht aus unbegrenztem Musikzugang, personalisierten Empfehlungen durch Künstliche Intelligenz, und Convenience. Spotify macht Musik nicht zum Besitztum, sondern zur Utility – ähnlich wie Strom oder Wasser.',
-        e: 'Discover Weekly zeigt das Nutzenversprechen perfekt: Spotify versteht nicht einfach nur, welche Musik verfügbar ist – es versteht, was jeder einzelne Nutzer liebt. Die KI-gestützte Personalisierung schafft echten Mehrwert über die reine Verfügbarkeit hinaus.'
+        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit und unflexibler Musikkonsum. Statt CDs zu kaufen oder auf Radioübertragungen zu warten, hat jeder sofort Zugang zu Millionen Songs.',
+        v: 'Ein typischer Spotify-Kunde ist musikbegeistert, möchte Musik überall verfügbar haben und schätzt personalisierte Empfehlungen. Oft junge Menschen oder Musikliebhaber aller Altersgruppen.',
+        e: 'Spotify sticht heraus durch KI-gestützte Personalisierung (Discover Weekly), unbegrenzten Zugang zu Millionen Songs und die Umwandlung von Musik von Besitztum zu Service – ähnlich wie Strom oder Wasser.'
     },
     dm: {
-        p: 'dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar. Mit 50 ähnlichen Cremes, Vitaminen oder Zahnbürsten im Regal braucht jeder Kunde Expert:innen-Wissen – nicht einfach nur Verfügbarkeit.',
-        v: 'Das Nutzenversprechen besteht aus Produktvielfalt, persönlicher Fachberatung vor Ort durch geschulte Mitarbeiter:innen, Convenience und gute Preise. dm verbindet schnelle Verfügbarkeit mit kompetenter, persönlicher Beratung.',
-        e: 'Beratung vor Ort löst das echte Problem: "Welches Produkt passt zu MIR?" Die Mitarbeiter:innen können sagen, welche Creme bei trockener Haut besser ist, oder welche Zahnbürste für Zahnfleischprobleme empfohlen wird – das ist echter Mehrwert.'
+        p: 'dm löst das Problem der Produktauswahl und Beratungsbedürftigkeit. Mit 50 ähnlichen Cremes braucht jeder Kunde Expert:innen-Wissen – nicht einfach nur Verfügbarkeit.',
+        v: 'Ein typischer dm-Kunde ist jemand, der qualitativ gute Drogerie- und Gesundheitsprodukte möchte, gute Beratung braucht und dabei sparen will. Oft Frauen, Mütter, Gesundheitsbewusste.',
+        e: 'dm sticht heraus durch kompetente Fachberatung vor Ort, große Produktvielfalt, gute Preise und Service. Das Unternehmen behandelt Kunden:innen als Menschen mit individuellen Bedürfnissen, nicht nur als Käufer.'
     },
     Ryanair: {
-        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr, indem es Ultra-Billigflüge anbietet. Vorher konnten nur wohlhabende Menschen Europa bereisen.',
-        v: 'Das Nutzenversprechen besteht aus ultra-günstigen Ticketpreisen, häufigen Verbindungen auch zu kleineren Flughäfen, und echter Mobilität für Mittel- und Unterschicht. Ryanair machte Fliegen zur alltäglichen Option für normale Menschen.',
-        e: '50-Euro-Flüge von Berlin nach Rom ermöglichen echte Mobilität, kulturellen Austausch und Europareisen für Menschen mit kleinerem Budget. Das ist echter Marktwandel – nicht nur Innovation, sondern gesellschaftliche Demokratisierung.'
+        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr und macht Mobilität für breite Bevölkerung erschwinglich.',
+        v: 'Ein typischer Ryanair-Kunde ist preissensibel, flexibel und möchte günstig reisen. Oft junge Menschen, Studenten, Familien mit kleinerem Budget oder Geschäftsreisende mit niedrigeren Kostenbudgets.',
+        e: 'Ryanair sticht heraus durch Ultra-Billigflüge (50€ nach Rom), häufige Verbindungen auch zu kleineren Flughäfen und die Demokratisierung des Flugverkehrs. Das ermöglicht Europareisen für Menschen, die sich das sonst nicht leisten könnten.'
     },
     Airbnb: {
-        p: 'Airbnb bietet echte, lokale Erfahrungen statt anonyme Hotelzimmer. Hotels sind austauschbar und unpersönlich. Airbnb schafft echte Begegnung zwischen Menschen und Orten.',
-        v: 'Das Nutzenversprechen besteht aus authentischen Erlebnissen, besseren Preisen als Hotels, Flexibilität, und Unterstützung der lokalen Wirtschaft. Airbnb schafft echte Gastfreundschaft und kulturelle Erfahrung, nicht nur Unterkunft.',
-        e: 'Eine Wohnung bei einer echten Person in Barcelona statt ein anonymes Hotelzimmer zeigt es: Airbnb verkauft Erlebnisse und Authentizität, nicht einfach nur "Schlafplatz". Der Gastgeber zeigt dir die echte Stadt, nicht die Touristenzone.'
+        p: 'Airbnb löst das Problem anonymer Hotelzimmer und fehlender lokaler Erfahrungen. Hotels sind austauschbar und unpersönlich – Airbnb schafft echte Begegnung.',
+        v: 'Ein typischer Airbnb-Kunde ist abenteuerlustig, möchte Authentizität und echte lokale Erfahrungen. Oft kulturinteressierte Reisende, die Wert auf Einzigartigkeit und echte Gastfreundschaft legen.',
+        e: 'Airbnb sticht heraus durch authentische Erlebnisse statt anonyme Hotelzimmer, direkten Kontakt zu lokalen Gastgebern, oft bessere Preise und das Gefühl, echte Stadt-Erfahrungen zu machen, nicht nur zu übernachten.'
     },
     Netflix: {
-        p: 'Netflix endet das Problem von starren Programmzeiten und begrenzter Auswahl. Vorher konnten Zuschauer:innen nur schauen, was im Fernsehprogramm lief. Netflix machte die Kontrolle zum Zuschauer.',
-        v: 'Das Nutzenversprechen besteht aus unbegrenzten Inhalten jederzeit verfügbar, hochwertig personalisierten Empfehlungen, exklusivem Original-Content, Vielfalt, fairen Kosten, und überall verfügbar (Handy, Tablet, TV). Netflix hat Television demokratisiert.',
-        e: 'Die Algorithmen zeigen: Netflix weiß nicht nur, WAS verfügbar ist – es weiß, WAS du schauen möchtest. Die Startseite sieht bei jeder Person anders aus. Das ist echter Mehrwert: Personalisierung spart dir Zeit und verbessert das Erlebnis.'
+        p: 'Netflix löst das Problem von starren Programmzeiten und begrenztem TV-Angebot. Vorher konnten Zuschauer:innen nur schauen, was im Fernsehprogramm lief – Netflix gab ihnen volle Kontrolle.',
+        v: 'Ein typischer Netflix-Kunde möchte Inhalte nach seinem Zeitplan schauen, schätzt personalisierte Empfehlungen und möchte ständig neuen, hochwertigen Content. Oft verschiedene Generationen heute.',
+        e: 'Netflix sticht heraus durch unbegrenzte Inhalte jederzeit verfügbar, hochwertige Personalisierung (der Algorithmus kennt deine Vorlieben), exklusiven Original-Content und überall verfügbar (Handy, Tablet, TV).'
     }
+};
+
+const task2Solutions = {
+    q1: 'Das zentrale Nutzenversprechen von IKEA ist die Demokratisierung von Design. IKEA macht hochwertiges, funktionales Möbeldesign für breite Bevölkerung erschwinglich. Der Slogan "Für viele Menschen" zeigt es: IKEA glaubt, dass jeder Mensch das Recht auf schöne Dinge hat, nicht nur die Reichen.',
+    q2: '(1) IKEA Family Programm: Kundenkarteninhaber erhalten personalisierte Angebote, exklusive Rabatte, Geburtstagsgeschenke und werden zu speziellen Events eingeladen. (2) Professionelle Planungstools: Online und im Store können Kunden planen, Ideen speichern, Preise vergleichen – das reduziert Kaufbarrieren. (3) Showroom-Erlebnisse: IKEA gestaltet komplette Musterwohnungen, die Kunden inspirieren und ihnen helfen, ihre eigenen Träume zu visualisieren.',
+    q3: 'IKEA verfolgt klar eine Marketingorientierung (nicht Verkaufsorientierung). Das gesamte Geschäftsmodell (Selbstbedienung, DIY-Montage, Katalog als Inspirationsmedium, Showroom-Erlebnisse) ist auf KUNDENBEDÜRFNISSE ausgerichtet. IKEA fragt nicht "Was können wir bauen?", sondern "Was brauchen Menschen wirklich?" Das ist echte Marketingorientierung.'
+};
+
+const task3Solutions = {
+    q1: 'Das zentrale Nutzenversprechen von Starbucks ist der "Third Place" – ein Ort zwischen Zuhause und Arbeit, wo Menschen sich wohlfühlen, entspannen, arbeiten und Gemeinschaft erleben. Für viele ist Starbucks ein zweites Wohnzimmer mit kostenlosem WLAN, komfortablen Sesseln und sozialer Wärme.',
+    q2: 'Starbucks kreiert das Erlebnis durch: Die Atmosphäre mit gedimmtem Licht, warmen Farben und entspannender Musik. Das Personal ist trainiert, freundlich zu sein und nennt jeden Kunden beim Namen. Die Getränke werden personalisiert – der Barista schreibt deinen Namen auf den Cup. Beispiel: Du betrittst morgens müde einen Starbucks, wirst vom Namen begrüßt, erhältst deinen ganz persönlichen Drink, setzt dich in einen gemütlichen Sessel – das Erlebnis, nicht nur der Kaffee, ist das Nutzenversprechen.',
+    q3: '(1) Loyalty-Programm mit Punkte-System: Jeden Kaffee mit Karte zahlen, Punkte sammeln, freie Drinks verdienen – das schafft finanzielle Anreize zu wiederkommen. (2) Mobile App mit digitaler Geldbörse, Bestellhistorie, personalisierten Angeboten und exklusiven Deals – macht den Kauf einfacher und persönlicher.',
+    q4: 'Starbucks verkörpert Service-Dominant Logic perfekt, weil es nicht das Produkt "Kaffee" verkauft – es verkauft einen SERVICE: das Erlebnis, die Gemeinschaft, den Raum, die Personalisierung. Der echte Wert entsteht nicht in der Küche, sondern in der Interaktion zwischen dir und dem Barista, in der Atmosphäre und in der emotionalen Bedürfnisbefriedigung (Zugehörigkeitsbedarf, Ruhe, Produktivität).',
+    q5: 'In Italien hat Starbucks Schwierigkeiten, weil: (1) Es gibt eine etablierte, starke Café-Kultur mit authentischen lokalen Bars, die seit Generationen Treffpunkte sind und tiefe Kundenloyalität haben. (2) Das italienische Ritual ist anders: Italiener trinken einen perfekten Espresso kurz und intensiv an der Theke im Stehen – nicht Stunden sitzend. (3) Lokale Bars sind günstiger, haben bessere Qualität und echte menschliche Beziehung. (4) Es gibt kulturelle Ablehnung der amerikanischen Kommerzialisierung.'
+};
+
+const task4Solutions = {
+    q1: 'Ein echtes Fitnessstudio-Erlebnis: Train4U sollte nicht einfach Geräte vermieten, sondern einen Ort schaffen, wo Transformation möglich ist. Das Nutzenversprechen: "Wir helfen dir nicht nur zu trainieren, sondern zu TRANSFORMIEREN." Das bedeutet: persönliche Betreuung, erreichbare Erfolge, echten Support, und eine Gemeinschaft, die dich trägt.',
+    q2: '(1) Buddy-System für Anfänger: Neue Mitglieder werden an erfahrene Mitglieder gepaart, die ihnen zeigen, wie alles funktioniert und sie motivieren. (2) Kostenlose Personal-Training-Sessions für die ersten 4 Wochen: Neue Kunden starten richtig und sehen schnell erste Erfolge. (3) Wöchentliche Challenges mit erreichbaren Zielen (z.B. 10 Liegestütze): Kleine Erfolgs-Erlebnisse bauen Motivation auf. (4) App zum Fortschritt-Tracking: Gewicht, Kraft, Trainingsfrequenz sichtbar machen – Erfolg motiviert. (5) Flexible Öffnungszeiten und Online-Live-Kurse: Für Menschen mit wenig Zeit.',
+    q3: '(1) Authentische Before-After-Stories von echten Menschen aus dem Studio – zeigen, dass Transformation real ist. (2) Lokale Facebook- und Instagram-Kampagnen mit geografischem Targeting. (3) Partnerschaften mit lokalen Micro-Influencern (Ärzte, Psychologen, lokale TV-Moderatoren) aus der Region. (4) Kostenlose Trainings-Events in Parks an Wochenenden – Menschen können testen, ohne zu zahlen. (5) Referral-Programm mit Anreizen: Zufriedene Kunden sind die beste Werbung. (6) Google Ads mit lokalen Keywords wie "Fitnessstudio [Stadt]".'
 };
 
 const slogans = {
@@ -389,6 +409,7 @@ function goBack() {
     document.getElementById('results').classList.remove('show');
     step--;
     document.getElementById(`task${step}`).classList.add('show');
+    window.scrollTo(0, 0);
     updateNav();
 }
 
@@ -401,6 +422,7 @@ function goNext() {
     } else {
         document.getElementById(`task${step}`).classList.add('show');
     }
+    window.scrollTo(0, 0);
     updateNav();
 }
 
@@ -422,9 +444,9 @@ function finish() {
         let e1 = (document.getElementById('c1example').value || '').split(/\s+/).length;
         
         html += `<strong>${c1}</strong>
-            <div class="rating"><div class="rating-icon ${p1 > 100 ? 'green' : p1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}</div></div>
-            <div class="rating"><div class="rating-icon ${v1 > 100 ? 'green' : v1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzen:</strong> ${solutions[c1].v}</div></div>
-            <div class="rating"><div class="rating-icon ${e1 > 100 ? 'green' : e1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Beispiel:</strong> ${solutions[c1].e}</div></div>`;
+            <div class="rating"><div class="rating-icon ${p1 > 100 ? 'green' : p1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenproblem:</strong> ${solutions[c1].p}</div></div>
+            <div class="rating"><div class="rating-icon ${v1 > 100 ? 'green' : v1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Typischer Kunde:</strong> ${solutions[c1].v}</div></div>
+            <div class="rating"><div class="rating-icon ${e1 > 100 ? 'green' : e1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Was macht es besser:</strong> ${solutions[c1].e}</div></div>`;
     }
     
     if (c2) {
@@ -433,14 +455,43 @@ function finish() {
         let e2 = (document.getElementById('c2example').value || '').split(/\s+/).length;
         
         html += `<strong>${c2}</strong>
-            <div class="rating"><div class="rating-icon ${p2 > 100 ? 'green' : p2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}</div></div>
-            <div class="rating"><div class="rating-icon ${v2 > 100 ? 'green' : v2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzen:</strong> ${solutions[c2].v}</div></div>
-            <div class="rating"><div class="rating-icon ${e2 > 100 ? 'green' : e2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Beispiel:</strong> ${solutions[c2].e}</div></div>`;
+            <div class="rating"><div class="rating-icon ${p2 > 100 ? 'green' : p2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenproblem:</strong> ${solutions[c2].p}</div></div>
+            <div class="rating"><div class="rating-icon ${v2 > 100 ? 'green' : v2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Typischer Kunde:</strong> ${solutions[c2].v}</div></div>
+            <div class="rating"><div class="rating-icon ${e2 > 100 ? 'green' : e2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Was macht es besser:</strong> ${solutions[c2].e}</div></div>`;
     }
     
     html += '</div>';
     
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 2 - IKEA</div>';
+    let e2q1 = (document.getElementById('e2q1').value || '').split(/\s+/).length;
+    let e2q2 = (document.getElementById('e2q2').value || '').split(/\s+/).length;
+    let e2q3 = (document.getElementById('e2q3').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e2q1 > 100 ? 'green' : e2q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e2q2 > 100 ? 'green' : e2q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e2q3 > 100 ? 'green' : e2q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}</div></div></div>`;
+    
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 3 - Starbucks</div>';
+    let e3q1 = (document.getElementById('e3q1').value || '').split(/\s+/).length;
+    let e3q2 = (document.getElementById('e3q2').value || '').split(/\s+/).length;
+    let e3q3 = (document.getElementById('e3q3').value || '').split(/\s+/).length;
+    let e3q4 = (document.getElementById('e3q4').value || '').split(/\s+/).length;
+    let e3q5 = (document.getElementById('e3q5').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e3q1 > 100 ? 'green' : e3q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q2 > 100 ? 'green' : e3q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q3 > 100 ? 'green' : e3q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenbindung:</strong> ${task3Solutions.q3}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q4 > 100 ? 'green' : e3q4 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q4}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q5 > 100 ? 'green' : e3q5 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q5}</div></div></div>`;
+    
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 4 - Train4U</div>';
+    let e4q1 = (document.getElementById('e4q1').value || '').split(/\s+/).length;
+    let e4q2 = (document.getElementById('e4q2').value || '').split(/\s+/).length;
+    let e4q3 = (document.getElementById('e4q3').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e4q1 > 100 ? 'green' : e4q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Slogan & Nutzenversprechen:</strong> ${task4Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e4q2 > 100 ? 'green' : e4q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Konkrete Maßnahmen:</strong> ${task4Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e4q3 > 100 ? 'green' : e4q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}</div></div></div>`;
+    
     document.getElementById('fb').innerHTML = html;
+    window.scrollTo(0, 0);
 }
 
 function makePDF() {
