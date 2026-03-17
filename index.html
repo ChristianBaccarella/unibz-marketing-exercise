@@ -176,16 +176,12 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <textarea id="e3q2"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Welche Instrumente nutzt Starbucks zur Kundenbindung (CRM)? Geben Sie zwei konkrete Beispiele.</div>
+                <div class="q-label">Warum könnte Starbucks als Beispiel für eine Service-Dominant Logic gelten?</div>
                 <textarea id="e3q3"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Warum könnte Starbucks als Beispiel für eine Service-Dominant Logic gelten?</div>
-                <textarea id="e3q4"></textarea>
-            </div>
-            <div class="q-group">
                 <div class="q-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten?</div>
-                <textarea id="e3q5"></textarea>
+                <textarea id="e3q4"></textarea>
             </div>
         </div>
 
@@ -283,6 +279,25 @@ const solutions = {
     Ryanair: { p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war.', v: 'Ein typischer Ryanair-Kunde ist preissensibel und möchte günstig reisen.', e: 'Ryanair sticht durch Ultra-Billigflüge und häufige Verbindungen zu kleineren Flughäfen heraus.' },
     Airbnb: { p: 'Airbnb löst das Problem anonymer Hotelzimmer durch echte, lokale Erfahrungen.', v: 'Ein typischer Airbnb-Kunde ist abenteuerlustig und möchte authentische Erlebnisse.', e: 'Airbnb sticht durch authentische Erlebnisse und direkten Kontakt zu Gastgebern heraus.' },
     Netflix: { p: 'Netflix löst das Problem von starren Programmzeiten und begrenztem TV-Angebot.', v: 'Ein typischer Netflix-Kunde möchte Inhalte nach seinem Zeitplan schauen.', e: 'Netflix sticht durch unbegrenzte Inhalte jederzeit verfügbar und exklusiven Original-Content heraus.' }
+};
+
+const task2Solutions = {
+    q1: 'Das zentrale Nutzenversprechen von IKEA ist die Demokratisierung von Design. IKEA macht hochwertiges, funktionales Möbeldesign für breite Bevölkerung erschwinglich.',
+    q2: '(1) IKEA Family Programm: personalisierte Angebote, exklusive Rabatte, Geburtstagsgeschenke. (2) Professionelle Planungstools: online planen, Ideen speichern. (3) Showroom-Erlebnisse: inspirierende Musterwohnungen.',
+    q3: 'IKEA verfolgt klar eine Marketingorientierung. Das gesamte Geschäftsmodell ist auf KUNDENBEDÜRFNISSE ausgerichtet.'
+};
+
+const task3Solutions = {
+    q1: 'Das zentrale Nutzenversprechen von Starbucks ist der "Third Place" – ein Ort zwischen Zuhause und Arbeit.',
+    q2: 'Starbucks kreiert das Erlebnis durch: Atmosphäre mit gedimmtem Licht, warmen Farben, trainiertes Personal, personalisierte Getränke.',
+    q3: 'Starbucks verkörpert Service-Dominant Logic, weil es nicht das Produkt "Kaffee" verkauft – es verkauft einen SERVICE.',
+    q4: 'In Italien gibt es etablierte Café-Kultur, anderes Ritual (kurzer Espresso an der Theke), Preisvorteil lokaler Bars, kulturelle Ablehnung.'
+};
+
+const task4Solutions = {
+    q1: 'Ein echtes Fitnessstudio-Erlebnis: Train4U sollte einen Ort schaffen, wo Transformation möglich ist.',
+    q2: '(1) Buddy-System. (2) Kostenlose Personal-Training-Sessions. (3) Wöchentliche Challenges. (4) App zum Fortschritt-Tracking. (5) Flexible Öffnungszeiten.',
+    q3: '(1) Before-After-Stories. (2) Lokale Social-Media-Kampagnen. (3) Micro-Influencer-Partnerschaften. (4) Kostenlose Trainings-Events. (5) Referral-Programm.'
 };
 
 const slogans = {
@@ -389,7 +404,7 @@ function finish() {
     document.querySelector('.timer-bar').style.display = 'none';
     updateDisplay();
     
-    let html = '<div class="fb-item"><div class="fb-h">Aufgabe 1</div>';
+    let html = '<div class="fb-item"><div class="fb-h">Aufgabe 1 - Nutzenversprechen</div>';
     let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
     let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
     
@@ -406,6 +421,32 @@ function finish() {
         html += `<strong>${c2}</strong><div class="rating"><div class="rating-icon ${p2 > 100 ? 'green' : p2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}</div></div><div class="rating"><div class="rating-icon ${v2 > 100 ? 'green' : v2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c2].v}</div></div><div class="rating"><div class="rating-icon ${e2 > 100 ? 'green' : e2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c2].e}</div></div>`;
     }
     html += '</div>';
+    
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 2 - IKEA</div>';
+    let e2q1 = (document.getElementById('e2q1').value || '').split(/\s+/).length;
+    let e2q2 = (document.getElementById('e2q2').value || '').split(/\s+/).length;
+    let e2q3 = (document.getElementById('e2q3').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e2q1 > 100 ? 'green' : e2q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e2q2 > 100 ? 'green' : e2q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e2q3 > 100 ? 'green' : e2q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}</div></div></div>`;
+    
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 3 - Starbucks</div>';
+    let e3q1 = (document.getElementById('e3q1').value || '').split(/\s+/).length;
+    let e3q2 = (document.getElementById('e3q2').value || '').split(/\s+/).length;
+    let e3q3 = (document.getElementById('e3q3').value || '').split(/\s+/).length;
+    let e3q4 = (document.getElementById('e3q4').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e3q1 > 100 ? 'green' : e3q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q2 > 100 ? 'green' : e3q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q3 > 100 ? 'green' : e3q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q3}</div></div>
+    <div class="rating"><div class="rating-icon ${e3q4 > 100 ? 'green' : e3q4 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q4}</div></div></div>`;
+    
+    html += '<div class="fb-item"><div class="fb-h">Aufgabe 4 - Train4U</div>';
+    let e4q1 = (document.getElementById('e4q1').value || '').split(/\s+/).length;
+    let e4q2 = (document.getElementById('e4q2').value || '').split(/\s+/).length;
+    let e4q3 = (document.getElementById('e4q3').value || '').split(/\s+/).length;
+    html += `<div class="rating"><div class="rating-icon ${e4q1 > 100 ? 'green' : e4q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Slogan:</strong> ${task4Solutions.q1}</div></div>
+    <div class="rating"><div class="rating-icon ${e4q2 > 100 ? 'green' : e4q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Maßnahmen:</strong> ${task4Solutions.q2}</div></div>
+    <div class="rating"><div class="rating-icon ${e4q3 > 100 ? 'green' : e4q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}</div></div></div>`;
     
     document.getElementById('fb').innerHTML = html;
 }
@@ -454,7 +495,10 @@ function makePDF() {
     add(document.getElementById('e2q3').value || '-');
     
     add('Aufgabe 3: Starbucks', true);
-    for (let i = 1; i <= 5; i++) add(document.getElementById(`e3q${i}`).value || '-');
+    add(document.getElementById('e3q1').value || '-');
+    add(document.getElementById('e3q2').value || '-');
+    add(document.getElementById('e3q3').value || '-');
+    add(document.getElementById('e3q4').value || '-');
     
     add('Aufgabe 4: Train4U', true);
     add(document.getElementById('e4q1').value || '-');
