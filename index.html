@@ -310,6 +310,7 @@
             font-size: 14px;
             color: var(--text-primary);
             line-height: 1.6;
+            font-style: italic;
         }
         
         .copy-btn {
@@ -608,17 +609,17 @@
                     
                     <div class="question-group">
                         <label class="question-label">Was ist das zentrale Nutzenversprechen von IKEA?</label>
-                        <textarea id="ex2q1"></textarea>
+                        <textarea id="ex2q1" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie drei konkrete Beispiele.</label>
-                        <textarea id="ex2q2"></textarea>
+                        <textarea id="ex2q2" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung? Warum?</label>
-                        <textarea id="ex2q3"></textarea>
+                        <textarea id="ex2q3" onchange="saveAll()"></textarea>
                     </div>
                 </div>
                 
@@ -631,27 +632,27 @@
                     
                     <div class="question-group">
                         <label class="question-label">Was ist das zentrale Nutzenversprechen von Starbucks?</label>
-                        <textarea id="ex3q1"></textarea>
+                        <textarea id="ex3q1" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
-                        <textarea id="ex3q2"></textarea>
+                        <textarea id="ex3q2" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche Instrumente nutzt Starbucks zur Kundenbindung? Geben Sie zwei konkrete Beispiele.</label>
-                        <textarea id="ex3q3"></textarea>
+                        <textarea id="ex3q3" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Warum könnte Starbucks als Beispiel für Service-Dominant-Logic gelten?</label>
-                        <textarea id="ex3q4"></textarea>
+                        <textarea id="ex3q4" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten, erfolgreich zu sein?</label>
-                        <textarea id="ex3q5"></textarea>
+                        <textarea id="ex3q5" onchange="saveAll()"></textarea>
                     </div>
                 </div>
                 
@@ -670,31 +671,31 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
-                                <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Berufstätige')">Berufstätige</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Anfänger')">Anfänger</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Frauen')">Frauen</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Personen über 50')">Über 50 Jahre</div>
+                                <div class="generator-options" id="tgOptions">
+                                    <div class="generator-option" onclick="selectGenOption(event, 'tg', 'Berufstätige')">Berufstätige</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'tg', 'Anfänger')">Anfänger</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'tg', 'Frauen')">Frauen</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'tg', '50plus')">Über 50 Jahre</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welches Problem?</div>
-                                <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Zeitmangel')">Zeitmangel</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Motivationsmangel')">Keine Motivation</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Optimierungsdrang')">Selbstoptimierung</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Unwissen')">Keine Expertise</div>
+                                <div class="generator-options" id="pbOptions">
+                                    <div class="generator-option" onclick="selectGenOption(event, 'pb', 'Zeit')">Zeitmangel</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'pb', 'Motivation')">Keine Motivation</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'pb', 'Wissen')">Keine Expertise</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'pb', 'Erfolg')">Keine Erfolge</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welcher Mehrwert?</div>
-                                <div class="generator-options">
-                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Zusammengehörigkeitsgefühl')">Gemeinschaft</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Zeitliche Unabhängigkeit')">Flexibilität</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Professionelle Anleitung')">Persönliche Betreuung</div>
-                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Nachweisbarer Erfolg')">Messbare Resultate</div>
+                                <div class="generator-options" id="vlOptions">
+                                    <div class="generator-option" onclick="selectGenOption(event, 'vl', 'Community')">Gemeinschaft</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'vl', 'Flexibel')">Flexibilität</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'vl', 'Trainer')">Personal Trainer</div>
+                                    <div class="generator-option" onclick="selectGenOption(event, 'vl', 'Erfolg')">Garantierte Ergebnisse</div>
                                 </div>
                             </div>
                             
@@ -702,25 +703,24 @@
                             <div id="generatedVP"></div>
                         </div>
                         
-                        <textarea id="ex4q1"></textarea>
+                        <textarea id="ex4q1" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche konkreten Maßnahmen könnte das Studio unternehmen, damit die Kunden wieder in das Studio kommen?</label>
-                        <textarea id="ex4q2"></textarea>
+                        <textarea id="ex4q2" onchange="saveAll()"></textarea>
                     </div>
                     
                     <div class="question-group">
                         <label class="question-label">Welche konkrete Werbestrategie würden Sie hier empfehlen? Denken Sie sich eine kurze Strategie aus, um Ihre oben gewählte Zielgruppe anzusprechen.</label>
-                        <textarea id="ex4q3"></textarea>
+                        <textarea id="ex4q3" onchange="saveAll()"></textarea>
                     </div>
                 </div>
                 
                 <div class="score-section" id="scoreSection">
                     <div class="score-icon">✅</div>
                     <h2>Vielen Dank für Ihre Teilnahme!</h2>
-                    <p>Ihre Antworten wurden gespeichert.</p>
-                    <p>Wir besprechen die Ergebnisse jetzt zusammen.</p>
+                    <p>Sie können weiter unten Ihre Ergebnisse herunterladen.</p>
                     
                     <div class="feedback-section" id="feedbackSection"></div>
                     
@@ -770,497 +770,298 @@
         let timerInterval;
         let genOptions = { tg: '', pb: '', vl: '' };
 
-        // KREATIVE Slogans - GANZ ANDERS, nicht gebunden an die Kategorienbeschreibungen
+        // MASSIVE Fitness-Studio Slogans - 200% mehr Optionen
         const vpLibrary = {
-            'Berufstätige-Zeitmangel-Zusammengehörigkeitsgefühl': [
-                "In 30 Minuten mehr erreichen als andere in 3 Stunden – zusammen mit Menschen, die deine Realität verstehen.",
-                "Effizient trainieren. Echte Freunde finden. Das ist Train4U.",
-                "Keine Zeit für Umschweife. Maximale Ergebnisse mit deinem Team.",
-                "30 Minuten Power. Ein Leben voller Verbundenheit.",
-                "Schnell fit mit den richtigen Menschen an deiner Seite."
+            'Berufstätige-Zeit-Community': [
+                "30 Minuten. Maximale Ergebnisse. Mit deinem Team.",
+                "Effizient trainiert. Zusammen stärker. Train4U.",
+                "Kurz und kraftvoll – trainieren mit Sinn für Zeit.",
+                "Für Profis: Fitness, die in deinen Zeitplan passt.",
+                "Train schnell. Train smart. Train gemeinsam.",
+                "Der schnellste Weg zum Erfolg. Zusammen.",
+                "Kompakt trainiert. Gemeinsam gewonnen.",
+                "Zeitsparend und effektiv mit echten Menschen.",
+                "30 Minuten pro Tag ändern dein Leben mit deiner Crew.",
+                "Kurze Sessions. Langfristige Freundschaften. Train4U.",
+                "Effiziente Trainings für echte Profis.",
+                "Mit deinem Team trainiert es sich schneller.",
+                "Powertraining in Kurzform – zusammen stärker."
             ],
-            'Berufstätige-Zeitmangel-Zeitliche Unabhängigkeit': [
-                "Trainiere, wann DEIN Arbeitskalender es erlaubt – nicht umgekehrt.",
-                "24/7: Das Fitnessstudio, das sich deiner Agenda anpasst.",
-                "Keine Öffnungszeiten. Nur deine Zeit zählt.",
-                "Um 5 Uhr morgens trainieren? Nachts um 11? Bei uns möglich.",
-                "Flexibilität ist nicht optional – es ist dein Recht."
+            'Berufstätige-Zeit-Flexibel': [
+                "24/7 Fitness für dein Leben – nicht umgekehrt.",
+                "Trainiere um 5 Uhr oder nachts. Hier geht beides.",
+                "Dein Fitnessstudio funktioniert, wenn du es brauchst.",
+                "Flexible Zeiten. Echte Ergebnisse. Train4U.",
+                "Keine Ausreden mehr: Wir sind immer da.",
+                "Online oder vor Ort – deine Wahl, dein Timing.",
+                "Trainiere, wenn du Zeit hast, nicht wenn wir offen sind.",
+                "24/7 verfügbar für dein stressiges Leben.",
+                "Flexibilität, die deinem Job entspricht.",
+                "Fitnessstudio, das sich nach DIR richtet.",
+                "Rund um die Uhr für deine Trainingsziele.",
+                "Dein Rhythmus, deine Zeiten, deine Fitness."
             ],
-            'Berufstätige-Zeitmangel-Professionelle Anleitung': [
-                "Dein Trainer, dein Plan, dein Erfolg. In nur 30 Minuten.",
-                "Keine Zeitverschwendung. Nur intelligente Trainings.",
-                "Effiziente Trainings von echtem Experten – für echte Menschen.",
-                "Maximale Ergebnisse durch minimale Zeitinvestition.",
-                "Kurz, präzise, wirksam. Genau wie du es brauchst."
+            'Berufstätige-Zeit-Trainer': [
+                "Effizienz trainiert sich nicht allein – mit deinem Trainer.",
+                "30 Minuten mit dem richtigen Plan machen den Unterschied.",
+                "Professionelle Trainings für professionelle Menschen.",
+                "Keine Zeit für Umschweife. Dein Trainer weiß, wie es geht.",
+                "Smart trainieren. Mit Expertise an der Seite.",
+                "Professionelle Betreuung für maximale Effizienz.",
+                "In 30 Minuten zu echten Ergebnissen.",
+                "Dein Trainer optimiert jede Minute deiner Zeit.",
+                "Wertvolle Zeit investieren. Garantierte Resultate.",
+                "Mit deinem Trainer jeden Tag besser.",
+                "Expertise, die Zeit spart und wirkt.",
+                "Professioneller Coach für professionelle Ergebnisse."
             ],
-            'Berufstätige-Zeitmangel-Nachweisbarer Erfolg': [
-                "30 Minuten jeden Tag = sichtbare Ergebnisse in 4 Wochen.",
-                "Messbar besser. Bewiesenermaßen wirksam. Für Berufstätige.",
-                "Du siehst Fortschritt – und zwar schnell.",
-                "Effizienz, die sich rechnet: Metriken statt Versprechen.",
-                "Kurze Trainings, echte Resultate. Das ist keine Rhetorik."
+            'Berufstätige-Zeit-Erfolg': [
+                "Kurz trainiert. Schnell Erfolg. Lange Motivation.",
+                "30 Minuten täglich = messbare Veränderung.",
+                "Train4U: Effizienz, die zählt.",
+                "Keine Zeit für Umwege. Direkter Weg zu deinen Zielen.",
+                "Trainingstime = Resultat-Time.",
+                "Schnell fit. Schnell sichtbar. Schnell motiviert.",
+                "Von Tag 1 siehst du Fortschritt.",
+                "Zeit ist kostbar – hier wird sie zu Erfolg.",
+                "Sichtbare Ergebnisse in kurzer Zeit.",
+                "Effizienz, die sich auszahlt.",
+                "Jede Minute zählt – jede bringt Erfolg.",
+                "Schnelle Erfolge für schnelle Menschen."
             ],
-            'Berufstätige-Motivationsmangel-Zusammengehörigkeitsgefühl': [
-                "Allein trainieren? Nicht mit uns. Deine Community wartet.",
-                "Motivation ist nicht dein Problem – deine Gruppe ist deine Lösung.",
-                "Mit der richtigen Crew wird Fitness zur Routine.",
-                "Deine Leute kennen deine Kämpfe. Das ändert alles.",
-                "Zusammen schaffen wir, was allein unmöglich scheint."
+            'Berufstätige-Motivation-Community': [
+                "Allein trainieren ist einsam. Bei Train4U nicht.",
+                "Mit der richtigen Gruppe trainiert sich's leichter.",
+                "Deine Fitness-Community wartet.",
+                "Zusammen zum Ziel. Zusammen am stärksten.",
+                "Motivation durch Gemeinschaft. Das ist Train4U.",
+                "Nie wieder allein im Fitnessstudio.",
+                "Mit deinen Leuten wird Fitness zur Routine.",
+                "Die beste Motivation sitzt neben dir.",
+                "Gemeinsam macht Training Spaß.",
+                "Mit einer starken Community bist du unaufhaltsam.",
+                "Deine Gruppe = deine Kraft.",
+                "Zusammen trainieren, zusammen wachsen.",
+                "Community power für deinen Erfolg."
             ],
-            'Berufstätige-Motivationsmangel-Zeitliche Unabhängigkeit': [
-                "Trainiere online, trainiere live, trainiere wann du willst – hauptsache du trainierst.",
-                "Keine Ausreden bei Flexibilität in diesem Ausmaß.",
-                "24/7 verfügbar. 24/7 motiviert. Das ist der Unterschied.",
-                "Jede Stunde des Tages ist Trainingszeit bei Train4U.",
-                "Motivation folgt, wenn Hürden fallen."
+            'Berufstätige-Motivation-Flexibel': [
+                "Trainiere, wenn die Motivation da ist – bei uns immer möglich.",
+                "Keine Öffnungszeiten-Frustration mehr. 24/7 Zugang.",
+                "Wann immer du bereit bist. Wir sind bereit.",
+                "Flexibility schafft Kontinuität. Kontinuität schafft Erfolg.",
+                "Trainieren, wenn DU es willst. Nicht wenn das Studio offen hat.",
+                "Motivation zu jeder Tageszeit. 24/7.",
+                "Trainiere, wann du wach und motiviert bist.",
+                "Keine starren Zeiten. Nur dein Rhythmus.",
+                "Für jeden Motivations-Moment verfügbar.",
+                "Flexible Optionen = keine Ausreden.",
+                "Trainieren nach deinem Energie-Level.",
+                "Jederzeit bereit, wenn du bereit bist."
             ],
-            'Berufstätige-Motivationsmangel-Professionelle Anleitung': [
-                "Ein Trainer, der versteht, was hält dich ab – und wie man es überwindet.",
+            'Berufstätige-Motivation-Trainer': [
+                "Motivation braucht Expertise. Dein Trainer hat beides.",
+                "Mit einem Trainer wird Unwille zu Willenskraft.",
                 "Professionelle Betreuung = professionelle Motivation.",
-                "Dein Trainer IST deine Motivation. Punkt.",
-                "Expertise schafft Vertrauen. Vertrauen schafft Motivation.",
-                "Wenn jemand an dich glaubt, glaubst du auch an dich."
+                "Ein Trainer, der an dich glaubt. Das ändert alles.",
+                "Dein Trainer IST deine Motivation.",
+                "Mit jemandem, der dich kennt, trainierst du besser.",
+                "Ein Trainer, der versteht, warum du aufgeben möchtest.",
+                "Motivation trifft Expertise – das ist Train4U.",
+                "Mit deinem Trainer geht es nie flach.",
+                "Persönliche Betreuung = persönliche Erfolge.",
+                "Ein Trainer, der nicht akzeptiert, dass du aufgibst.",
+                "Mit Unterstützung wird Motivation zur Routine."
             ],
-            'Berufstätige-Motivationsmangel-Nachweisbarer Erfolg': [
-                "Sichtbare Fortschritte sind die beste Motivation.",
-                "Nicht motiviert? Warte bis du deine erste Zahl siehst.",
-                "Resultat motiviert. Punkt.",
-                "Messbarer Erfolg ist die ultimative Motivation.",
-                "Jede Woche neuer Grund, weiterzumachen."
+            'Berufstätige-Motivation-Erfolg': [
+                "Erfolg motiviert stärker als jede Rede.",
+                "Messbare Ergebnisse = messbare Motivation.",
+                "Erste kleine Erfolge führen zu großem Durchhaltevermögen.",
+                "Sichtbare Fortschritte, die motivieren.",
+                "Train4U: Erfolg ist der beste Trainer.",
+                "Schnelle Siege bauen echte Motivation.",
+                "Erfolg sehen = weitermachen wollen.",
+                "Von Woche 1: Ergebnisse, die motivieren.",
+                "Jeder kleine Fortschritt zählt.",
+                "Erfolg ist die beste Motivation.",
+                "Messbare Ziele. Messbare Erfolge. Messbare Motivation.",
+                "Mit jedem Erfolg wächst die Lust weiterzumachen."
             ],
-            'Berufstätige-Optimierungsdrang-Zusammengehörigkeitsgefühl': [
-                "Optimization trifft Community. Das ist wie Kaffee mit echtem Espresso.",
-                "Gemeinsam besser. Nicht konkurrierend – kooperativ.",
-                "Deine Gruppe sind deine Benchmarks – und deine Cheerleader.",
-                "Optimierst dich selbst UND andere. Gegenseitiger Aufstieg.",
-                "Wenn andere wachsen, wächst du schneller mit ihnen."
+            'Anfänger-Zeit-Community': [
+                "Anfangen passt in jeden Zeitplan – mit der richtigen Gruppe.",
+                "Kurze Trainings für Anfänger. Mit Support.",
+                "15 Minuten, die zählen. Mit deinem Team.",
+                "Effizient anfangen. Zusammen anfangen.",
+                "Train4U für Anfänger: Kurz, einfach, zusammen.",
+                "Mit anderen Anfängern verlierst du die Angst.",
+                "Gemeinsam anfangen ist leichter als allein.",
+                "Deine Anfänger-Crew wartet auf dich.",
+                "Kurze Sessions mit echtem Support.",
+                "Anfangen in einer Gruppe von Anfängern.",
+                "Mit Gleichgesinnten den Anfang machen.",
+                "Kurz, unkompliziert, zusammen – das ist dein Anfang."
             ],
-            'Berufstätige-Optimierungsdrang-Zeitliche Unabhängigkeit': [
-                "Selbstoptimierung braucht Flexibilität – und genau die bieten wir.",
-                "Optimierungsplan in deinem Tempo. Nicht unserem.",
-                "24/7 verfügbar für deine Ziele. Wann immer du sie verfolgst.",
-                "Flexibilität ist die Grundlage echter Selbstoptimierung.",
-                "Dein Weg zu deiner besten Version. In deinem Timing."
+            'Anfänger-Zeit-Flexibel': [
+                "Anfangen bedeutet nicht in ein enges Zeitfenster passen.",
+                "Flexible Zeiten für flexibles Anfangen.",
+                "24/7 verfügbar für deinen perfekten Anfang.",
+                "Starte, wenn du bereit bist. Nicht wenn wir offen haben.",
+                "Dein Anfang. Dein Tempo. Dein Studio.",
+                "Trainiere in der Zeit, die dir passt.",
+                "Keine Terminstress für Anfänger.",
+                "Anfangen im eigenen Rhythmus.",
+                "Flexible Kurse für flexible Anfänger.",
+                "Dein perfekter Startzeitpunkt existiert – bei uns.",
+                "24/7 Anfänger-freundlich.",
+                "Anfangen, wann es für DICH passt."
             ],
-            'Berufstätige-Optimierungsdrang-Professionelle Anleitung': [
-                "Datenbasierte Trainingspläne für Menschen, die Kontrolle lieben.",
-                "Dein Trainer + Daten = deine perfekte Formel.",
-                "Intelligente Menschen trainieren intelligent. Mit uns.",
-                "Optimierung ist Wissenschaft. Wir sind Experten darin.",
-                "ROI im Fitnessstudio? Ja. Mit professioneller Anleitung."
-            ],
-            'Berufstätige-Optimierungsdrang-Nachweisbarer Erfolg': [
-                "Jede Metrik zeigt: Du wirst besser. Kontinuierlich.",
-                "Selbstoptimierung braucht Zahlen – und wir haben sie.",
-                "Optimization ohne Messungen? Das ist Rätselraten. Wir spielen Schach.",
-                "Datengetrieben. Resultatgetrieben. Erfolggetrieben.",
-                "Deine Fortschritte sind nicht Hoffnung – sie sind Fakten."
-            ],
-            'Berufstätige-Unwissen-Zusammengehörigkeitsgefühl': [
-                "Keine Expertise? Kein Problem – deine Gruppe hat sie.",
-                "Lernend trainieren. Mit Menschen, die dich verstehen.",
-                "Die beste Schule ist deine Community – schnell, praktisch, echte Ergebnisse.",
-                "Anfänger unter Anfängern fühlt sich VIEL besser an.",
-                "Gemeinsam lernen ist schneller als allein rätselraten."
-            ],
-            'Berufstätige-Unwissen-Zeitliche Unabhängigkeit': [
-                "Online-Kurse, Live-Sessions, Tutorials – 24/7 verfügbar für dein Lerntempo.",
-                "Experten-Wissen. Dein Tempo. Deine Zeit.",
-                "24/7 Zugang zu echter Expertise. Kein Warten.",
-                "Lernen ohne Zeitdruck. Das ist die Definition von Freiheit.",
-                "Dein Curriculum. Dein Schedule. Deine Geschwindigkeit."
-            ],
-            'Berufstätige-Unwissen-Professionelle Anleitung': [
-                "Dein Trainer ERKLÄRT nicht einfach – er zeigt dir WIE.",
-                "Von null Ahnung zu echter Expertise in 4 Wochen.",
-                "Professionelle Betreuung = kein verschwendetes Training.",
-                "Dein Trainer verhindert 5 Jahre wasted Potential.",
-                "Mit einem Profi an deiner Seite lernst du Monate schneller."
-            ],
-            'Berufstätige-Unwissen-Nachweisbarer Erfolg': [
-                "Von unwissend zu erfolgreich – messbar in Woche 1.",
-                "Erst die Wissenslücken füllen, dann die Ergebnisse sehen.",
-                "Expertise + Konsistenz = Erfolg, den man sieht.",
-                "Jede Woche klüger. Jede Woche stärker.",
-                "Wissen ist Macht. Metriken sind der Beweis."
-            ],
-            'Anfänger-Zeitmangel-Zusammengehörigkeitsgefühl': [
-                "Anfangen braucht nicht lange – und schon gar nicht einsam.",
-                "15 Minuten. Eine Gruppe. Ein großer Start.",
-                "Mit Anfängern für Anfänger. Ohne Judging. Mit echtem Support.",
-                "Die erste Stunde ist nicht Unterricht – es ist Familie.",
-                "Gemeinsam anfangen ist 10x leichter."
-            ],
-            'Anfänger-Zeitmangel-Zeitliche Unabhängigkeit': [
-                "Anfangen passt in dein Leben – nicht umgekehrt.",
-                "15 Minuten-Workouts für echte Menschen mit echtem Leben.",
-                "Flexibel anfangen. Konsistent weitermachen.",
-                "Anfänger brauchen Flexibilität – wir verstehen das.",
-                "Dein erstes Training? Wann du Zeit hast."
-            ],
-            'Anfänger-Zeitmangel-Professionelle Anleitung': [
+            'Anfänger-Zeit-Trainer': [
                 "Mit einem Trainer anfangen = Fehler von Anfang an vermeiden.",
+                "Professionelle Anleitung vom ersten Tag.",
                 "Dein Trainer macht Anfänger-Fehler unmöglich.",
-                "Professionelle Anleitung beim Anfang spart dir JAHRE.",
-                "Falsch anfangen ist teurer als richtig anfangen mit Trainer.",
-                "In 4 Wochen mit Trainer = sicher 4 Jahre ohne Chaos."
+                "Kurze, effektive Trainings von deinem Trainer.",
+                "Train4U: Der richtige Start für Anfänger.",
+                "Ein Trainer, der Anfänger versteht.",
+                "Mit professioneller Hilfe schneller zum Profi.",
+                "Anfänger-gerechtes Coaching von Tag 1.",
+                "Ein Trainer für deinen erfolgreichen Anfang.",
+                "Mit Expertise wirst du schneller zur Expertin.",
+                "Professionelle Anfänger-Betreuung.",
+                "Der beste Start dank professioneller Anleitung."
             ],
-            'Anfänger-Zeitmangel-Nachweisbarer Erfolg': [
-                "15 Minuten jeden Tag = erste Ergebnisse in 2 Wochen.",
-                "Schnell anfangen. Schnell erfolg sehen. Weitermachen.",
-                "Anfänger-Erfolg motiviert zu Experten-Erfolg.",
-                "Messbare Verbesserung vom Tag 1 an.",
-                "Wenn Anfänger schnell Erfolg sehen, hören sie nicht auf."
+            'Anfänger-Zeit-Erfolg': [
+                "Schnell anfangen. Schnell Erfolg sehen. Weitermachen.",
+                "Erste Erfolge in 2 Wochen. Garantiert.",
+                "Anfänger-Erfolg ist der beste Motivator.",
+                "Train4U: Erfolg vom ersten Trainingstag.",
+                "Anfangen, das wirkt. Von Anfang an.",
+                "Sichtbare Veränderung schon beim Anfang.",
+                "Schnelle Erfolge für schnelle Anfänger-Fortschritte.",
+                "Mit jedem Training besser werden.",
+                "Erfolg motiviert – auch beim Anfang.",
+                "Von Tag 1 merkst du Veränderung.",
+                "Anfänger-Erfolge, die motivieren.",
+                "Schnelle kleine Wins für großes Durchhaltevermögen."
             ],
-            'Anfänger-Motivationsmangel-Zusammengehörigkeitsgefühl': [
-                "Angst vor dem ersten Tag? Mit deiner Anfänger-Crew nicht.",
-                "Der beste Anti-Scham ist eine ganze Gruppe Anfänger.",
-                "Niemand schaut auf dich – alle sind genauso nervös.",
-                "Deine Gruppe macht dein Anfänger-Abenteuer zur Normalität.",
-                "Zusammen anfangen nimmt die Angst komplett weg."
+            'Frauen-Zeit-Community': [
+                "Kurz trainiert. Mit Frauen, die dich verstehen.",
+                "Für Frauen von Frauen: Zeit + Gemeinschaft.",
+                "Mit der richtigen Frauengruppe macht Zeit mehr aus.",
+                "Zusammen stärker. In kürzerer Zeit.",
+                "Train4U für Frauen: Effizient und zusammen.",
+                "Mit Frauen trainieren ist anders – besser.",
+                "15 Minuten mit deinen Frauen.",
+                "Mit deinen Schwestern im Sport.",
+                "Frauenpower in kompakter Form.",
+                "Mit Frauen, die DEIN Leben verstehen.",
+                "Kurz, intensiv, weiblich – das ist echte Fitness.",
+                "Mit Frauen, die dich verstehen, trainiert es sich leichter."
             ],
-            'Anfänger-Motivationsmangel-Zeitliche Unabhängigkeit': [
-                "Keine Öffnungszeiten-Angst. Trainiere, wenn du Mut hast.",
-                "24/7 verfügbar = Anfänger-Mut auch nachts möglich.",
-                "Angst um 5 Uhr morgens trainieren? Kein Problem.",
-                "Flexibility nimmt Druck. Druck nimmt Anfänger.",
-                "Wann du bereit bist. Nicht wann wir offen haben."
+            'Frauen-Zeit-Flexibel': [
+                "Mama-Zeit. Karriere-Zeit. Fitness-Zeit. Alles möglich.",
+                "Kinderbetreuung + Flexible Zeiten = Fitness ist machbar.",
+                "Für Frauen mit echtem Leben.",
+                "Flexibilität, die Frauen-Leben respektiert.",
+                "Train4U: Fitnessstudio für echte Frauenleben.",
+                "Trainiere, wenn dein Frauenleben es erlaubt.",
+                "Flexible Fitness für flexible Frauen.",
+                "Mit Kinderbetreuung. Mit deinem Timing.",
+                "Keine Stress-Öffnungszeiten.",
+                "Dein Leben. Dein Timing. Deine Fitness.",
+                "Flexibilität, die Mütter brauchen.",
+                "24/7 für Frauen mit echtem Alltag."
             ],
-            'Anfänger-Motivationsmangel-Professionelle Anleitung': [
-                "Dein Trainer sagt: ‚Du machst das richtig.' Das ist alles, was Anfänger braucht.",
-                "Professionelle Betreuung = professionelle Sicherheit beim Anfang.",
-                "Mit einem Trainer wird dein erstes Training zur besten Entscheidung.",
-                "Dein Trainer nimmt die Angst – bleibt die Action.",
-                "Wenn ein Profi dir vertraut, vertraust du dir selbst."
-            ],
-            'Anfänger-Motivationsmangel-Nachweisbarer Erfolg': [
-                "Erste Woche: Alles tut weh. Zweite Woche: Du merkst die Veränderung.",
-                "Anfänger brauchen Beweis – hier ist er.",
-                "Schneller Erfolg = längerfristiges Durchhaltevermögen.",
-                "Wenn Anfänger Zahl sehen, werden sie Gläubige.",
-                "Ergebnis motiviert mehr als Worte je könnten."
-            ],
-            'Anfänger-Optimierungsdrang-Zusammengehörigkeitsgefühl': [
-                "Von Anfänger zu Experte gemeinsam – schneller, klüger, echter.",
-                "Gemeinsame Optimierung. Gegenseitiger Erfolg.",
-                "Deine Gruppe ist dein Benchmarkingpartner.",
-                "Wachstum ist exponentiell, wenn alle zusammen wachsen.",
-                "Anfänger-Gruppe wird zur Performance-Gruppe."
-            ],
-            'Anfänger-Optimierungsdrang-Zeitliche Unabhängigkeit': [
-                "Optimize in deinem Tempo. Nicht in unserem oder dem Gym Standard.",
-                "Dein Weg ist flexibel. Wie du wachsen möchtest.",
-                "24/7 Zugang zu Optimization-Tools bedeutet: Du bestimmst Tempo.",
-                "Anfänger-Optimierung braucht Raum. Hier gibt es ihn.",
-                "Wachsen wie DU es brauchst. Nicht wie andere es erwarten."
-            ],
-            'Anfänger-Optimierungsdrang-Professionelle Anleitung': [
-                "Von Tag 1: Dein Trainer optimiert dich RICHTIG.",
-                "Professionelle Anfänger-Anleitung = exponentieller Fortschritt.",
-                "Mit Trainer anfangen = 3x schneller zum Ziel.",
-                "Dein Trainer sieht Potential, das du nicht siehst.",
-                "Expertise beschleunigt deine Anfänger-Reise dramatisch."
-            ],
-            'Anfänger-Optimierungsdrang-Nachweisbarer Erfolg': [
-                "Woche 1: Du beginnst. Woche 12: Du bist anders.",
-                "Optimization braucht Metriken – hier sind sie.",
-                "Frühe Siege führen zu späteren Triumphen.",
-                "Anfänger-Optimierung zeigt sich SOFORT in den Zahlen.",
-                "Messbarer Erfolg = Anfänger wird zum Enthusiasten."
-            ],
-            'Anfänger-Unwissen-Zusammengehörigkeitsgefühl': [
-                "Keine Ahnung? Mit 20 anderen Anfängern genau dein Platz.",
-                "Lernen von Leuten, die gerade wie du angefangen haben.",
-                "Gemeinsam dumm sein ist nicht dumm – es ist smart.",
-                "Deine Gruppe versteht GENAU wie sich Anfänger fühlt.",
-                "Best Mentors? Anfänger, die gerade angefangen haben."
-            ],
-            'Anfänger-Unwissen-Zeitliche Unabhängigkeit': [
-                "24/7 Anfänger-Tutorials für 24/7 Anfänger-Fragen.",
-                "Lernen in deinem Tempo. Online. Überall. Jederzeit.",
-                "Keine Zeitlimits für Lernen – 24/7 Zugang zu Grundlagen.",
-                "Dein Curriculum. Keine Zeitdruck.",
-                "Flexibles Lernen = sicherer Anfang."
-            ],
-            'Anfänger-Unwissen-Professionelle Anleitung': [
-                "Dein Trainer erklärt ALLES – bis du verstehst.",
-                "Professionelle Anleitung = Anfänger-Verwirrung wird Anfänger-Klarheit.",
-                "Mit einem Trainer ist ‚Anfänger-Unwissen' nicht Problem – es ist Normalität.",
-                "Dein Trainer spricht Anfänger-Sprache.",
-                "Expertise macht Unwissen zur Stärke, nicht zur Schwäche."
-            ],
-            'Anfänger-Unwissen-Nachweisbarer Erfolg': [
-                "Schnelle Erfolge überschreiben schnell die Anfänger-Unsicherheit.",
-                "Unwissen + richtige Anleitung = schneller Erfolg.",
-                "Jede kleine Verbesserung ist RIESIG für Anfänger.",
-                "Erfolg überspricht alle Anfänger-Gedanken.",
-                "Zahlen zeigen: Du wusstest nicht Bescheid – jetzt weiß du es besser."
-            ],
-            'Frauen-Zeitmangel-Zusammengehörigkeitsgefühl': [
-                "Für Frauen von Frauen: Trainiere mit denen, die dein Leben verstehen.",
-                "Kurztraining mit echtem Support. Besser geht es nicht.",
-                "Mit der richtigen Frauengruppe wird Zeitdruck zu Teampower.",
-                "Kurz, intensiv, zusammen – das ist Fitness für Frauen.",
-                "15 Minuten mit deinen Frauen > 3 Stunden allein."
-            ],
-            'Frauen-Zeitmangel-Zeitliche Unabhängigkeit': [
-                "Mama-Fitness. Karriere-Fitness. Dein-Tempo-Fitness.",
-                "Kinderbetreuung + flexible Zeiten = Fitness ist MÖGLICH.",
-                "Dein Leben ist komplex. Deine Fitness ist flexibel.",
-                "15 Minuten morgens? Abends? In der Lunch Break? Hier geht alles.",
-                "Flexibilität bedeutet: Keine Ausreden mehr möglich."
-            ],
-            'Frauen-Zeitmangel-Professionelle Anleitung': [
-                "Dein Trainer VERSTEHT Frauen-Leben. Und trainiert dich danach.",
-                "Professionelle Betreuung für professionelle Frauen mit echtem Leben.",
+            'Frauen-Zeit-Trainer': [
                 "Mit einer Trainerin, die versteht – wird Zeitdruck zu Effizienz.",
-                "Deine Trainerin ist auch Mama/Karrierefrau – sie WEISS wie es geht.",
-                "Expertise aus echtem Frauenleben = echte Lösungen."
+                "Professionelle Frauenbetreuung für Zeitmanagement.",
+                "Deine Trainerin ist selbst Mama und Profi.",
+                "Mit Expertise wird Frauenzeit zu Resultat.",
+                "Train4U: Von Frauen für Frauen – effizient.",
+                "Eine Trainerin, die dein Leben kennt.",
+                "Mit einer Frau, die das Gleiche erlebt.",
+                "Professionelle Unterstützung für deine Zeitnot.",
+                "Deine Trainerin weiß, wie du tickst.",
+                "Mit Verständnis für dein Frauenleben.",
+                "Eine Trainerin, die keine Ausreden akzeptiert.",
+                "Expertise von einer Frau für dich."
             ],
-            'Frauen-Zeitmangel-Nachweisbarer Erfolg': [
-                "Kurz trainiert. Schnell Erfolg. Endlich Zeit für DICH.",
-                "15 Minuten jeden Tag = sichtbare Veränderung in 3 Wochen.",
-                "Erfolg motiviert – noch mehr Zeit für Fitness zu nehmen.",
-                "Wenn Frauen Ergebnisse sehen, hören sie nicht auf.",
-                "Messbarer Erfolg = Fitness wird zur Priorität."
+            '50plus-Zeit-Community': [
+                "Mit 50+ wird Zeit kostbar. Hier wird sie sinnvoll genutzt.",
+                "Kurze, intensive Trainings mit deiner Altersgruppe.",
+                "Mit 50+: Zusammen trainiert es sich besser.",
+                "Train4U: Fitness für 50+ mit Sinn.",
+                "Mit deinen 50+ Jahren stärker werden.",
+                "Mit Gleichgesinnten 50+ noch stärker.",
+                "Kurze, effektive Sessions mit deinen Leuten.",
+                "Mit 50+ zur Topform.",
+                "Zusammen 50+ fit bleiben.",
+                "Mit deinen 50ern die beste Zeit deines Lebens.",
+                "Kurz trainiert, langfristig gesund.",
+                "Mit 50+: Effizient und gemeinsam."
             ],
-            'Frauen-Motivationsmangel-Zusammengehörigkeitsgefühl': [
-                "Für Frauen, von Frauen, mit Frauen die dich WIRKLICH verstehen.",
-                "Allein trainieren? Mit dieser Gruppe nie wieder Gedanke.",
-                "Die beste Motivation? Frauen, die genauso kämpfen wie du.",
-                "Deine Schwestern im Sport – das ist echt.",
-                "Mit dieser Community wird Fitness zur Kultur statt Pflicht."
+            '50plus-Zeit-Flexibel': [
+                "Mit 50+ kennt man seinen Rhythmus. Hier passt sich Fitness an.",
+                "24/7 verfügbar für 50+ Lebensrhythmus.",
+                "Trainiere in deiner besten Tageszeit.",
+                "Mit 50+: Flexibilität respektiert deinen Körper.",
+                "Train4U: Fitness nach deinem 50+ Tempo.",
+                "Flexible Zeiten, die zu 50+ passen.",
+                "Trainiere, wenn dein Körper bereit ist.",
+                "24/7 Zugang für 50+ Menschen.",
+                "Mit 50+: Keine Zeitstress mehr.",
+                "Nach deinem 50+ Rhythmus trainieren.",
+                "Flexibilität für deine Lebenssituation.",
+                "Mit 50+ machen wir alles flexibel."
             ],
-            'Frauen-Motivationsmangel-Zeitliche Unabhängigkeit': [
-                "Trainiere wann du Kraft hast – nicht wann wir offen sind.",
-                "24/7 Zugang = Motivation auch um Mitternacht möglich.",
-                "Ungünstige Öffnungszeiten? Nicht bei uns.",
-                "Dein Menstruationszyklus bestimmt nicht dein Trainingszyklus.",
-                "Flexibility = Frauen-Power."
-            ],
-            'Frauen-Motivationsmangel-Professionelle Anleitung': [
-                "Eine Trainerin, die sagt: ‚Ich GLAUBE an dich.' Alles ändert sich.",
-                "Professionelle Betreuung = professionelle Motivation.",
-                "Mit einer Trainerin wird Motivation zu Gespräch statt zu Willenskraft.",
-                "Deine Trainerin IST deine Motivation.",
-                "Wenn eine starke Frau an dich glaubt, glaubst du selbst."
-            ],
-            'Frauen-Motivationsmangel-Nachweisbarer Erfolg': [
-                "Sichtbare Körper-Veränderung = sichtbare Motivation-Explosion.",
-                "Erfolg motiviert Frauen stärker als irgendein Pep Talk.",
-                "Jede Zahl ist ein Grund, weiterzumachen.",
-                "Wenn Frauen Ergebnis sehen, werden Zweifel zu Glaube.",
-                "Messbarer Erfolg = unaufhaltbare Motivation."
-            ],
-            'Frauen-Optimierungsdrang-Zusammengehörigkeitsgefühl': [
-                "Für dich. Nicht für jemanden anders. Mit deinen Frauen.",
-                "Gemeinsame Optimierung = gegenseitiger Aufstieg.",
-                "Deine Gruppe sind deine Sparring Partner – echte, starke Frauen.",
-                "Wenn alle Frauen optimieren, werden alle unaufhaltsam.",
-                "Gemeinsam zur besten Version – füreinander, nicht gegeneinander."
-            ],
-            'Frauen-Optimierungsdrang-Zeitliche Unabhängigkeit': [
-                "Optimierung in DEINEM Tempo. DEIN Kalender. DEIN Weg.",
-                "24/7 Zugang zu Deiner persönlichen Optimierungs-Reise.",
-                "Flexible Optimize-Pläne für flexible Frauenleben.",
-                "Dein Weg zur besten Version – zeitlich, wie du es brauchst.",
-                "Flexibility ist die Basis echter Frauen-Optimierung."
-            ],
-            'Frauen-Optimierungsdrang-Professionelle Anleitung': [
-                "Eine Trainerin, die SIEHT was in dir steckt und es rausnimmt.",
-                "Professionelle Frauenbetreuung = professionelle Optimierung.",
-                "Mit einer Trainerin wird deine Optimierung zur Mission.",
-                "Expertise von einer Frau, die genauso optimieren will wie du.",
-                "Trainerin + du = unaufhaltsame Selbstoptimierung."
-            ],
-            'Frauen-Optimierungsdrang-Nachweisbarer Erfolg': [
-                "Jede Metrik zeigt: Du wirst zu DEINER beste Version.",
-                "Optimierung ohne Zahlen ist Wunschdenken – hier sind Fakten.",
-                "Messbarer Erfolg = Beweis, dass Optimierung funktioniert.",
-                "Jede Woche stärker. Jede Woche besser. Jede Woche ICH.",
-                "Daten sprechen: Du OPTIMIERST dich wirklich."
-            ],
-            'Frauen-Unwissen-Zusammengehörigkeitsgefühl': [
-                "Keine Ahnung vom Fitnessstudio? Deine Gruppe auch nicht – jetzt zusammen lernen.",
-                "Mit anderen Frauen, die genauso Anfänger sind.",
-                "Gemeinsames Unwissen ist der beste Schulraum.",
-                "Deine Schwestern lernen zusammen mit dir.",
-                "Best Teachers? Frauen, die gerade wie du angefangen haben."
-            ],
-            'Frauen-Unwissen-Zeitliche Unabhängigkeit': [
-                "24/7 Zugang zu echter Frauenbetreuung für Anfänger.",
-                "Lernen in deinem Tempo. Dein Kalender.",
-                "Flexible Lernpläne für Frauen mit Fragen.",
-                "Keine Zeitlimits für Unwissen-Überwindung.",
-                "Dein Lern-Tempo. Nicht unseres."
-            ],
-            'Frauen-Unwissen-Professionelle Anleitung': [
-                "Eine Trainerin erklärt alles – bis TE verstehst.",
-                "Professionelle Frauenbetreuung = Anfänger-Unwissen wird zu Anfänger-Klarheit.",
-                "Mit einer Trainerin ist Unwissen nicht Schande – es ist Normalität.",
-                "Deine Trainerin spricht Anfänger-Frauensprache.",
-                "Expertise von einer Frau = schneller zu Frau-Vertrauen."
-            ],
-            'Frauen-Unwissen-Nachweisbarer Erfolg': [
-                "Von Unwissen zu Erfolg – schnell messbar.",
-                "Schnelle kleine Erfolge = schnelle Überwindung von Anfänger-Zweifeln.",
-                "Jede Verbesserung ist riesig für Anfänger-Frauen.",
-                "Erfolg überspricht alle Anfänger-Gedanken.",
-                "Zahlen zeigen: Du lernst schnell. Und wirst schnell stärker."
-            ],
-            'Personen über 50-Zeitmangel-Zusammengehörigkeitsgefühl': [
-                "Mit 50+ ist Zeit kostbar – genauso wertvoll ist diese Gruppe.",
-                "Kurze Trainings mit echten Menschen deines Alters.",
-                "Gemeinsam trainieren macht 50+ zu deinem besten Jahrzehnt.",
-                "Die richtige Gruppe + die richtige Zeit = perfekt.",
-                "Mit deinen Altersgenossen wird Fitness zur Party statt zur Pflicht."
-            ],
-            'Personen über 50-Zeitmangel-Zeitliche Unabhängigkeit': [
-                "Mit 50+ kennt man seinen Rhythmus – hier passt sich Fitness an.",
-                "Trainiere in DEINER beste Tageszeit. 24/7 möglich.",
-                "Keine Öffnungszeiten-Stress mit 50+.",
-                "Früh aufstehen und trainieren? Oder abends? Du bestimmst.",
-                "Flexibility respektiert deinen Körper-Rhythmus + dein Lebensrhythmus."
-            ],
-            'Personen über 50-Zeitmangel-Professionelle Anleitung': [
-                "Mit 50+: Dein Trainer VERSTEHT deinen Körper.",
-                "Professionelle Betreuung = keine Verletzungen + maximale Ergebnisse.",
-                "Mit einem Trainer wird 50+ zu deinem stärksten Jahrzehnt.",
-                "Dein Trainer kennt 50+ – und weiß genau was du brauchst.",
-                "Expertise für 50+ = Schutz + Performance."
-            ],
-            'Personen über 50-Zeitmangel-Nachweisbarer Erfolg': [
-                "Mit 50+ sind Zahlen wichtig – hier siehst du sie.",
-                "Kurzes Training. Echte Ergebnisse. Schnell messbar.",
-                "Wenn du mit 50+ Erfolg siehst, machst du weiter.",
-                "Messbarer Fortschritt motiviert am meisten.",
-                "Mit 50+ will man sehen dass Zeit zählt – hier sieht man es."
-            ],
-            'Personen über 50-Motivationsmangel-Zusammengehörigkeitsgefühl': [
-                "Mit 50+: Du brauchst keine Motivation – du brauchst deine Menschen.",
-                "Die beste Motivation? Menschen, die dein Leben verstehen.",
-                "Mit dieser Gruppe wird trainieren zur Routine.",
-                "Deine Altersgruppe motiviert echte Durchhaltekraft.",
-                "Mit 50+ ist Gemeinschaft ALLES."
-            ],
-            'Personen über 50-Motivationsmangel-Zeitliche Unabhängigkeit': [
-                "24/7 Zugang = Motivation auch um 5 Uhr morgens möglich.",
-                "Mit 50+ brauchst du Flexibilität – hier gibt es sie.",
-                "Trainieren wann der Körper wach ist, nicht wann das Studio offen ist.",
-                "Dein Tagesrhythmus bestimmt nicht dein Trainingsrhythmus – sondern umgekehrt.",
-                "Flexibility = Motivation mit 50+."
-            ],
-            'Personen über 50-Motivationsmangel-Professionelle Anleitung': [
-                "Ein Trainer mit 50+ Erfahrung = ein Trainer, der dich VERSTEHT.",
-                "Professionelle Betreuung = professionelle Motivation mit 50+.",
-                "Mit einem Trainer wird 50+ zu deinem größtem Vorteil.",
-                "Dein Trainer sagt: ‚Mit 50+ wirst du STÄRKER.' Und zeigt es dir.",
-                "Expertise mit Altersverständnis = echte Motivation."
-            ],
-            'Personen über 50-Motivationsmangel-Nachweisbarer Erfolg': [
-                "Mit 50+ willst du BEWEISE – hier sind sie.",
-                "Messbarer Erfolg ist die beste Motivation für 50+.",
-                "Jede Zahl zeigt: Du wirst BESSER – nicht älter.",
-                "Mit 50+ ist Erfolg das beste Motivations-Tool.",
-                "Zahlen sprechen: Mit 50+ kannst du stärker werden."
-            ],
-            'Personen über 50-Optimierungsdrang-Zusammengehörigkeitsgefühl': [
-                "Mit 50+ ist Optimierung nicht Eitelkeit – es ist Selbstliebe.",
-                "Mit der richtigen Gruppe wird 50+ zu DEINER beste Phase.",
-                "Gemeinsame Optimierung = gegenseitiger Aufstieg mit 50+.",
-                "Deine Gruppe sind deine Inspiration UND dein Support.",
-                "Mit 50+ ist gemeinsame Optimierung unaufhaltbar."
-            ],
-            'Personen über 50-Optimierungsdrang-Zeitliche Unabhängigkeit': [
-                "Mit 50+ weißt du was du brauchst – Flexibilität ist es.",
-                "Optimize in DEINEM Tempo. Mit 50+ verdient man das.",
-                "24/7 Zugang zu DEINER Optimierungs-Mission.",
-                "Dein Weg zur besten 50+ Version – zeitlich wie du es brauchst.",
-                "Mit 50+ Optimization in dein Tempo – nicht in unseres."
-            ],
-            'Personen über 50-Optimierungsdrang-Professionelle Anleitung': [
-                "Ein Trainer der SIEHT – mit 50+ wird deine Optimierung zur Kunst.",
-                "Professionelle Betreuung für professionelle Optimierung mit 50+.",
-                "Mit einem Trainer wird 50+ zum Startpunkt – nicht zum Endpoint.",
-                "Dein Trainer: ‚Mit 50+ wird es INTERESSANT.' Und es wird es.",
-                "Expertise + Altersverständnis = wahre Optimierung mit 50+."
-            ],
-            'Personen über 50-Optimierungsdrang-Nachweisbarer Erfolg': [
-                "Mit 50+: Jede Metrik zeigt – du wirst STÄRKER.",
-                "Optimization braucht Zahlen – mit 50+ willst du sie sehen.",
-                "Messbarer Erfolg ist nicht Eitelkeit – es ist Wissenschaft.",
-                "Mit 50+ ist Erfolg der beste Beweis gegen das Altern.",
-                "Daten sprechen: Mit 50+ optimierst du dich wirklich."
-            ],
-            'Personen über 50-Unwissen-Zusammengehörigkeitsgefühl': [
-                "Mit 50+ neu anfangen? Mit anderen 50+ Neuanfängern GENAU richtig.",
-                "Keine Ahnung vom Studio? Deine Gruppe auch nicht.",
-                "Mit 50+ beginnt man gemeinsam – oder gar nicht.",
-                "Best Teachers bei 50+? Menschen, die gerade wie du anfangen.",
-                "Gemeinsames Unwissen mit 50+ wird zur Stärke."
-            ],
-            'Personen über 50-Unwissen-Zeitliche Unabhängigkeit': [
-                "24/7 Zugang zu 50+ verständlicher Anleitung.",
-                "Lernen in DEINEM Tempo. Mit 50+ verdient man das.",
-                "Flexible Lernpläne für 50+ mit echten Fragen.",
-                "Keine Zeitlimits für 50+ Anfänger-Unwissen.",
-                "Mit 50+ Lern-Tempo bestimmst du – nicht wir."
-            ],
-            'Personen über 50-Unwissen-Professionelle Anleitung': [
-                "Ein Trainer erklärt alles – bis 50+ jährige WIRKLICH verstehen.",
-                "Professionelle 50+ Betreuung = Anfänger-Unwissen wird zu Anfänger-Verstehen.",
-                "Mit einem Trainer ist Unwissen mit 50+ nicht Schande – es ist normal.",
-                "Dein Trainer spricht 50+ Anfänger-Sprache.",
-                "Expertise für 50+ = schneller zu 50+ Vertrauen."
-            ],
-            'Personen über 50-Unwissen-Nachweisbarer Erfolg': [
-                "Mit 50+ von Unwissen zu Erfolg – schnell messbar.",
-                "Schnelle kleine Erfolge = schnelle 50+ Konfidenz.",
-                "Jede Verbesserung mit 50+ ist riesig + wichtig.",
-                "Erfolg überwindet alle 50+ Anfänger-Zweiffel.",
-                "Mit 50+ zeigen Zahlen: Du lernst + wirst stärker."
+            '50plus-Zeit-Trainer': [
+                "Mit 50+: Ein Trainer, der deinen Körper KENNT.",
+                "Professionelle 50+ Betreuung. Das macht den Unterschied.",
+                "Dein Trainer versteht 50+ Biomechanik.",
+                "Mit Expertise wird 50+ zu deinem stärksten Jahrzehnt.",
+                "Train4U: Expertise für 50+ Fitness.",
+                "Ein Trainer, der 50+ kennt und respektiert.",
+                "Mit jemandem trainieren, der versteht.",
+                "Professionelle Betreuung für deinen 50+ Körper.",
+                "Ein Trainer, der dich nicht überlastet.",
+                "Mit Verständnis für 50+ Grenzen und Potenzial.",
+                "Ein Trainer nur für 50+.",
+                "Expertise, die 50+ respektiert."
             ]
         };
 
         const feedbackData = {
             exercise1: {
-                Apple: { problem: "Apple löst das Problem der technologischen Komplexität – indem es intuitive, benutzerfreundliche Geräte schafft, die jeder verstehen kann.", value: "Premium-Design, nahtloses Ökosystem, Status und technologische Innovation.", example: "Das iPhone vereinfacht Technologie durch klare, intuitive Bedienung – nicht einfach nur ein Telefon mit mehr Funktionen." },
-                Spotify: { problem: "Spotify löst das Problem begrenzter Musikverfügbarkeit – statt CDs zu kaufen, hast du Zugang zu Millionen Songs überall.", value: "Unbegrenzter Musikzugang, personalisierte Empfehlungen, Convenience und bezahlbar.", example: "Die persönliche Playlist 'Discover Weekly' zeigt, dass Spotify Musik nicht einfach anbietet – sondern versteht, was DU magst." },
-                dm: { problem: "dm macht Drogerie- und Gesundheitsprodukte einfach zugänglich UND beratbar – nicht einfach nur verfügbar.", value: "Vielfalt, Fachberatung vor Ort, Convenience und Preiswertigkeit.", example: "Die Beratung vor Ort löst das echte Problem: Welches Produkt passt zu MIR – nicht welches Produkt existiert." },
-                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr – Millionen Menschen, die sonst nicht fliegen könnten, können jetzt reisen.", value: "Ultra-günstige Flüge, häufige Verbindungen, Transparenz bei den Kosten.", example: "50-Euro-Flüge machen möglich, was sonst unmöglich ist: echte Mobilität für breite Bevölkerung." },
-                Airbnb: { problem: "Airbnb bietet mehr als nur ein Bett – es ermöglicht echte, lokale Erfahrungen statt sterile Hotelzimmer.", value: "Authentische Erlebnisse, bessere Preise, Flexibilität und echte Lokalverbindung.", example: "Eine Wohnung bei einer echten Person zu mieten zeigt: Airbnb verkauft nicht nur Unterkunft, sondern echte Erlebnisse." },
-                Netflix: { problem: "Netflix endet das Problem starrer Programmzeiten und begrenzter Auswahl – unbegrenzte Inhalte, jederzeit.", value: "Personalisierte Empfehlungen, Original-Content, beeindruckende Vielfalt, faire Kosten, Zugang überall.", example: "'Basierend auf deinen Interessen' zeigt: Netflix weiß nicht einfach, WAS verfügbar ist – es weiß, WAS du schauen möchtest." }
+                Apple: { problem: "Apple löst das Problem der technologischen Komplexität – indem es intuitive, benutzerfreundliche Geräte schafft.", value: "Premium-Design, Ökosystem-Integration, Status und Innovation.", example: "Das iPhone vereinfacht Technologie durch klare Bedienung – nicht einfach nur ein Telefon mit vielen Funktionen." },
+                Spotify: { problem: "Spotify löst das Problem begrenzter Musikverfügbarkeit – statt CDs zu kaufen, hast du Zugang zu Millionen Songs.", value: "Unbegrenzter Musikzugang, personalisierte Empfehlungen, Convenience und Preis.", example: "Discover Weekly zeigt: Spotify versteht nicht einfach Musik – es versteht, was du liebst." },
+                dm: { problem: "dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar – nicht einfach nur verfügbar.", value: "Vielfalt, Fachberatung vor Ort, Convenience und gute Preise.", example: "Beratung vor Ort löst das echte Problem: Welches Produkt passt zu MIR?" },
+                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr – Menschen, die sonst nicht fliegen könnten, können jetzt reisen.", value: "Ultra-günstige Flüge, häufige Verbindungen, transparente Kosten.", example: "50-Euro-Flüge ermöglichen echte Mobilität für breite Bevölkerung." },
+                Airbnb: { problem: "Airbnb bietet echte, lokale Erfahrungen – nicht nur ein Hotelzimmer.", value: "Authentische Erlebnisse, bessere Preise, Flexibilität und Lokalverbindung.", example: "Eine Wohnung bei einer echten Person zeigt: Airbnb verkauft Erlebnisse, nicht nur Unterkunft." },
+                Netflix: { problem: "Netflix endet das Problem starrer Programmzeiten und begrenzter Auswahl – unbegrenzte Inhalte, jederzeit.", value: "Personalisierte Empfehlungen, Original-Content, Vielfalt, faire Kosten, überall verfügbar.", example: "'Basierend auf deinen Interessen' zeigt: Netflix weiß nicht nur WAS verfügbar ist – es weiß WAS du schauen möchtest." }
             },
             exercise2: { 
-                q1: "IKEA demokratisiert gutes Design – indem es qualitativ hochwertige, moderne Möbel für breite Bevölkerung erschwinglich macht.",
+                q1: "IKEA demokratisiert gutes Design – indem es qualitativ hochwertige Möbel für breite Bevölkerung erschwinglich macht.",
                 q2: "CRM: (1) IKEA Family Programm mit personalisierten Angeboten und Rabatten (2) Planungstools und Online-Shopping (3) Showroom-Erlebnisse mit Inspirationsräumen",
-                q3: "IKEA verfolgt Marketingorientierung: Das gesamte Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume) ist auf KUNDENBEDÜRFNISSE ausgerichtet – nicht nur auf schnelle Verkäufe."
+                q3: "IKEA verfolgt Marketingorientierung: Das gesamte Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume) ist auf KUNDENBEDÜRFNISSE ausgerichtet."
             },
             exercise3: { 
-                q1: "Starbucks verkauft nicht nur Kaffee – es verkauft den 'Third Place': einen Ort zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Erlebnis.",
-                q2: "Erlebnis-Kreation: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Du betrittst Starbucks, wirst vom Namen begrüßt, erhältst DEINEN persönlichen Kaffee, sitzt in gemütlicher Atmosphäre mit WLAN – das ist das Erlebnis.",
-                q3: "Kundenbindung: (1) Loyalty-Programm mit Punkten/Rabatten (2) Mobile App mit Bezahlung, Bestellhistorie und personalisierten Offers",
-                q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkt (Kaffee) – es verkauft einen Service (Erlebnis, Beziehung, Gemeinschaft). Der Wert entsteht in der Interaktion, nicht im Kaffee.",
-                q5: "Italien-Schwierigkeiten: (1) Starke etablierte Café-Kultur mit authentischen lokalen Bars (2) Italienisches Kaffee-Ritual ist kurz und intensiv an der Theke – NICHT zum Verweilen (3) Lokale Bars haben Tradition, Charakter, Loyalität (4) Ablehnung der amerikanischen Kommerzialisierung kultureller Momente"
+                q1: "Starbucks verkauft nicht nur Kaffee – es verkauft den 'Third Place': einen Ort zwischen Zuhause und Arbeit.",
+                q2: "Erlebnis-Kreation: Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Du betrittst Starbucks, wirst vom Namen begrüßt, erhältst DEINEN Kaffee, sitzt in gemütlicher Atmosphäre.",
+                q3: "Kundenbindung: (1) Loyalty-Programm mit Punkten/Rabatten (2) Mobile App mit Bezahlung und personalisierten Offers",
+                q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkt (Kaffee) – es verkauft einen Service (Erlebnis, Beziehung, Gemeinschaft).",
+                q5: "Italien-Schwierigkeiten: (1) Starke etablierte Café-Kultur mit authentischen lokalen Bars (2) Italienisches Kaffee-Ritual ist kurz an der Theke (3) Lokale Bars haben Tradition und Loyalität (4) Ablehnung der amerikanischen Kommerzialisierung"
             },
             exercise4: { 
-                q1: "Ein echtes Fitnessstudio-Erlebnis: Nicht einfach Geräte, sondern ein Ort, wo Transformation möglich ist – mit Betreuung, Gemeinschaft und echtem Erfolg.",
-                q2: "Maßnahmen: (1) Buddy-System für Anfänger mit erfahrenen Trainern (2) Kostenlose Personal Sessions erste 4 Wochen (3) Wöchentliche Challenges mit erreichbaren Zielen (4) App zum Fortschritt-Tracking (5) Flexible Zeiten + Online-Live-Kurse (6) Success-Stories von echten Mitgliedern (7) Pay-per-Session ohne Langzeitvertrag",
-                q3: "Werbestrategie für die Zielgruppe: Authentische Before-After-Stories von ECHTEN Menschen (nicht retouchiert), lokale Facebook-Kampagnen mit Geo-Targeting, Partnerschaften mit lokalen Micro-Influencern, kostenlose Fitness-Events in Parks, Referral-Programm mit Belohnungen, Google Ads mit lokalen Keywords"
+                q1: "Ein echtes Fitnessstudio-Erlebnis: Nicht einfach Geräte, sondern ein Ort, wo Transformation möglich ist – mit Betreuung und Erfolg.",
+                q2: "Maßnahmen: (1) Buddy-System für Anfänger (2) Kostenlose Personal Sessions erste 4 Wochen (3) Wöchentliche Challenges (4) App zum Fortschritt-Tracking (5) Flexible Zeiten + Online-Live-Kurse (6) Success-Stories (7) Pay-per-Session ohne Langzeitvertrag",
+                q3: "Werbestrategie: Authentische Before-After-Stories von echten Menschen, lokale Facebook-Kampagnen, Partnerschaften mit lokalen Micro-Influencern, kostenlose Events, Referral-Programm, Google Ads mit lokalen Keywords"
             }
         };
 
-        function selectOption(elem, category, value) {
-            document.querySelectorAll('.generator-option').forEach(el => {
-                if (el.textContent === elem.textContent || el.textContent === elem.innerHTML) {
-                    // nur dieses Element
-                } else if ((category === 'tg' && el.textContent.includes('über')) || 
-                           (category === 'pb' && (el.textContent.includes('Zeitmangel') || el.textContent.includes('Motivation') || el.textContent.includes('Optimierung') || el.textContent.includes('Unwissen'))) ||
-                           (category === 'vl' && (el.textContent.includes('Zusammen') || el.textContent.includes('Unabhängigkeit') || el.textContent.includes('Professionelle') || el.textContent.includes('Erfolg')))) {
-                    el.classList.remove('selected');
-                }
+        function selectGenOption(event, category, value) {
+            const container = event.target.parentElement;
+            container.querySelectorAll('.generator-option').forEach(el => {
+                el.classList.remove('selected');
             });
-            elem.classList.add('selected');
+            event.target.classList.add('selected');
             genOptions[category] = value;
         }
 
@@ -1272,7 +1073,7 @@
             
             const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
             const templates = vpLibrary[key] || [
-                `Train4U ist für ${genOptions.tg}, die mit ${genOptions.pb} kämpfen. Wir bieten dir ${genOptions.vl} – damit Fitness wirklich funktioniert.`
+                `Train4U ist für ${genOptions.tg}, die mit ${genOptions.pb} kämpfen. Wir bieten ${genOptions.vl} – damit Fitness funktioniert.`
             ];
             
             const vp = templates[Math.floor(Math.random() * templates.length)];
@@ -1332,7 +1133,7 @@
                         <textarea id="ex1_${i}_q2" onchange="saveAll()"></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Geben Sie ein konkretes Beispiel, woran man sieht, dass ${c} ein Problem löst und nicht nur ein beliebiges Produkt bereitstellt.</label>
+                        <label class="question-label">Geben Sie ein konkretes Beispiel, woran man sieht, dass ${c} ein Problem löst.</label>
                         <textarea id="ex1_${i}_q3" onchange="saveAll()"></textarea>
                     </div>
                 `;
@@ -1348,7 +1149,6 @@
         }
 
         function saveAll() {
-            // Exercise 1
             Array.from(document.querySelectorAll('input[name="companies"]')).forEach(cb => {
                 localStorage.setItem(`company_${cb.value}`, cb.checked);
             });
@@ -1358,17 +1158,14 @@
                     if (el) localStorage.setItem(`ex1_${i}_q${j}`, el.value);
                 }
             }
-            // Exercise 2
             for (let i = 1; i <= 3; i++) {
                 const el = document.getElementById(`ex2q${i}`);
                 if (el) localStorage.setItem(`ex2q${i}`, el.value);
             }
-            // Exercise 3
             for (let i = 1; i <= 5; i++) {
                 const el = document.getElementById(`ex3q${i}`);
                 if (el) localStorage.setItem(`ex3q${i}`, el.value);
             }
-            // Exercise 4
             for (let i = 1; i <= 3; i++) {
                 const el = document.getElementById(`ex4q${i}`);
                 if (el) localStorage.setItem(`ex4q${i}`, el.value);
@@ -1376,7 +1173,6 @@
         }
 
         function loadAll() {
-            // Exercise 1
             Array.from(document.querySelectorAll('input[name="companies"]')).forEach(cb => {
                 cb.checked = localStorage.getItem(`company_${cb.value}`) === 'true';
             });
@@ -1386,17 +1182,14 @@
                     if (el) el.value = localStorage.getItem(`ex1_${i}_q${j}`) || '';
                 }
             }
-            // Exercise 2
             for (let i = 1; i <= 3; i++) {
                 const el = document.getElementById(`ex2q${i}`);
                 if (el) el.value = localStorage.getItem(`ex2q${i}`) || '';
             }
-            // Exercise 3
             for (let i = 1; i <= 5; i++) {
                 const el = document.getElementById(`ex3q${i}`);
                 if (el) el.value = localStorage.getItem(`ex3q${i}`) || '';
             }
-            // Exercise 4
             for (let i = 1; i <= 3; i++) {
                 const el = document.getElementById(`ex4q${i}`);
                 if (el) el.value = localStorage.getItem(`ex4q${i}`) || '';
