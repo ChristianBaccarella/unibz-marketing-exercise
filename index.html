@@ -23,7 +23,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; b
 .start-btn { margin-top: 32px; padding: 16px 48px; background: #1F7FD4; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
 .task-title { font-size: 12px; color: #1F7FD4; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
 .task-h { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
-.task-desc { font-size: 15px; color: #6B7280; background: #F9FAFB; padding: 16px; border-radius: 12px; border-left: 4px solid #1F7FD4; margin-bottom: 24px; }
+.task-desc { font-size: 15px; color: #6B7280; background: #F9FAFB; padding: 16px; border-radius: 12px; border-left: 4px solid #1F7FD4; margin-bottom: 24px; line-height: 1.6; }
 .q-group { margin-bottom: 24px; }
 .q-label { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: block; }
 .radio-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
@@ -35,6 +35,8 @@ textarea { width: 100%; padding: 14px; border: 2px solid #E5E7EB; border-radius:
 textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgba(31, 127, 212, 0.1); }
 .gen-section { background: #E8F4FD; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
 .gen-title { font-size: 14px; font-weight: 600; color: #1F7FD4; margin-bottom: 12px; }
+.gen-cat { margin-bottom: 12px; }
+.gen-cat-label { font-size: 12px; font-weight: 600; margin-bottom: 8px; display: block; }
 .gen-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .gen-opt { padding: 10px; background: white; border: 2px solid #E5E7EB; border-radius: 10px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
 .gen-opt.sel { background: #1F7FD4; border-color: #1F7FD4; color: white; }
@@ -49,11 +51,11 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 .fb-item { margin-bottom: 24px; padding: 16px; background: #F9FAFB; border-radius: 12px; }
 .fb-h { font-size: 14px; font-weight: 700; color: #1F7FD4; text-transform: uppercase; margin-bottom: 12px; }
 .rating { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
-.rating-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; flex-shrink: 0; }
+.rating-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; flex-shrink: 0; font-size: 18px; }
 .rating-icon.green { background: #10B981; }
 .rating-icon.yellow { background: #F59E0B; }
 .rating-icon.red { background: #EF4444; }
-.rating-text { font-size: 13px; color: #6B7280; }
+.rating-text { font-size: 13px; color: #6B7280; line-height: 1.5; }
 .rating-text strong { color: #111827; display: block; margin-bottom: 4px; }
 .export { margin-top: 24px; padding: 20px; background: #F9FAFB; border: 2px solid #10B981; border-radius: 12px; text-align: center; }
 .export-btn { padding: 14px 32px; background: #10B981; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
@@ -74,8 +76,8 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <div style="font-size:80px;margin-bottom:24px">🎓</div>
                 <h1>Marketing-Übung</h1>
                 <p><span style="color:#1F7FD4;font-weight:600">Heute probieren wir etwas anderes.</span></p>
-                <p>Aufgaben lesen und direkt eintragen.</p>
-                <p>Nach jeder Aufgabe besprechen wir zusammen.</p>
+                <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
+                <p>Nach jeder Aufgabe besprechen wir Ihre Ergebnisse.</p>
                 <p style="color:#1F7FD4;font-weight:600;font-size:18px;margin-top:20px">Viel Erfolg! 🚀</p>
                 <button class="start-btn" onclick="startApp()">Los geht's</button>
             </div>
@@ -83,11 +85,11 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 
         <div id="task1" class="page">
             <div class="task-title">Aufgabe 1 / 4</div>
-            <div class="task-h">Nutzenversprechen analysieren</div>
-            <div class="task-desc">Wählen Sie zwei beliebige Unternehmen und analysieren Sie deren Nutzenversprechen.</div>
+            <div class="task-h">Nutzenversprechen verschiedener Unternehmen</div>
+            <div class="task-desc">Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei beliebige Unternehmen und analysieren Sie diese ausführlich. Beschreiben Sie jeweils: Welches Problem wird gelöst? Was ist das Nutzenversprechen? Geben Sie ein konkretes Beispiel.</div>
             
             <div class="q-group">
-                <div class="q-label">Unternehmen 1:</div>
+                <div class="q-label"><strong>Unternehmen 1:</strong></div>
                 <div class="radio-group">
                     <div class="radio-item"><input type="radio" name="comp1" value="Apple" id="c1a"><label for="c1a" class="radio-label">Apple</label></div>
                     <div class="radio-item"><input type="radio" name="comp1" value="Spotify" id="c1b"><label for="c1b" class="radio-label">Spotify</label></div>
@@ -99,20 +101,22 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             </div>
 
             <div class="q-group">
-                <div class="q-label">Für <strong id="comp1name">Unternehmen 1</strong> - Problem:</div>
+                <div class="q-label">Für <strong id="comp1name">Unternehmen 1</strong> - Welches Problem wird gelöst?</div>
                 <textarea id="c1problem"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Nutzenversprechen:</div>
+                <div class="q-label">Was ist das Nutzenversprechen? (Design, Ökosystem, Innovation, etc.)</div>
                 <textarea id="c1value"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Beispiel:</div>
+                <div class="q-label">Geben Sie ein konkretes Beispiel:</div>
                 <textarea id="c1example"></textarea>
             </div>
 
+            <hr style="margin:32px 0;border:none;border-top:1px solid #E5E7EB">
+
             <div class="q-group">
-                <div class="q-label">Unternehmen 2:</div>
+                <div class="q-label"><strong>Unternehmen 2:</strong></div>
                 <div class="radio-group">
                     <div class="radio-item"><input type="radio" name="comp2" value="Apple" id="c2a"><label for="c2a" class="radio-label">Apple</label></div>
                     <div class="radio-item"><input type="radio" name="comp2" value="Spotify" id="c2b"><label for="c2b" class="radio-label">Spotify</label></div>
@@ -124,86 +128,139 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             </div>
 
             <div class="q-group">
-                <div class="q-label">Für <strong id="comp2name">Unternehmen 2</strong> - Problem:</div>
+                <div class="q-label">Für <strong id="comp2name">Unternehmen 2</strong> - Welches Problem wird gelöst?</div>
                 <textarea id="c2problem"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Nutzenversprechen:</div>
+                <div class="q-label">Was ist das Nutzenversprechen?</div>
                 <textarea id="c2value"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Beispiel:</div>
+                <div class="q-label">Geben Sie ein konkretes Beispiel:</div>
                 <textarea id="c2example"></textarea>
             </div>
         </div>
 
         <div id="task2" class="page">
             <div class="task-title">Aufgabe 2 / 4</div>
-            <div class="task-h">IKEA Case Study</div>
-            <div class="task-desc">IKEA demokratisiert Design für breite Bevölkerung.</div>
-            <div class="q-group"><div class="q-label">Nutzenversprechen?</div><textarea id="e2q1"></textarea></div>
-            <div class="q-group"><div class="q-label">3 CRM-Instrumente?</div><textarea id="e2q2"></textarea></div>
-            <div class="q-group"><div class="q-label">Marketing oder Verkauf?</div><textarea id="e2q3"></textarea></div>
+            <div class="task-h">Mini Case Study: IKEA</div>
+            <div class="task-desc">IKEA ist einer der weltweit größten Möbelhändler. Das Unternehmen verfolgt das Ziel, gutes Design und funktionale Möbel für viele Menschen erschwinglich zu machen. Analysieren Sie das Geschäftsmodell und die Kundenorientierung.</div>
+            
+            <div class="q-group">
+                <div class="q-label">Was ist das zentrale Nutzenversprechen von IKEA? Erklären Sie, wie IKEA den Markt verändert hat.</div>
+                <textarea id="e2q1"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie mindestens drei konkrete Beispiele.</div>
+                <textarea id="e2q2"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung? Begründen Sie Ihre Antwort mit konkreten Beispielen aus dem Geschäftsmodell.</div>
+                <textarea id="e2q3"></textarea>
+            </div>
         </div>
 
         <div id="task3" class="page">
             <div class="task-title">Aufgabe 3 / 4</div>
-            <div class="task-h">Starbucks Analyse</div>
-            <div class="task-desc">Starbucks verkauft nicht Kaffee, sondern ein Erlebnis.</div>
-            <div class="q-group"><div class="q-label">Nutzenversprechen?</div><textarea id="e3q1"></textarea></div>
-            <div class="q-group"><div class="q-label">Kundenerlebnis Beispiel?</div><textarea id="e3q2"></textarea></div>
-            <div class="q-group"><div class="q-label">2 Kundenbindungs-Instrumente?</div><textarea id="e3q3"></textarea></div>
-            <div class="q-group"><div class="q-label">Service-Dominant Logic?</div><textarea id="e3q4"></textarea></div>
-            <div class="q-group"><div class="q-label">Probleme in Italien?</div><textarea id="e3q5"></textarea></div>
+            <div class="task-h">Fallanalyse: Starbucks</div>
+            <div class="task-desc">Starbucks ist eine internationale Kaffeehauskette. Das Unternehmen versucht nicht nur Kaffee zu verkaufen, sondern ein besonderes Kundenerlebnis zu schaffen. Der Ort wird als "Third Place" zwischen Zuhause und Arbeit positioniert.</div>
+            
+            <div class="q-group">
+                <div class="q-label">Was ist das zentrale Nutzenversprechen von Starbucks? (Nicht: Kaffee!)</div>
+                <textarea id="e3q1"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel.</div>
+                <textarea id="e3q2"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Welche Instrumente nutzt Starbucks zur Kundenbindung (CRM)? Geben Sie zwei konkrete Beispiele.</div>
+                <textarea id="e3q3"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten? Erklären Sie den Unterschied zwischen Produkt und Service.</div>
+                <textarea id="e3q4"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten? Nennen Sie mindestens zwei Gründe.</div>
+                <textarea id="e3q5"></textarea>
+            </div>
         </div>
 
         <div id="task4" class="page">
             <div class="task-title">Aufgabe 4 / 4</div>
-            <div class="task-h">Train4U Fitnessstudio</div>
-            <div class="task-desc">Das Studio verliert Kunden. Entwickeln Sie eine Rettungsstrategie.</div>
+            <div class="task-h">Das Fitnessstudio "Train4U"</div>
+            <div class="task-desc">Das Fitnessstudio "Train4U" verliert seit einiger Zeit immer mehr Kunden. Sie sind der CEO und überlegen sich, was Sie tun könnten, um das Studio zu retten. Nutzen Sie den Slogan-Generator, um ein Nutzenversprechen zu entwickeln.</div>
+            
             <div class="q-group">
-                <div class="q-label">Slogan generieren:</div>
+                <div class="q-label">Wie könnte der Slogan dieses Fitnessstudios lauten? Nutzen Sie den Generator unten!</div>
                 <div class="gen-section">
                     <div class="gen-title">💡 Slogan-Generator</div>
                     
-                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Zielgruppe?</div>
-                    <div class="gen-options">
-                        <div class="gen-opt" onclick="pickOpt(this,'g','Berufstätige')">Berufstätige</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'g','Anfänger')">Anfänger</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'g','Frauen')">Frauen</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'g','50+')">50+</div>
-                    </div></div>
+                    <div class="gen-cat">
+                        <div class="gen-cat-label">Schritt 1: Wer ist die Zielgruppe?</div>
+                        <div class="gen-options">
+                            <div class="gen-opt" onclick="selectGen(this, 'g', 'Berufstätige')">👔 Berufstätige</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'g', 'Anfänger')">🆕 Anfänger</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'g', 'Frauen')">👩 Frauen</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'g', '50+')">👴 50+</div>
+                        </div>
+                    </div>
                     
-                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Problem?</div>
-                    <div class="gen-options">
-                        <div class="gen-opt" onclick="pickOpt(this,'p','Zeitmangel')">Zeitmangel</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'p','Motivation')">Motivation</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'p','Expertise')">Expertise</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'p','Erfolge')">Erfolge</div>
-                    </div></div>
+                    <div class="gen-cat">
+                        <div class="gen-cat-label">Schritt 2: Welches Problem hat die Gruppe?</div>
+                        <div class="gen-options">
+                            <div class="gen-opt" onclick="selectGen(this, 'p', 'Zeitmangel')">⏰ Zeitmangel</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'p', 'Motivation')">💪 Keine Motivation</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'p', 'Expertise')">🤔 Keine Expertise</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'p', 'Erfolge')">📊 Keine Erfolge</div>
+                        </div>
+                    </div>
                     
-                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Wert?</div>
-                    <div class="gen-options">
-                        <div class="gen-opt" onclick="pickOpt(this,'v','Gemeinschaft')">Gemeinschaft</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'v','Flexibilität')">Flexibilität</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'v','Trainer')">Trainer</div>
-                        <div class="gen-opt" onclick="pickOpt(this,'v','Erfolg')">Erfolg</div>
-                    </div></div>
+                    <div class="gen-cat">
+                        <div class="gen-cat-label">Schritt 3: Welcher Mehrwert hilft?</div>
+                        <div class="gen-options">
+                            <div class="gen-opt" onclick="selectGen(this, 'v', 'Gemeinschaft')">👥 Gemeinschaft</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'v', 'Flexibilität')">🕐 Flexibilität</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'v', 'Trainer')">👨‍🏫 Personal Trainer</div>
+                            <div class="gen-opt" onclick="selectGen(this, 'v', 'Erfolg')">🎯 Garantierte Ergebnisse</div>
+                        </div>
+                    </div>
                     
-                    <button class="gen-btn" onclick="makeSlogan()">🎯 Generieren</button>
+                    <button class="gen-btn" onclick="makeSlogan()">🎯 Slogan generieren!</button>
                     <div id="sloganbox"></div>
                 </div>
-                <textarea id="e4q1"></textarea>
+                <div class="q-label" style="margin-top:16px">Ihre Slogan-Idee:</div>
+                <textarea id="e4q1" placeholder="Der Generator wird hier einen Slogan einfügen oder Sie schreiben selbst..."></textarea>
             </div>
-            <div class="q-group"><div class="q-label">Konkrete Maßnahmen?</div><textarea id="e4q2"></textarea></div>
-            <div class="q-group"><div class="q-label">Werbestrategie?</div><textarea id="e4q3"></textarea></div>
+            
+            <div class="q-group">
+                <div class="q-label">Welche konkreten Maßnahmen würde das Studio unternehmen, um Kunden zu gewinnen und zu halten? (Buddy-System, Events, App, etc.)</div>
+                <textarea id="e4q2"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Welche Werbestrategie würden Sie empfehlen? (Social Media, Influencer, Local Ads, etc.)</div>
+                <textarea id="e4q3"></textarea>
+            </div>
         </div>
 
         <div id="results" class="page result">
             <div class="result-icon">✅</div>
-            <h2>Fertig!</h2>
-            <p>Ihre Ergebnisse mit Musterlösungen und Feedback:</p>
-            <div id="fb"></div>
+            <h2>Vielen Dank für Ihre Teilnahme!</h2>
+            <p>Hier sind Ihre Ergebnisse mit Musterlösungen und Bewertung:</p>
+            <div class="feedback" id="fb"></div>
+            <div style="text-align:left;margin-top:24px;padding-top:24px;border-top:1px solid #E5E7EB">
+                <div style="font-size:14px;font-weight:700;color:#1F7FD4;text-transform:uppercase;margin-bottom:12px">🚦 Bewertungssystem:</div>
+                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px">
+                    <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#10B981;flex-shrink:0"></div><strong>Grün:</strong> Ausführliche Antwort (>100 Wörter)</div>
+                </div>
+                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px">
+                    <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#F59E0B;flex-shrink:0"></div><strong>Gelb:</strong> Teilweise ausführlich (50-100 Wörter)</div>
+                </div>
+                <div style="display:flex;gap:12px;font-size:13px">
+                    <div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EF4444;flex-shrink:0"></div><strong>Rot:</strong> Zu kurz (<50 Wörter)</div>
+                </div>
+            </div>
             <div class="export">
                 <button class="export-btn" onclick="makePDF()">📥 PDF herunterladen</button>
             </div>
@@ -213,7 +270,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
     <div class="buttons" id="buttons">
         <button class="btn btn-secondary" id="backbtn" onclick="goBack()" style="display:none">← Zurück</button>
         <button class="btn btn-primary" id="nextbtn" onclick="goNext()">Weiter →</button>
-        <button class="btn btn-primary" id="finbtn" onclick="finish()" style="display:none">✓ Fertig</button>
+        <button class="btn btn-primary" id="finbtn" onclick="finish()" style="display:none">✓ Abschließen</button>
     </div>
 </div>
 
@@ -222,79 +279,80 @@ let step = 0, time = 5400, timer, gen = {g:'', p:'', v:''};
 
 const solutions = {
     Apple: {
-        p: 'Apple löst das Problem der technologischen Komplexität, indem das Unternehmen hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte übersetzt.',
-        v: 'Das Nutzenversprechen von Apple besteht aus Premium-Design, nahtloser Ökosystem-Integration zwischen Geräten, und Innovation, die das Leben einfacher macht.',
-        e: 'Das iPhone ist perfekt: Es vereinfacht Technologie durch klare Bedienung. Es funktioniert, bevor man die Anleitung liest.'
+        p: 'Apple löst das Problem der technologischen Komplexität. Das Unternehmen übersetzt hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte, die für jeden zugänglich sind. Technologie wird zum Lifestyle-Objekt.',
+        v: 'Das Nutzenversprechen von Apple besteht aus Premium-Design, nahtloser Ökosystem-Integration zwischen Geräten, und Innovation, die das Leben einfacher macht. Apple schafft nicht nur Produkte, sondern Lifestyle-Objekte, die Menschen Identität und Status geben.',
+        e: 'Das iPhone ist ein perfektes Beispiel: Es vereinfacht Technologie durch klare Bedienung und intuitive Interfaces. Es ist nicht einfach nur ein Telefon mit vielen technischen Funktionen, sondern ein System, das funktioniert, bevor man die Bedienungsanleitung liest.'
     },
     Spotify: {
-        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit, indem es Millionen von Songs sofort verfügbar macht.',
-        v: 'Das Nutzenversprechen besteht aus unbegrenztem Musikzugang, personalisierten Empfehlungen durch KI, und Convenience.',
-        e: 'Discover Weekly zeigt es perfekt: Spotify versteht nicht nur, welche Musik verfügbar ist – es versteht, was jeder einzelne Nutzer liebt.'
+        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit. Statt CDs einzeln zu kaufen oder auf begrenzte Radioübertragungen zu warten, hat jeder Zugang zu fast aller Musik der Welt - sofort und überall.',
+        v: 'Das Nutzenversprechen besteht aus unbegrenztem Musikzugang, personalisierten Empfehlungen durch Künstliche Intelligenz, und Convenience. Spotify macht Musik nicht zum Besitztum, sondern zur Utility – ähnlich wie Strom oder Wasser.',
+        e: 'Discover Weekly zeigt das Nutzenversprechen perfekt: Spotify versteht nicht einfach nur, welche Musik verfügbar ist – es versteht, was jeder einzelne Nutzer liebt. Die KI-gestützte Personalisierung schafft echten Mehrwert über die reine Verfügbarkeit hinaus.'
     },
     dm: {
-        p: 'dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar. Mit 50 ähnlichen Cremes braucht jeder Kunde Expert:innen-Wissen.',
-        v: 'Das Nutzenversprechen besteht aus Produktvielfalt, persönlicher Fachberatung vor Ort durch geschulte Mitarbeiter:innen, und gute Preise.',
-        e: 'Beratung vor Ort löst das echte Problem: Die Mitarbeiter:innen können sagen, welche Creme bei trockener Haut besser ist – das ist echter Mehrwert.'
+        p: 'dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar. Mit 50 ähnlichen Cremes, Vitaminen oder Zahnbürsten im Regal braucht jeder Kunde Expert:innen-Wissen – nicht einfach nur Verfügbarkeit.',
+        v: 'Das Nutzenversprechen besteht aus Produktvielfalt, persönlicher Fachberatung vor Ort durch geschulte Mitarbeiter:innen, Convenience und gute Preise. dm verbindet schnelle Verfügbarkeit mit kompetenter, persönlicher Beratung.',
+        e: 'Beratung vor Ort löst das echte Problem: "Welches Produkt passt zu MIR?" Die Mitarbeiter:innen können sagen, welche Creme bei trockener Haut besser ist, oder welche Zahnbürste für Zahnfleischprobleme empfohlen wird – das ist echter Mehrwert.'
     },
     Ryanair: {
-        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr.',
-        v: 'Das Nutzenversprechen besteht aus ultra-günstigen Ticketpreisen, häufigen Verbindungen, und echter Mobilität für alle.',
-        e: '50-Euro-Flüge von Berlin nach Rom ermöglichen Europareisen für Menschen mit kleinerem Budget. Das ist echter Marktwandel.'
+        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr, indem es Ultra-Billigflüge anbietet. Vorher konnten nur wohlhabende Menschen Europa bereisen.',
+        v: 'Das Nutzenversprechen besteht aus ultra-günstigen Ticketpreisen, häufigen Verbindungen auch zu kleineren Flughäfen, und echter Mobilität für Mittel- und Unterschicht. Ryanair machte Fliegen zur alltäglichen Option für normale Menschen.',
+        e: '50-Euro-Flüge von Berlin nach Rom ermöglichen echte Mobilität, kulturellen Austausch und Europareisen für Menschen mit kleinerem Budget. Das ist echter Marktwandel – nicht nur Innovation, sondern gesellschaftliche Demokratisierung.'
     },
     Airbnb: {
-        p: 'Airbnb bietet echte, lokale Erfahrungen statt anonyme Hotelzimmer. Airbnb schafft echte Begegnung zwischen Menschen und Orten.',
-        v: 'Das Nutzenversprechen besteht aus authentischen Erlebnissen, besseren Preisen als Hotels, und Unterstützung der lokalen Wirtschaft.',
-        e: 'Eine Wohnung bei einer echten Person in Barcelona statt ein anonymes Hotelzimmer zeigt es: Airbnb verkauft Erlebnisse und Authentizität.'
+        p: 'Airbnb bietet echte, lokale Erfahrungen statt anonyme Hotelzimmer. Hotels sind austauschbar und unpersönlich. Airbnb schafft echte Begegnung zwischen Menschen und Orten.',
+        v: 'Das Nutzenversprechen besteht aus authentischen Erlebnissen, besseren Preisen als Hotels, Flexibilität, und Unterstützung der lokalen Wirtschaft. Airbnb schafft echte Gastfreundschaft und kulturelle Erfahrung, nicht nur Unterkunft.',
+        e: 'Eine Wohnung bei einer echten Person in Barcelona statt ein anonymes Hotelzimmer zeigt es: Airbnb verkauft Erlebnisse und Authentizität, nicht einfach nur "Schlafplatz". Der Gastgeber zeigt dir die echte Stadt, nicht die Touristenzone.'
     },
     Netflix: {
-        p: 'Netflix endet das Problem von starren Programmzeiten. Vorher konnten Zuschauer:innen nur schauen, was im TV-Programm lief.',
-        v: 'Das Nutzenversprechen besteht aus unbegrenzten Inhalten jederzeit verfügbar, hochwertig personalisierten Empfehlungen, und Original-Content.',
-        e: 'Die Algorithmen zeigen es: Netflix weiß nicht nur, WAS verfügbar ist – es weiß, WAS du schauen möchtest. Die Startseite sieht bei jeder Person anders aus.'
+        p: 'Netflix endet das Problem von starren Programmzeiten und begrenzter Auswahl. Vorher konnten Zuschauer:innen nur schauen, was im Fernsehprogramm lief. Netflix machte die Kontrolle zum Zuschauer.',
+        v: 'Das Nutzenversprechen besteht aus unbegrenzten Inhalten jederzeit verfügbar, hochwertig personalisierten Empfehlungen, exklusivem Original-Content, Vielfalt, fairen Kosten, und überall verfügbar (Handy, Tablet, TV). Netflix hat Television demokratisiert.',
+        e: 'Die Algorithmen zeigen: Netflix weiß nicht nur, WAS verfügbar ist – es weiß, WAS du schauen möchtest. Die Startseite sieht bei jeder Person anders aus. Das ist echter Mehrwert: Personalisierung spart dir Zeit und verbessert das Erlebnis.'
     }
 };
 
 const slogans = {
-    'Berufstätige-Zeitmangel-Gemeinschaft': ['30 Min. Maximum. Mit deinem Team.', 'Effizient. Zusammen. Stärker.'],
-    'Berufstätige-Zeitmangel-Motivation': ['Mit Trainer. Effizient.', 'Professionell. Schnell. Stark.'],
-    'Berufstätige-Zeitmangel-Expertise': ['Mit Experte. Richtig.', 'Professionell. Sicher.'],
-    'Berufstätige-Zeitmangel-Erfolge': ['Kurz trainiert. Schnell Erfolg.', '30 Minuten = Veränderung.'],
-    'Anfänger-Zeitmangel-Gemeinschaft': ['Mit Gruppe. Leicht.', 'Deine Anfänger-Crew.'],
-    'Anfänger-Zeitmangel-Motivation': ['Mit Trainer. Sicher.', 'Von Tag 1. Richtig.'],
-    'Anfänger-Zeitmangel-Expertise': ['Mit Experte. Richtig.', 'Professionell. Sicher.'],
-    'Anfänger-Zeitmangel-Erfolge': ['Schnell anfangen. Schnell Erfolg.', 'In 2 Wochen sichtbar.'],
-    'Frauen-Zeitmangel-Gemeinschaft': ['Mit Frauen verstanden.', 'Für Frauen von Frauen.'],
-    'Frauen-Zeitmangel-Motivation': ['Mit Trainerin verstanden.', 'Eine Trainerin für dich.'],
-    'Frauen-Zeitmangel-Expertise': ['Mit Expertin. Richtig.', 'Trainerin. Verständnisvoll.'],
-    'Frauen-Zeitmangel-Erfolge': ['Kurz. Sichtbar. Für dich.', 'Messbar. Motivierend.'],
-    '50+-Zeitmangel-Gemeinschaft': ['Zeit kostbar. Zusammen.', 'Mit Gleichgesinnten stark.'],
-    '50+-Zeitmangel-Motivation': ['Mit Trainer 50+. Richtig.', 'Ein Trainer der versteht.'],
-    '50+-Zeitmangel-Expertise': ['Mit Experte 50+. Sicher.', 'Trainer. Respektvoll.'],
-    '50+-Zeitmangel-Erfolge': ['Zahlen wichtig. Sichtbar.', 'Erfolg messbar.']
+    'Berufstätige-Zeitmangel-Gemeinschaft': ['30 Minuten. Maximale Ergebnisse. Mit deinem Team.', 'Effizient trainiert. Zusammen stärker. Train4U.'],
+    'Berufstätige-Zeitmangel-Motivation': ['Mit deinem Trainer. Effizient stark.', 'Professionell. Schnell. Motiviert.'],
+    'Berufstätige-Zeitmangel-Expertise': ['Mit Experte. Richtig trainieren.', 'Professionell. Sicher. Effektiv.'],
+    'Berufstätige-Zeitmangel-Erfolg': ['Kurz trainiert. Schnell Erfolg.', '30 Minuten = Veränderung.'],
+    'Anfänger-Zeitmangel-Gemeinschaft': ['Mit der Gruppe anfangen.', 'Deine Anfänger-Crew wartet.'],
+    'Anfänger-Zeitmangel-Motivation': ['Mit Trainer. Sicher starten.', 'Von Tag 1. Richtig anfangen.'],
+    'Anfänger-Zeitmangel-Expertise': ['Mit Experte. Richtig starten.', 'Professionell. Sicher. Anfänger-freundlich.'],
+    'Anfänger-Zeitmangel-Erfolg': ['Schnell anfangen. Schnell Erfolg.', 'Erste Erfolge in 2 Wochen.'],
+    'Frauen-Zeitmangel-Gemeinschaft': ['Mit Frauen, die dich verstehen.', 'Für Frauen von Frauen.'],
+    'Frauen-Zeitmangel-Motivation': ['Mit Trainerin, die versteht.', 'Eine Trainerin für dein Leben.'],
+    'Frauen-Zeitmangel-Expertise': ['Mit Expertin. Richtig.', 'Trainerin. Verständnisvoll. Professionell.'],
+    'Frauen-Zeitmangel-Erfolg': ['Kurz. Sichtbar. Für dich.', 'Messbarer Erfolg. Messbare Motivation.'],
+    '50+-Zeitmangel-Gemeinschaft': ['Mit 50+ wird Zeit kostbar.', 'Mit Gleichgesinnten 50+ noch stärker.'],
+    '50+-Zeitmangel-Motivation': ['Mit Trainer 50+. Der versteht.', 'Ein Trainer, der dich und deinen Körper kennt.'],
+    '50+-Zeitmangel-Expertise': ['Mit Experte 50+. Sicher.', 'Ein Trainer, der 50+ respektiert.'],
+    '50+-Zeitmangel-Erfolg': ['Mit 50+ sind Zahlen wichtig.', 'Sichtbare Erfolge mit 50+.']
 };
 
 document.querySelectorAll('input[name="comp1"]').forEach(r => {
-    r.addEventListener('change', () => {
-        document.getElementById('comp1name').textContent = r.value;
-    });
+    r.addEventListener('change', () => document.getElementById('comp1name').textContent = r.value);
 });
 
 document.querySelectorAll('input[name="comp2"]').forEach(r => {
-    r.addEventListener('change', () => {
-        document.getElementById('comp2name').textContent = r.value;
-    });
+    r.addEventListener('change', () => document.getElementById('comp2name').textContent = r.value);
 });
 
-function pickOpt(el, cat, val) {
-    document.querySelectorAll(`#${el.parentElement.id} .gen-opt`).forEach(o => o.classList.remove('sel'));
+function selectGen(el, cat, val) {
+    document.querySelectorAll(`.gen-cat`).forEach(c => {
+        if (c.contains(el)) {
+            c.querySelectorAll('.gen-opt').forEach(o => o.classList.remove('sel'));
+        }
+    });
     el.classList.add('sel');
     gen[cat] = val;
     document.getElementById('sloganbox').innerHTML = '';
 }
 
 function makeSlogan() {
-    if (!gen.g || !gen.p || !gen.v) return alert('Wählen Sie bitte alle 3 Kategorien!');
+    if (!gen.g || !gen.p || !gen.v) return alert('Bitte wählen Sie aus allen 3 Kategorien!');
     let k = `${gen.g}-${gen.p}-${gen.v}`;
-    let s = (slogans[k] || ['Train4U!'])[Math.floor(Math.random() * (slogans[k]?.length || 1))];
+    let arr = slogans[k] || ['Train4U: Fitness, die funktioniert.'];
+    let s = arr[Math.floor(Math.random() * arr.length)];
     document.getElementById('sloganbox').innerHTML = `<div class="slogan-box">"${s}"<button class="copy-btn" onclick="copySlogan('${s.replace(/'/g, "\\'")}')">📋 Kopieren</button></div>`;
 }
 
@@ -328,7 +386,7 @@ function updateNav() {
 
 function goBack() {
     document.getElementById(`task${step}`).classList.remove('show');
-    document.getElementById(`results`).classList.remove('show');
+    document.getElementById('results').classList.remove('show');
     step--;
     document.getElementById(`task${step}`).classList.add('show');
     updateNav();
