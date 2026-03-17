@@ -273,31 +273,55 @@ let timer;
 let gen = {g:'', p:'', v:''};
 
 const solutions = {
-    Apple: { p: 'Apple löst das Problem der technologischen Komplexität in intuitive, benutzerfreundliche Geräte.', v: 'Ein typischer Apple-Kunde schätzt Qualität, Design und einfache Bedienbarkeit.', e: 'Apple sticht durch minimalistisches Design, nahtlose Ökosystem-Integration heraus.' },
-    Spotify: { p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit mit sofortigem Zugang zu Millionen Songs.', v: 'Ein typischer Spotify-Kunde ist musikbegeistert und möchte überall verfügbar sein.', e: 'Spotify sticht durch KI-gestützte Personalisierung (Discover Weekly) heraus.' },
-    dm: { p: 'dm löst das Problem der Produktauswahl und Beratungsbedürftigkeit bei Drogerieprodukten.', v: 'Ein typischer dm-Kunde möchte qualitativ gute Produkte mit Beratung und guten Preisen.', e: 'dm sticht durch kompetente Fachberatung vor Ort und große Produktvielfalt heraus.' },
-    Ryanair: { p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war.', v: 'Ein typischer Ryanair-Kunde ist preissensibel und möchte günstig reisen.', e: 'Ryanair sticht durch Ultra-Billigflüge und häufige Verbindungen zu kleineren Flughäfen heraus.' },
-    Airbnb: { p: 'Airbnb löst das Problem anonymer Hotelzimmer durch echte, lokale Erfahrungen.', v: 'Ein typischer Airbnb-Kunde ist abenteuerlustig und möchte authentische Erlebnisse.', e: 'Airbnb sticht durch authentische Erlebnisse und direkten Kontakt zu Gastgebern heraus.' },
-    Netflix: { p: 'Netflix löst das Problem von starren Programmzeiten und begrenztem TV-Angebot.', v: 'Ein typischer Netflix-Kunde möchte Inhalte nach seinem Zeitplan schauen.', e: 'Netflix sticht durch unbegrenzte Inhalte jederzeit verfügbar und exklusiven Original-Content heraus.' }
+    Apple: { 
+        p: 'Apple löst das Problem der technologischen Komplexität, indem das Unternehmen hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte übersetzt.', 
+        v: 'Ein typischer Apple-Kunde ist qualitätsorientiert, designbewusst und möchte eine nahtlose Bedienererfahrung. Oft ein Nutzer mit höherem Einkommen, der bereit ist, für Premium-Qualität zu zahlen.', 
+        e: 'Apple sticht durch minimalistisches Design, perfekte Verarbeitung, nahtlose Ökosystem-Integration zwischen Geräten und die Philosophie heraus, dass Technologie das Leben vereinfachen – nicht komplizieren – sollte.' 
+    },
+    Spotify: { 
+        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit und unflexibler Musikkonsum. Statt einzelne CDs zu kaufen oder auf Radioübertragungen zu warten, hat jeder sofort Zugang zu Millionen Songs.', 
+        v: 'Ein typischer Spotify-Kunde ist musikbegeistert, aktiv in sozialen Medien und möchte Musik überall und jederzeit verfügbar haben. Oft junge Menschen und digitale Natives, aber auch musikliebende Menschen aller Generationen.', 
+        e: 'Spotify sticht durch KI-gestützte Personalisierung (Discover Weekly), unbegrenzten Zugang zu Millionen Songs, Playlists für jeden Moment und die Umwandlung von Musik von Besitztum zu Service heraus.' 
+    },
+    dm: { 
+        p: 'dm löst das Problem der Produktauswahl, Beratungsbedürftigkeit und fehlender sozialer Verantwortung. Mit großer Vielfalt brauchen Kunden Expert:innen-Wissen und Vertrauen in die Qualität.', 
+        v: 'Ein typischer dm-Kunde m��chte qualitativ hochwertige Drogerie- und Gesundheitsprodukte, gute Beratung, gute Preise und Unternehmen, die sozial und ökologisch verantwortungsvoll handeln.', 
+        e: 'dm sticht durch kompetente Fachberatung vor Ort, riesige Produktvielfalt mit hoher Qualität, faire Preise, Nachhaltigkeit in der Beschaffung und soziales Engagement heraus.' 
+    },
+    Ryanair: { 
+        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr und macht echte Mobilität für die breite Bevölkerung erschwinglich.', 
+        v: 'Ein typischer Ryanair-Kunde ist preissensibel, flexibel in seinen Reisedaten und möchte günstig durch Europa reisen. Oft junge Menschen, Studenten, Familien mit kleinerem Budget oder Geschäftsreisende mit niedrigeren Kostenbudgets.', 
+        e: 'Ryanair sticht durch Ultra-Billigflüge (oft unter 50 Euro), häufige Verbindungen auch zu kleineren Flughäfen statt nur Großstädten und die Demokratisierung des Flugverkehrs für alle Einkommensschichten heraus.' 
+    },
+    Airbnb: { 
+        p: 'Airbnb löst das Problem anonymer, unpersönlicher Hotelzimmer und fehlender echter lokaler Erfahrungen. Reisen wird authentisch und menschlich statt standardisiert und kalt.', 
+        v: 'Ein typischer Airbnb-Kunde ist abenteuerlustig, kulturinteressiert und möchte authentische, lokale Erfahrungen machen. Oft Reisende, die Wert auf Einzigartigkeit und echte menschliche Verbindung legen.', 
+        e: 'Airbnb sticht durch authentische Erlebnisse statt anonyme Hotelzimmer, direkten persönlichen Kontakt zu lokalen Gastgebern, oft bessere Preise und das Gefühl heraus, echte Stadt-Erfahrungen zu machen, nicht nur zu übernachten.' 
+    },
+    Netflix: { 
+        p: 'Netflix löst das Problem von starren Programmzeiten und begrenztem TV-Angebot. Vorher konnten Zuschauer:innen nur schauen, was im Fernsehprogramm lief – Netflix gab ihnen volle Kontrolle und Freiheit.', 
+        v: 'Ein typischer Netflix-Kunde möchte Inhalte nach seinem eigenen Zeitplan schauen, schätzt hochwertige Empfehlungen und möchte ständig neuen, hochwertigen Content entdecken. Heute Menschen aller Altersgruppen weltweit.', 
+        e: 'Netflix sticht durch unbegrenzte Inhalte jederzeit verfügbar, hochwertige KI-Personalisierung (der Algorithmus kennt deine Vorlieben), exklusiven Original-Content mit Oscargewinnern und überall verfügbar (Handy, Tablet, TV) heraus.' 
+    }
 };
 
 const task2Solutions = {
-    q1: 'Das zentrale Nutzenversprechen von IKEA ist die Demokratisierung von Design. IKEA macht hochwertiges, funktionales Möbeldesign für breite Bevölkerung erschwinglich.',
-    q2: '(1) IKEA Family Programm: personalisierte Angebote, exklusive Rabatte, Geburtstagsgeschenke. (2) Professionelle Planungstools: online planen, Ideen speichern. (3) Showroom-Erlebnisse: inspirierende Musterwohnungen.',
-    q3: 'IKEA verfolgt klar eine Marketingorientierung. Das gesamte Geschäftsmodell ist auf KUNDENBEDÜRFNISSE ausgerichtet.'
+    q1: 'Das zentrale Nutzenversprechen von IKEA ist die Demokratisierung von Design. IKEA macht hochwertiges, funktionales Möbeldesign für die breite Bevölkerung erschwinglich. Der Slogan "Für viele Menschen" zeigt es: IKEA glaubt, dass jeder Mensch das Recht auf schöne, hochwertige Möbel hat, nicht nur Reiche.',
+    q2: '(1) IKEA Family Programm: Kundenkarteninhaber erhalten personalisierte Angebote, exklusive Rabatte und Geburtstagsgeschenke. (2) Professionelle Planungstools: Online und im Store können Kunden ihre Wohnungen planen, Ideen speichern und Preise vergleichen – das reduziert Kaufbarrieren. (3) Showroom-Erlebnisse und Katalog: Komplette Musterwohnungen inspirieren Kunden und helfen ihnen, ihre eigenen Träume zu visualisieren.',
+    q3: 'IKEA verfolgt klar eine Marketingorientierung, nicht Verkaufsorientierung. Das gesamte Geschäftsmodell ist konsequent auf KUNDENBEDÜRFNISSE ausgerichtet. Beispiele: IKEA fragt nicht "Was können wir bauen und verkaufen?", sondern "Was brauchen Menschen für ein schönes Zuhause zu erschwinglichen Preisen?" Das Selbstbausystem (BILLY-Regale) senkt Kosten – gut für Kunden. Der Katalog inspiriert – gut für Kunden. DIY-Montage spart Kosten – gut für Kunden. Das ist echte Marketingorientierung.'
 };
 
 const task3Solutions = {
-    q1: 'Das zentrale Nutzenversprechen von Starbucks ist der "Third Place" – ein Ort zwischen Zuhause und Arbeit.',
-    q2: 'Starbucks kreiert das Erlebnis durch: Atmosphäre mit gedimmtem Licht, warmen Farben, trainiertes Personal, personalisierte Getränke.',
-    q3: 'Starbucks verkörpert Service-Dominant Logic, weil es nicht das Produkt "Kaffee" verkauft – es verkauft einen SERVICE.',
-    q4: 'In Italien gibt es etablierte Café-Kultur, anderes Ritual (kurzer Espresso an der Theke), Preisvorteil lokaler Bars, kulturelle Ablehnung.'
+    q1: 'Das zentrale Nutzenversprechen von Starbucks ist nicht der Kaffee, sondern der "Third Place" – ein Ort zwischen Zuhause und Arbeit, wo Menschen sich wohlfühlen, entspannen, arbeiten, treffen und eine kleine Gemeinschaft erleben können. Für viele ist Starbucks ein zweites Wohnzimmer.',
+    q2: 'Starbucks kreiert das Erlebnis durch mehrere Elemente: (1) Die Atmosphäre: gedimmtes Licht, warme Farben, entspannende Musik, gemütliche Sessel. (2) Das Personal: trainiert, freundlich, kennt den Namen der Stammkunden. (3) Personalisierte Getränke: Der Barista schreibt deinen Namen auf den Deckel – du wirst gesehen. (4) Rituale: Der tägliche Besuch wird zur Routine, zum sozialen Treffpunkt.',
+    q3: 'Starbucks verkörpert Service-Dominant Logic perfekt: Das Unternehmen verkauft nicht das Produkt "Kaffee" – es verkauft einen umfassenden SERVICE. Der echte Wert entsteht nicht in der Küche, sondern in der Interaktion zwischen dir und dem Barista, in der Atmosphäre, in der Zugehörigkeit, in der Erfüllung von emotionalen Bedürfnissen (Zugehörigkeitsbedarf, Ruhe, Produktivität). Das ist Service-Dominant Logic.',
+    q4: 'In Italien hat Starbucks Schwierigkeiten, weil: (1) Es gibt eine etablierte, starke Café-Kultur mit authentischen lokalen Bars, die seit Generationen Treffpunkte sind und tiefe Kundenloyalität genießen. (2) Das italienische Kaffee-Ritual ist völlig anders: Italiener trinken einen perfekten Espresso kurz und intensiv an der Theke im Stehen – nicht Stunden sitzend wie Amerikaner. (3) Lokale Bars sind günstiger, haben bessere Qualität und echte menschliche Beziehung. (4) Es gibt kulturelle Ablehnung der amerikanischen Kommerzialisierung von Kaffee.'
 };
 
 const task4Solutions = {
-    q1: 'Ein echtes Fitnessstudio-Erlebnis: Train4U sollte einen Ort schaffen, wo Transformation möglich ist.',
-    q2: '(1) Buddy-System. (2) Kostenlose Personal-Training-Sessions. (3) Wöchentliche Challenges. (4) App zum Fortschritt-Tracking. (5) Flexible Öffnungszeiten.',
-    q3: '(1) Before-After-Stories. (2) Lokale Social-Media-Kampagnen. (3) Micro-Influencer-Partnerschaften. (4) Kostenlose Trainings-Events. (5) Referral-Programm.'
+    q1: 'Ein echtes Fitnessstudio-Erlebnis: Train4U sollte nicht einfach Geräte vermieten – es sollte einen Ort schaffen, wo Transformation möglich ist. Das Nutzenversprechen: "Wir helfen dir nicht nur zu trainieren, sondern zu TRANSFORMIEREN – mit persönlicher Betreuung, erreichbaren Erfolgen, echtem Support und einer Gemeinschaft, die dich trägt."',
+    q2: '(1) Buddy-System für Anfänger: Neue Mitglieder werden an erfahrene Mitglieder gepaart, die ihnen zeigen, wie alles funktioniert und sie motivieren. (2) Kostenlose Personal-Training-Sessions für die ersten 4 Wochen: Neue Kunden starten richtig und sehen schnell erste Erfolge. (3) Wöchentliche Challenges mit erreichbaren Zielen (z.B. 10 Liegestütze): Kleine Erfolgs-Erlebnisse bauen Motivation auf. (4) App zum Fortschritt-Tracking: Gewicht, Kraft, Trainingsfrequenz sichtbar machen – Erfolg motiviert.',
+    q3: '(1) Authentische Before-After-Stories von echten Menschen aus dem Studio: Sie zeigen, dass Transformation real ist und schaffen Vertrauen. (2) Lokale Facebook- und Instagram-Kampagnen mit geografischem Targeting an Menschen in der Nähe. (3) Partnerschaften mit lokalen Micro-Influencern (Ärzte, Physiotherapeuten, lokale TV-Moderatoren) aus der Region – sie kennen die Leute. (4) Kostenlose Trainings-Events in Parks an Wochenenden: Menschen können testen, ohne zu zahlen. (5) Referral-Programm: Zufriedene Kunden sind die beste Werbung.'
 };
 
 const slogans = {
