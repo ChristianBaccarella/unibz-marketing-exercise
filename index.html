@@ -5,7 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketing-Übung - Freie Universität Bozen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -48,7 +49,6 @@
             flex-direction: column;
         }
         
-        /* Header */
         .header {
             padding: 16px 20px;
             border-bottom: 1px solid var(--gray-100);
@@ -71,7 +71,6 @@
             letter-spacing: -1px;
         }
         
-        /* Timer */
         .timer-bar {
             padding: 16px 20px;
             background: var(--primary-light);
@@ -96,7 +95,6 @@
             font-family: 'Courier New', monospace;
         }
         
-        /* Content */
         .content {
             flex: 1;
             overflow-y: auto;
@@ -107,7 +105,6 @@
             padding: 24px 20px 40px;
         }
         
-        /* Landing Page */
         .landing-page {
             display: flex;
             flex-direction: column;
@@ -162,12 +159,6 @@
             box-shadow: 0 4px 12px rgba(31, 127, 212, 0.15);
         }
         
-        .start-button:active {
-            transform: scale(0.98);
-            box-shadow: 0 2px 8px rgba(31, 127, 212, 0.1);
-        }
-        
-        /* Exercise */
         .exercise {
             display: none;
             animation: fadeIn 0.3s ease-in;
@@ -209,7 +200,6 @@
             border-left: 4px solid var(--primary);
         }
         
-        /* Questions */
         .question-group {
             margin-bottom: 28px;
         }
@@ -222,7 +212,6 @@
             display: block;
         }
         
-        /* Checkbox Group */
         .checkbox-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -263,7 +252,6 @@
             font-weight: 600;
         }
 
-        /* Radio Group (für Single-Select) */
         .radio-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -304,7 +292,6 @@
             font-weight: 600;
         }
         
-        /* Textarea */
         textarea {
             width: 100%;
             padding: 14px;
@@ -325,7 +312,6 @@
             box-shadow: 0 0 0 3px rgba(31, 127, 212, 0.1);
         }
         
-        /* Generator */
         .generator-section {
             padding: 16px;
             background: var(--primary-light);
@@ -360,10 +346,6 @@
             font-weight: 500;
         }
         
-        .generator-option:active {
-            transform: scale(0.95);
-        }
-        
         .generator-option.selected {
             background: var(--primary);
             border-color: var(--primary);
@@ -381,10 +363,6 @@
             font-weight: 600;
             cursor: pointer;
             transition: var(--transition);
-        }
-        
-        .generate-btn:active {
-            transform: scale(0.98);
         }
         
         .generated-vp {
@@ -413,11 +391,6 @@
             width: 100%;
         }
         
-        .copy-btn:active {
-            transform: scale(0.98);
-        }
-        
-        /* Buttons */
         .button-section {
             display: none;
             gap: 12px;
@@ -454,20 +427,11 @@
             box-shadow: 0 4px 12px rgba(31, 127, 212, 0.15);
         }
         
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-        
         .btn-secondary {
             background: var(--gray-100);
             color: var(--text-primary);
         }
         
-        .btn-secondary:active {
-            background: var(--gray-200);
-        }
-        
-        /* Score Section */
         .score-section {
             display: none;
             text-align: center;
@@ -496,7 +460,6 @@
             margin-bottom: 24px;
         }
         
-        /* Feedback */
         .feedback-section {
             margin-top: 32px;
             padding-top: 32px;
@@ -572,7 +535,6 @@
             margin-bottom: 4px;
         }
         
-        /* Traffic Legend */
         .traffic-legend {
             margin-top: 24px;
             padding: 16px;
@@ -594,10 +556,6 @@
             gap: 12px;
             margin-bottom: 12px;
             font-size: 13px;
-        }
-        
-        .legend-item:last-child {
-            margin-bottom: 0;
         }
         
         .legend-icon {
@@ -651,16 +609,7 @@
             align-items: center;
             gap: 10px;
         }
-        
-        .export-btn:active {
-            transform: scale(0.98);
-        }
-        
-        .export-btn:hover {
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-        }
-        
-        /* Scrollbar */
+
         .content::-webkit-scrollbar {
             width: 6px;
         }
@@ -673,29 +622,21 @@
             background: var(--gray-300);
             border-radius: 3px;
         }
-        
-        .content::-webkit-scrollbar-thumb:hover {
-            background: var(--gray-400);
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
             <div class="header-logo">unibz</div>
         </div>
         
-        <!-- Timer -->
         <div class="timer-bar" id="timerBar" style="display: none;">
             <div class="timer-label">⏱️ Zeit verbleibend</div>
             <div class="timer" id="timer">90:00</div>
         </div>
         
-        <!-- Content -->
         <div class="content">
             <div class="content-inner">
-                <!-- Landing Page -->
                 <div id="landing" class="landing-page">
                     <div class="landing-icon">🎓</div>
                     <h1>Willkommen zur Marketing-Übung</h1>
@@ -706,7 +647,6 @@
                     <button class="start-button" onclick="startExercises()">Los geht's</button>
                 </div>
                 
-                <!-- Exercise 1 -->
                 <div class="exercise" id="exercise1">
                     <div class="task-counter">Aufgabe 1 / 4</div>
                     <h2>Nutzenversprechen verschiedener Unternehmen</h2>
@@ -748,7 +688,6 @@
                     <div id="companyAnswers"></div>
                 </div>
                 
-                <!-- Exercise 2 -->
                 <div class="exercise" id="exercise2">
                     <div class="task-counter">Aufgabe 2 / 4</div>
                     <h2>Mini Case Study: IKEA</h2>
@@ -772,7 +711,6 @@
                     </div>
                 </div>
                 
-                <!-- Exercise 3 -->
                 <div class="exercise" id="exercise3">
                     <div class="task-counter">Aufgabe 3 / 4</div>
                     <h2>Fallanalyse: Starbucks</h2>
@@ -806,7 +744,6 @@
                     </div>
                 </div>
                 
-                <!-- Exercise 4 -->
                 <div class="exercise" id="exercise4">
                     <div class="task-counter">Aufgabe 4 / 4</div>
                     <h2>Das Fitnessstudio "Train4U"</h2>
@@ -822,67 +759,31 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
-                                <div class="generator-options" id="targetGroup">
-                                    <div class="radio-item">
-                                        <input type="radio" id="tg1" name="targetGroup" value="Berufstätige" onchange="toggleOption(this, 'targetGroup')">
-                                        <label for="tg1" class="radio-label">Berufstätige</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="tg2" name="targetGroup" value="Anfänger" onchange="toggleOption(this, 'targetGroup')">
-                                        <label for="tg2" class="radio-label">Anfänger</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="tg3" name="targetGroup" value="Frauen" onchange="toggleOption(this, 'targetGroup')">
-                                        <label for="tg3" class="radio-label">Frauen</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="tg4" name="targetGroup" value="Personen über 50 Jahre" onchange="toggleOption(this, 'targetGroup')">
-                                        <label for="tg4" class="radio-label">Über 50 Jahre</label>
-                                    </div>
+                                <div class="generator-options">
+                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Berufstätige')">Berufstätige</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Anfänger')">Anfänger</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Frauen')">Frauen</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'tg', 'Personen über 50')">Über 50 Jahre</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
-                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welches Problem löst das Studio?</div>
-                                <div class="generator-options" id="problem">
-                                    <div class="radio-item">
-                                        <input type="radio" id="pb1" name="problem" value="Zeitmangel" onchange="toggleOption(this, 'problem')">
-                                        <label for="pb1" class="radio-label">Zeitmangel</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="pb2" name="problem" value="Keine Motivation" onchange="toggleOption(this, 'problem')">
-                                        <label for="pb2" class="radio-label">Keine Motivation</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="pb3" name="problem" value="Selbstoptimierung" onchange="toggleOption(this, 'problem')">
-                                        <label for="pb3" class="radio-label">Selbstoptimierung</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="pb4" name="problem" value="Keine Expertise" onchange="toggleOption(this, 'problem')">
-                                        <label for="pb4" class="radio-label">Keine Expertise</label>
-                                    </div>
+                                <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welches Problem?</div>
+                                <div class="generator-options">
+                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Zeitmangel')">Zeitmangel</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Keine Motivation')">Keine Motivation</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Selbstoptimierung')">Selbstoptimierung</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'pb', 'Keine Expertise')">Keine Expertise</div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welcher Mehrwert?</div>
-                                <div class="generator-options" id="value">
-                                    <div class="radio-item">
-                                        <input type="radio" id="vl1" name="value" value="Gemeinschaft" onchange="toggleOption(this, 'value')">
-                                        <label for="vl1" class="radio-label">Gemeinschaft</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="vl2" name="value" value="Flexibilität" onchange="toggleOption(this, 'value')">
-                                        <label for="vl2" class="radio-label">Flexibilität</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="vl3" name="value" value="Persönliche Betreuung" onchange="toggleOption(this, 'value')">
-                                        <label for="vl3" class="radio-label">Persönliche Betreuung</label>
-                                    </div>
-                                    <div class="radio-item">
-                                        <input type="radio" id="vl4" name="value" value="Messbare Resultate" onchange="toggleOption(this, 'value')">
-                                        <label for="vl4" class="radio-label">Messbare Resultate</label>
-                                    </div>
+                                <div class="generator-options">
+                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Gemeinschaft')">Gemeinschaft</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Flexibilität')">Flexibilität</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Persönliche Betreuung')">Persönliche Betreuung</div>
+                                    <div class="generator-option" onclick="selectOption(this, 'vl', 'Messbare Resultate')">Messbare Resultate</div>
                                 </div>
                             </div>
                             
@@ -904,7 +805,6 @@
                     </div>
                 </div>
                 
-                <!-- Score Section -->
                 <div class="score-section" id="scoreSection">
                     <div class="score-icon">✅</div>
                     <h2>Vielen Dank für Ihre Teilnahme!</h2>
@@ -932,7 +832,7 @@
                     <div class="export-section">
                         <div class="export-title">📥 Deine Ergebnisse exportieren</div>
                         <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Lade deine Antworten als PDF herunter - perfekt zum Speichern oder Ausdrucken.</p>
-                        <button class="export-btn" onclick="exportPDF()">
+                        <button class="export-btn" onclick="downloadPDF()">
                             <i class="fas fa-download"></i> PDF herunterladen
                         </button>
                     </div>
@@ -940,7 +840,6 @@
             </div>
         </div>
         
-        <!-- Button Section -->
         <div class="button-section" id="buttonSection">
             <button class="btn btn-secondary" onclick="previousExercise()" id="backBtn" style="display: none;">
                 <i class="fas fa-chevron-left"></i> Zurück
@@ -958,172 +857,115 @@
         let currentExercise = 0;
         let timeRemaining = 90 * 60;
         let timerInterval;
-        let selectedOptions = { targetGroup: [], problem: [], value: [] };
+        let genOptions = { tg: '', pb: '', vl: '' };
 
-        const feedbackData = {
-            exercise1: {
-                Apple: { problem: "Apple löst das Problem der technologischen Kompliziertheit und macht intuitive, benutzerfreundliche Technologie zugänglich.", value: "Premium-Design, Ökosystem-Integration, Status und Innovation.", example: "Das iPhone vereinfacht komplexe Technologie durch ein einfaches Interface, nicht nur ein Telefon." },
-                Spotify: { problem: "Löst das Problem, Musik überall und in großer Vielfalt verfügbar zu haben, anstatt CDs zu kaufen.", value: "Unbegrenzter Musikzugang, Personalisierung, Convenience und Affordabilität.", example: "Personalisierte Playlists und Recommendations lösen das Problem, neue Musik zu entdecken." },
-                dm: { problem: "Macht Drogerie- und Gesundheitsprodukte convenient und beratbar zugänglich.", value: "Vielfalt, Beratung, Convenience und Preiswertigkeit bei Drogerie- und Hygieneartikeln.", example: "Fachberatung vor Ort löst das Problem, die richtigen Produkte für persönliche Bedürfnisse zu finden." },
-                Ryanair: { problem: "Macht Flugverkehr für breite Bevölkerung erschwinglich und demokratisiert das Reisen.", value: "Günstige Flüge, häufige Verbindungen, Kostentransparenz.", example: "Billige Flüge ermöglichen Reisen, die sich Millionen sonst nicht leisten könnten." },
-                Airbnb: { problem: "Bietet Alternative zu Hotels - authentische, lokale Unterkünfte zu besseren Preisen.", value: "Authentische Erfahrungen, Kosteneinsparung, Flexibilität und lokale Verbindung.", example: "Ein Zimmer bei einem Locals zu mieten löst das Problem, echte Orte zu erleben, nicht nur Hotels." },
-                Netflix: { problem: "Beendet das Problem der begrenzten Filmauswahl und starrer Programmzeiten - stattdessen unbegrenzte Inhalte jederzeit verfügbar.", value: "Personalisierte Empfehlungen, Originalinhalte, beeindruckende Vielfalt, vorhersagbare Kosten, Zugang auf allen Geräten.", example: "Die intelligente Empfehlung 'Basierend auf deinen Interessen' zeigt, dass Netflix nicht einfach nur einen Katalog anbietet, sondern den Film kennt, den SIE sehen möchten." }
-            },
-            exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planningstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
-            exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: (1) Loyalty-Programm mit Rewards und exklusiven Angeboten für Stammkunden, (2) Mobile App mit Bezahlung, Personalisierung und Kommunikation.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien hat Starbucks Schwierigkeiten, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italienischer Kaffee ist kurzes, intensives Ritual an der Theke - nicht zum Verweilen gedacht, (3) Harte Konkurrenz durch lokale Bars mit Tradition, (4) Ablehnung von amerikanischer Massenproduktion von Kulturmomenten." },
-            exercise4: { q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern ein Ort für echte Transformation und persönliches Wachstum. Beispiel: 'Dein Fitnessstudio, das dir wirklich zuhört - mit maßgeschneiderten Trainings und einer Community, die deinen Erfolg mitfeiert.'", q2: "Konkrete Maßnahmen: (1) Buddy-Matching-Programm für neue Mitglieder mit erfahrenen Trainern, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen zur Vermeidung von Anfängerfehlern, (3) Wöchentliche Gruppen-Challenges mit erreichbaren Zielen und Belohnungen, (4) Mobile App zum Tracking von Fortschritten mit Visualisierung und Community-Feed, (5) Flexible Öffnungszeiten + Online-Live-Kurse für Berufstätige, (6) Monatliche Success-Stories von Mitgliedern als Inspiration, (7) Pay-Per-Session Modell ohne Langzeitvertrag.", q3: "Werbestrategie: (1) Authentische Before-After-Stories auf Instagram/TikTok - echte Menschen, echte Transformationen, nicht retouchiert, (2) Hyper-lokale Facebook-Kampagnen mit Geo-Targeting auf 5km um das Studio, (3) Partnerschaften mit lokalen Influencern (mit 5k-50k Follower, nicht Mega-Influencer) die den Studio-Lifestyle leben, (4) Grassroots: Kostenlose Fitness-Pop-ups in Parks und auf Märkten, (5) Referral-Programm: 1 Monat gratis für jede geworbene Person, (6) Google Ads mit Keywords 'Fitnessstudio ohne Vertrag' und 'Fitness für Anfänger in [Stadt]'." }
-        };
-
-        const keywords = {
-            exercise1: { problem: ['problem', 'löst', 'bedürfnis', 'bedarf', 'schwierigkeit'], value: ['nutzen', 'versprechen', 'vorteil', 'wert', 'differenzierung'], example: ['beispiel', 'konkret', 'zeigt', 'etwa', 'z.b'] },
-            exercise2: { q1: ['nutzen', 'versprechen', 'wert', 'design', 'erschwinglich'], q2: ['crm', 'kundenbindung', 'family', 'programm', 'loyalty'], q3: ['marketing', 'orientierung', 'kunde', 'kundenbedürfnis', 'geschäftsmodell'] },
-            exercise3: { q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft'], q2: ['erlebnis', 'atmosphäre', 'beispiel', 'besuch', 'name'], q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards'], q4: ['service-dominant', 'service', 'wert', 'erlebnis', 'beziehung'], q5: ['italien', 'kultur', 'café', 'bar', 'espresso', 'schwierigkeit'] },
-            exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'transformation', 'wachstum', 'ort'], q2: ['buddy', 'training', 'app', 'tracking', 'session', 'erfolg'], q3: ['instagram', 'authentisch', 'lokal', 'facebook', 'referral', 'parks'] }
-        };
-
-        // VERBESSERTE VP-Templates mit besserer Grammatik
-        const vpDatabase = {
+        // MASSIVE VP DATABASE mit professionellen Texten
+        const vpLibrary = {
             'Berufstätige-Zeitmangel-Gemeinschaft': [
-                "Train4U versteht, dass deine Zeit kostbar ist. Wir bieten dir 30-minütige Power-Trainings, die wissenschaftlich optimiert sind. Das Beste: Du trainierst nicht allein. Eine Community von Berufstätigen unterstützt dich und feiert deine Fortschritte.",
-                "Für Berufstätige ohne Zeit: 30-Minuten-Trainings, die wirken. Plus eine Community, die dich jeden Tag pusht.",
-                "Train4U: Effiziente Trainings, echte Gemeinschaft. Perfekt für Berufstätige, die wenig Zeit haben.",
-                "Train4U ist dein Time-Hacker für Fitness. Statt stundenlanges Pumpen - 30 Minuten wissenschaftlich getuned. Und du machst es nicht allein: eine Community von Menschen, die verstehen, wie dein Leben funktioniert.",
-                "Fitness sollte nicht in Konkurrenz zu deiner Karriere stehen. Train4U bietet effiziente Trainings UND eine Community, die diese Balance versteht.",
-                "Train4U ist dein Fitnessstudio für Menschen, die ihr Leben ernst nehmen. 30 Minuten, die mehr bringen als 3 Stunden Mainstream. Eine Community, die nicht über Fitness spricht - sie LEBT sie gemeinsam.",
-                "Berufstätige trainieren anders: smart, effizient, zusammen. Train4U ist der Ort, wo deine Karriere und Fitness nicht konkurrieren - sie unterstützen sich gegenseitig."
+                "Fitness für echte Menschen: 30 Minuten, die wirken. Trainiere mit einer Community von Berufstätigen, die dein Leben verstehen.",
+                "Train4U: Der schnellste Weg zu echtem Erfolg. Power-Trainings für Menschen, die keine Zeit verschwenden – aber auch nicht allein trainieren wollen.",
+                "Deine Community wartet: Effiziente Trainings. Echte Verbindungen. Gemeinsamer Erfolg.",
+                "30 Minuten Fokus. Ein Leben voller Energie. Eine Community, die es versteht."
             ],
             'Berufstätige-Zeitmangel-Flexibilität': [
-                "Dein Fitnessstudio passt sich deinem Leben an. 24/7 offen, Live-Online-Kurse, flexible Trainingspläne. Fitness wann du da bist, nicht wann wir offen haben.",
-                "Train4U: 24/7, Online, Vor Ort. Du bestimmst wann und wie.",
-                "Flexibilität statt Kompromisse: Train4U ist offen wenn du trainieren willst.",
-                "Train4U ist das Fitnessstudio für Menschen, die keine Öffnungszeiten brauchen. 24/7 Zugang, Live-Kurse um Mitternacht, Training in deiner Lunch-Break.",
-                "Für Berufstätige ist Zeit das kostbarste Gut. Train4U macht Fitness zu einer Option, nicht zu einem Termin.",
-                "Das klassische Fitnessstudio passt sich dir an - mit Train4U bestimmst du die Regeln."
+                "Fitness, wenn DU Zeit hast, nicht wenn wir offen haben. 24/7, Online, Überall.",
+                "Train4U: Die Revolution ist flexibel. Trainiere um 5 Uhr morgens oder nachts um 11.",
+                "Keine Öffnungszeiten. Keine Kompromisse. Nur dein Fitness-Leben.",
+                "Flexibilität ist nicht optional – es ist essentiell. Train4U macht es möglich."
             ],
             'Berufstätige-Keine Motivation-Gemeinschaft': [
-                "Train4U ist dein Accountability-Partner. Wir verbinden dich mit ehrgeizigen Berufstätigen. Wenn du nicht kommst, vermisst man dich hier.",
-                "Motivation kommt von Gemeinschaft. Train4U verbindet dich mit Menschen auf der gleichen Reise.",
-                "Train4U: Die Community treibt dich an - nicht die Willenskraft.",
-                "Allein trainieren ist einsam. Train4U ist eine Gemeinschaft von Berufstätigen, die sich gegenseitig nach oben ziehen.",
-                "Deine Community ist deine beste Motivation. Train4U bringt dich mit echten Menschen zusammen, nicht mit Fitness-Influencern."
+                "Motivation braucht keine Willenskraft – sie braucht die richtige Community. Deine wartet schon.",
+                "Vergiss Selbstdisziplin. Mit der richtigen Community trainierst du, weil du es willst.",
+                "Die besten Berufstätigen trainieren nicht allein. Sie trainieren bei Train4U.",
+                "Deine Motivation liegt in der Gemeinschaft – nicht in deinem Kopf."
             ],
             'Berufstätige-Selbstoptimierung-Persönliche Betreuung': [
-                "Train4U: Datengestützte Optimierung trifft persönliche Betreuung. Dein Trainer nutzt Leistungstests, nicht Bauchgefühl.",
-                "Optimierung braucht Daten UND eine Person, die das versteht. Train4U kombiniert beides.",
-                "Train4U misst, analysiert, optimiert - und hat einen Menschen, der dir hilft, das Beste draus zu machen.",
-                "Für Berufstätige, die auch im Fitness ROI maximieren wollen: Science trifft Personal Touch.",
-                "Data-driven Fitness mit Human Touch: Train4U ist für die, die auch im Fitnessstudio nach Effizienz streben."
+                "Train4U: Daten trifft Personal Touch. Wir optimieren dich wissenschaftlich – aber nie unpersönlich.",
+                "Dein Trainer. Deine Daten. Dein Erfolg. Messbar.",
+                "Optimierung mit Empathie. Das ist der Unterschied zwischen Fitness und Erfolg.",
+                "Intelligente Trainingspläne für intelligente Menschen. Train4U weiß, worauf es ankommt."
             ],
             'Anfänger-Keine Motivation-Gemeinschaft': [
-                "Train4U bricht deine Anfänger-Angst auf. Hier trainiert wirklich JEDER auf seinem Level. Niemand schaut auf dich.",
-                "Anfänger brauchen Anfänger. Train4U ist voller Menschen, die gerade anfangen - genau wie du.",
-                "Du bist nicht allein beim Anfang. Eine ganze Community durchlebt das gleich mit dir.",
-                "Train4U ist ein sicherer Raum für Anfänger. Keine Profis die dich beurteilen - nur Menschen wie du.",
-                "Anfangen ist nicht einsam bei Train4U - es ist eine Community-Erfahrung."
+                "Anfangen ist nicht einsam. Bei Train4U trainiert deine ganze Anfänger-Kohorte mit dir.",
+                "Die beste Zeit zum Anfang ist JETZT. Die beste Umgebung ist hier: Train4U.",
+                "Kein Anfänger trainiert allein. Und keine Anfängerin fühlt sich verloren.",
+                "Das erste Mal ist das wichtigste Mal. Lass es von einer Community begleiten."
             ],
             'Anfänger-Keine Expertise-Persönliche Betreuung': [
-                "Train4U: Dein Erfolg ist unser Erfolg. Kostenlose 1-zu-1 Einführung, fester Trainer, echtes Vertrauen.",
-                "Für Anfänger braucht es Expertise an deiner Seite. Train4U hat einen Trainer, der dich kennt.",
-                "Train4U behandelt Anfänger wie Anfänger sollten behandelt werden: mit voller Aufmerksamkeit.",
-                "Keine Angst vor dem ersten Tag. Dein fester Trainer macht dich in 4 Wochen zum Profi.",
-                "Anfangen bedeutet bei Train4U: Ein Trainer, der nur für dich da ist."
+                "Dein Trainer kennt jeden Anfängerfehler – und wie man sie vermeidet. Mit dir, persönlich.",
+                "4 Wochen mit einem persönlichen Trainer = 4 Jahre Selbstfindung im Fitnessstudio vermieden.",
+                "Expertise macht den Unterschied zwischen schnell und ewig trainieren.",
+                "Dein fester Trainer ist dein Anfänger-Kompass. Der Weg wird klar."
             ],
             'Anfänger-Selbstoptimierung-Persönliche Betreuung': [
-                "Train4U folgt dem 12-Wochen-Prinzip: Basis → Stärke → Ausdauer. Du siehst Fortschritt strukturiert.",
-                "Von Anfänger zu deiner besten Version - in 12 Wochen, strukturiert, mit Trainer.",
-                "Anfänger brauchen einen Plan. Train4U hat einen - und einen Menschen, der dich durchführt.",
-                "Train4U ist nicht chaotisch: 12 Wochen, 3 Phasen, sichtbare Transformation.",
-                "Strukturierte Anfänger-Transformation mit persönlicher Betreuung: Das ist Train4U."
+                "12 Wochen. 3 Phasen. Vollständige Transformation. Mit Plan. Mit Trainer.",
+                "Von Anfänger zu deiner besten Version – nicht chaotisch, sondern strukturiert.",
+                "Dein Fortschritt ist nicht Zufall. Es ist System. Es ist Plan. Es ist Train4U.",
+                "Anfänger brauchen einen Navigator. Wir sind deiner – die ganze Reise lang."
             ],
             'Frauen-Keine Motivation-Gemeinschaft': [
-                "Train4U: Dieser Ort ist FÜR DICH designt - von Frauen, mit Trainerinnen, von Frauen wie dir.",
-                "Frauen trainieren anders - bei Train4U ist das normal. Keine Konkurrenz, nur gegenseitige Unterstützung.",
-                "Das ist nicht nur ein Fitnessstudio - es ist deine Gemeinschaft von Frauen, die verstehen.",
-                "Train4U versteht das weibliche Fitness-Erlebnis. Eine Community, die dich anfeuert, nicht verurteilt.",
-                "Für Frauen, von Frauen. Train4U ist ein Ort, wo du dich zu Hause fühlst."
+                "Für Frauen, von Frauen, mit Frauen. Hier verstanden. Hier stark. Hier daheim.",
+                "Fitness ist nicht männlich. Motivation auch nicht. Train4U ist für dich.",
+                "Die beste Motivation für eine Frau? Eine Community von Frauen, die es verstehen.",
+                "Dein Raum. Deine Community. Deine Mission."
             ],
             'Frauen-Selbstoptimierung-Gemeinschaft': [
-                "Train4U: Fitness ist Selbstliebe. Wir trainieren nicht um andere zu beeindrucken - für uns selbst.",
-                "Frauen bei Train4U trainieren für sich selbst, nicht für andere. Eine Community der Selbstoptimierung.",
-                "Selbstliebe durch Fitness: Train4U ist für Frauen, die das verstehen.",
-                "Train4U ist ein Ort wo Frauen aufeinander aufpassen und gemeinsam wachsen.",
-                "Für Frauen, die sich selbst an erste Stelle stellen: Train4U ist dein Studio."
+                "Selbstoptimierung ist kein Egoismus – es ist Selbstliebe. Train4U feiert beide.",
+                "Frauen trainieren nicht um zu gefallen. Sie trainieren um zu WISSEN, dass sie stark sind.",
+                "Gemeinsam stärker. Nicht konkurrierend – unterstützend.",
+                "Deine beste Version ist auch meine beste Version. Das ist unsere Kultur."
             ],
             'Frauen-Zeitmangel-Flexibilität': [
-                "Train4U versteht dein Leben. Mama-freundliche Kurse mit Kinderbetreuung, 15-Minuten-Trainings.",
-                "Fitness sollte dein Leben nicht belasten - es sollte es verbessern. Train4U passt sich dir an.",
-                "Für Frauen mit echtem Leben: flexible Zeiten, Kinderbetreuung, realistische Trainings.",
-                "Mütter, Karrierefrauen, alle: Train4U bietet die Flexibilität, die du brauchst.",
-                "Train4U respektiert, dass dein Leben komplex ist - und macht Fitness trotzdem möglich."
+                "Mama, Karriere, Fitness? Alles drei. Mit Train4U, weil wir verstehen, dass dein Leben komplex ist.",
+                "Flexible Zeiten, Kinderbetreuung, realistische Trainings. Für das echte Leben.",
+                "Train4U respektiert, dass du mehrere Leben gleichzeitig lebst.",
+                "15 Minuten zählen. Wenn es bedeutsam ist."
             ],
-            'Personen über 50 Jahre-Flexibilität-Persönliche Betreuung': [
-                "Train4U: Dein bestes Jahrzehnt fängt JETZT an. Trainer, die verstehen, dass Knieverletzungen real sind.",
-                "Mit über 50 trainierst du smart, nicht hart. Train4U weiß wie.",
-                "Train4U ist designt für Personen über 50 Jahren: Flexibilität, Verständnis, Ergebnisse.",
-                "Trainieren im besten Alter: Train4U versteht deinen Körper und respektiert ihn.",
-                "Über 50 ist nicht zu alt - es ist die beste Zeit. Train4U zeigt dir wie."
+            'Personen über 50-Flexibilität-Persönliche Betreuung': [
+                "Über 50 heißt nicht älter – es heißt klüger. Train4U trainiert dich klug.",
+                "Knieverletzungen sind real. Trainings, die das verstehen, auch.",
+                "Dein bestes Jahrzehnt beginnt jetzt – mit den richtigen Menschen.",
+                "50+ ist nicht eine Begrenzung – es ist dein bestes Kapitel."
             ],
-            'Personen über 50 Jahre-Keine Expertise-Messbare Resultate': [
-                "Train4U: Wissenschaft, nicht Ratschläge. DEXA-Scans, Bluttests, echte Messungen.",
-                "Du siehst objektiv: mein Körper wird BESSER. Das ist Train4U für Personen über 50.",
-                "Für Menschen über 50, die Beweise wollen: Train4U misst alles wissenschaftlich.",
-                "Trainieren mit Messungen: Train4U zeigt dir nicht nur Gefühle, sondern echte Ergebnisse.",
-                "Wer über 50 ist, verdient wissenschaftliche Betreuung - und genau das bietet Train4U."
+            'Personen über 50-Keine Expertise-Messbare Resultate': [
+                "Dexa-Scans. Bluttests. Echte Zahlen. Du siehst objektiv: Du wirst BESSER.",
+                "Wissenschaft statt Versprechen. Das verdienst du mit über 50.",
+                "Messbare Resultate machen echten Erfolg. Train4U zeigt dir beide.",
+                "Dein Körper spricht Zahlen. Train4U übersetzt sie in Erfolg."
             ],
-            'Personen über 50 Jahre-Selbstoptimierung-Gemeinschaft': [
-                "Train4U: Du wirst nicht älter, du wirst STÄRKER. Eine Gruppe von Personen über 50, die aufsteigen.",
-                "Über 50 ist deine beste Phase. Train4U verbindet dich mit anderen, die das leben.",
-                "Mit über 50 kannst du stärker sein als mit 30 - wenn du es richtig machst. Train4U zeigt dir wie.",
-                "Train4U ist für Personen über 50, die gerade anfangen - ihre beste Version zu werden.",
-                "Dein neues Normal ist fit, energetisch, lebendig. Train4U macht das möglich."
+            'Personen über 50-Selbstoptimierung-Gemeinschaft': [
+                "Über 50? Willkommen in der besten Phase deines Lebens. Hier wirst du STÄRKER.",
+                "Eine Gruppe von Menschen 50+, die nicht aufgeben – sondern aufsteigen.",
+                "Ihr gemeinsamer Erfolg ist euer gemeinsames Versprechen.",
+                "Stark mit 50. Stärker mit 60. Unstoppable mit 70."
             ]
         };
 
-        function toggleOption(element, category) {
-            document.querySelectorAll(`input[name="${element.name}"]`).forEach(radio => {
-                radio.checked = false;
+        function selectOption(elem, category, value) {
+            document.querySelectorAll(`[onclick*="'${category}'"]`).forEach(el => {
+                el.classList.remove('selected');
             });
-            element.checked = true;
-            const value = element.value;
-            selectedOptions[category] = [value];
+            elem.classList.add('selected');
+            genOptions[category] = value;
         }
 
         function generateVP() {
-            if (!selectedOptions.targetGroup.length || !selectedOptions.problem.length || !selectedOptions.value.length) {
+            if (!genOptions.tg || !genOptions.pb || !genOptions.vl) {
                 alert('Bitte wählen Sie aus jeder Kategorie eine Option aus!');
                 return;
             }
-
-            const tg = selectedOptions.targetGroup[0];
-            const pb = selectedOptions.problem[0];
-            const vl = selectedOptions.value[0];
-            const key = `${tg}-${pb}-${vl}`;
             
-            let vp;
-            if (vpDatabase[key]) {
-                const templates = vpDatabase[key];
-                const randomIndex = Math.floor(Math.random() * templates.length);
-                vp = templates[randomIndex];
-            } else {
-                // Besserer Fallback mit korrekter Grammatik
-                vp = `Train4U ist für ${tg}, die mit ${pb} kämpfen. Wir bieten dir ${vl} - damit Fitness endlich funktioniert und wirklich zu deinem Leben passt.`;
-            }
+            const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
+            const templates = vpLibrary[key] || [
+                `Train4U ist für ${genOptions.tg}, die mit ${genOptions.pb} kämpfen. Wir bieten dir ${genOptions.vl} – damit Fitness wirklich funktioniert.`
+            ];
             
-            document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
+            const vp = templates[Math.floor(Math.random() * templates.length)];
+            document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyText('ex4q1', '${vp.replace(/'/g, "\\'")}')">📋 In Antwort kopieren</button></div>`;
         }
 
-        function copyToTextarea(id, text) {
+        function copyText(id, text) {
             document.getElementById(id).value = text;
-        }
-
-        function getRating(text, type, q) {
-            const words = text.trim().split(/\s+/).length;
-            const kw = keywords[type]?.[q] || [];
-            let count = kw.filter(k => text.toLowerCase().includes(k.toLowerCase())).length;
-            const score = kw.length > 0 ? count / kw.length : 0;
-            if (words > 100 && score > 0.5) return { rating: 'green', icon: '✓' };
-            if ((words > 50 && score > 0.25) || words > 80) return { rating: 'yellow', icon: '○' };
-            return { rating: 'red', icon: '✕' };
         }
 
         function startExercises() {
@@ -1132,7 +974,6 @@
             document.getElementById('buttonSection').classList.add('active');
             document.getElementById('timerBar').style.display = 'flex';
             startTimer();
-            loadData();
             renderCompanyQuestions();
             updateButtonVisibility();
         }
@@ -1166,49 +1007,31 @@
                     <h3 style="font-size: 16px; font-weight: 600; color: var(--primary); margin: 20px 0 12px;">${c}</h3>
                     <div class="question-group">
                         <label class="question-label">Welches Problem löst ${c} für seine Kundinnen und Kunden?</label>
-                        <textarea id="ex1_${i}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
+                        <textarea id="ex1_${i}_q1"></textarea>
                     </div>
                     <div class="question-group">
                         <label class="question-label">Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${c}?</label>
-                        <textarea id="ex1_${i}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
+                        <textarea id="ex1_${i}_q2"></textarea>
                     </div>
                     <div class="question-group">
                         <label class="question-label">Geben Sie ein konkretes Beispiel, woran man sieht, dass ${c} ein Problem löst und nicht nur ein beliebiges Produkt bereitstellt.</label>
-                        <textarea id="ex1_${i}_q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
+                        <textarea id="ex1_${i}_q3"></textarea>
                     </div>
                 `;
                 container.appendChild(div);
             });
-            selected.forEach((c, i) => {
-                ['q1', 'q2', 'q3'].forEach(q => {
-                    const saved = localStorage.getItem(`ex1_${i}_${q}`);
-                    if (saved) document.getElementById(`ex1_${i}_${q}`).value = saved;
-                });
-            });
         }
 
         function updateButtonVisibility() {
-            const back = document.getElementById('backBtn');
-            const next = document.getElementById('nextBtn');
-            const submit = document.getElementById('submitBtn');
-            back.style.display = currentExercise > 0 ? 'flex' : 'none';
-            next.style.display = currentExercise < 3 ? 'flex' : 'none';
-            submit.style.display = currentExercise === 3 ? 'flex' : 'none';
+            document.getElementById('backBtn').style.display = currentExercise > 0 ? 'flex' : 'none';
+            document.getElementById('nextBtn').style.display = currentExercise < 3 ? 'flex' : 'none';
+            document.getElementById('submitBtn').style.display = currentExercise === 3 ? 'flex' : 'none';
         }
 
         function previousExercise() {
-            if (currentExercise === 1) {
-                localStorage.setItem('ex2q1', document.getElementById('ex2q1').value);
-                localStorage.setItem('ex2q2', document.getElementById('ex2q2').value);
-                localStorage.setItem('ex2q3', document.getElementById('ex2q3').value);
-            } else if (currentExercise === 2) {
-                for (let i = 1; i <= 5; i++) localStorage.setItem(`ex3q${i}`, document.getElementById(`ex3q${i}`).value);
-            } else if (currentExercise === 3) {
-                for (let i = 1; i <= 3; i++) localStorage.setItem(`ex4q${i}`, document.getElementById(`ex4q${i}`).value);
-            }
+            currentExercise--;
             document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
-            document.getElementById(`exercise${--currentExercise + 1}`).classList.add('active');
-            document.getElementById('companyError').style.display = 'none';
+            document.getElementById(`exercise${currentExercise + 1}`).classList.add('active');
             updateButtonVisibility();
         }
 
@@ -1218,139 +1041,106 @@
                     document.getElementById('companyError').style.display = 'block';
                     return;
                 }
-                const checkboxes = document.querySelectorAll('input[name="companies"]');
-                checkboxes.forEach(cb => localStorage.setItem(`company_${cb.value}`, cb.checked));
-                Array.from(checkboxes).filter(cb => cb.checked).forEach((cb, i) => {
-                    ['q1', 'q2', 'q3'].forEach(q => localStorage.setItem(`ex1_${i}_${q}`, document.getElementById(`ex1_${i}_${q}`).value));
-                });
-            } else if (currentExercise === 1) {
-                localStorage.setItem('ex2q1', document.getElementById('ex2q1').value);
-                localStorage.setItem('ex2q2', document.getElementById('ex2q2').value);
-                localStorage.setItem('ex2q3', document.getElementById('ex2q3').value);
-            } else if (currentExercise === 2) {
-                for (let i = 1; i <= 5; i++) localStorage.setItem(`ex3q${i}`, document.getElementById(`ex3q${i}`).value);
+                document.getElementById('companyError').style.display = 'none';
             }
-            document.getElementById('companyError').style.display = 'none';
+            currentExercise++;
             document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
-            document.getElementById(`exercise${++currentExercise + 1}`).classList.add('active');
+            document.getElementById(`exercise${currentExercise + 1}`).classList.add('active');
             updateButtonVisibility();
         }
 
-        function loadData() {
-            const checkboxes = document.querySelectorAll('input[name="companies"]');
-            checkboxes.forEach(cb => cb.checked = localStorage.getItem(`company_${cb.value}`) === 'true');
-            for (let i = 1; i <= 4; i++) {
-                for (let j = 1; j <= 5; j++) {
-                    const el = document.getElementById(`ex${i}q${j}`);
-                    if (el) el.value = localStorage.getItem(`ex${i}q${j}`) || '';
-                }
-            }
-        }
-
         function submitAll() {
-            for (let i = 1; i <= 3; i++) localStorage.setItem(`ex4q${i}`, document.getElementById(`ex4q${i}`).value);
             clearInterval(timerInterval);
             document.querySelectorAll('.exercise').forEach(e => e.classList.remove('active'));
             document.getElementById('scoreSection').classList.add('active');
-            document.getElementById('buttonSection').classList.remove('active');
+            document.getElementById('buttonSection').style.display = 'none';
             document.getElementById('timerBar').style.display = 'none';
             
             let html = '<div class="feedback-title">📊 Bewertung Ihrer Antworten</div>';
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             
-            html += '<div class="feedback-item"><h4>Aufgabe 1</h4>';
+            html += '<div class="feedback-item"><h4>Aufgabe 1 - Nutzenversprechen</h4>';
             selected.forEach((c, i) => {
-                html += `<div style="margin-bottom: 16px;"><strong>${c}</strong>`;
-                ['q1', 'q2', 'q3'].forEach((q, idx) => {
-                    const text = document.getElementById(`ex1_${i}_${q}`).value;
-                    const r = getRating(text, 'exercise1', 'problem');
-                    const titles = ['Problem', 'Nutzenversprechen', 'Konkretes Beispiel'];
-                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>${titles[idx]}</strong>${feedbackData.exercise1[c][['problem', 'value', 'example'][idx]]}</div></div>`;
-                });
-                html += '</div>';
+                html += `<strong>${c}</strong><br>`;
+                html += `Problem: ${document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)'}<br>`;
+                html += `Nutzenversprechen: ${document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)'}<br>`;
+                html += `Beispiel: ${document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)'}<br><br>`;
             });
             html += '</div>';
             
-            ['2', '3', '4'].forEach((ex, idx) => {
-                const questions = ex === '2' ? ['q1', 'q2', 'q3'] : ex === '3' ? ['q1', 'q2', 'q3', 'q4', 'q5'] : ['q1', 'q2', 'q3'];
-                html += `<div class="feedback-item"><h4>Aufgabe ${parseInt(ex)}</h4>`;
-                questions.forEach(q => {
-                    const text = document.getElementById(`ex${ex}${q}`).value;
-                    const r = getRating(text, `exercise${ex}`, q);
-                    html += `<div class="rating-row"><div class="rating-icon ${r.rating}">${r.icon}</div><div class="rating-text"><strong>Frage ${q.substring(1)}</strong>${feedbackData[`exercise${ex}`][q]}</div></div>`;
-                });
-                html += '</div>';
-            });
             document.getElementById('feedbackSection').innerHTML = html;
         }
 
-        function exportPDF() {
+        function downloadPDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+            
+            let yPos = 20;
+            const pageHeight = doc.internal.pageSize.getHeight();
+            const pageWidth = doc.internal.pageSize.getWidth();
+            const margin = 15;
+            const maxWidth = pageWidth - (2 * margin);
+            
+            function addText(text, isBold = false, isTitle = false) {
+                if (yPos > pageHeight - 20) {
+                    doc.addPage();
+                    yPos = 20;
+                }
+                
+                if (isBold) doc.setFont('Arial', 'bold');
+                else doc.setFont('Arial', 'normal');
+                
+                if (isTitle) {
+                    doc.setFontSize(14);
+                } else {
+                    doc.setFontSize(10);
+                }
+                
+                const lines = doc.splitTextToSize(text, maxWidth);
+                doc.text(lines, margin, yPos);
+                yPos += lines.length * 6;
+            }
+            
+            doc.setFontSize(16);
+            doc.setFont('Arial', 'bold');
+            doc.text('Marketing-Übung - Ihre Antworten', margin, yPos);
+            yPos += 12;
+            
+            addText(`Datum: ${new Date().toLocaleDateString('de-DE')}`);
+            yPos += 10;
+            
+            addText('AUFGABE 1: Nutzenversprechen', true, true);
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
-            
-            let htmlContent = '<div style="font-family: Arial, sans-serif; padding: 20px; line-height: 1.6;">';
-            htmlContent += '<h1>Marketing-Übung - Ihre Antworten</h1>';
-            htmlContent += '<p><strong>Freie Universität Bozen</strong></p>';
-            htmlContent += '<p>Datum: ' + new Date().toLocaleDateString('de-DE') + '</p>';
-            htmlContent += '<hr style="border: none; border-top: 1px solid #ccc; margin: 20px 0;">';
-            
-            htmlContent += '<h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>';
             selected.forEach((c, i) => {
-                htmlContent += '<h3 style="color: #1F7FD4; margin-top: 20px;">' + c + '</h3>';
-                htmlContent += '<p><strong>Problem:</strong></p>';
-                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-                htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
-                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-                htmlContent += '<p><strong>Beispiel:</strong></p>';
-                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-                htmlContent += '<hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">';
+                addText(`${c}:`, true);
+                addText(`Problem: ${document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)'}`);
+                addText(`Nutzenversprechen: ${document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)'}`);
+                addText(`Beispiel: ${document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)'}`);
+                yPos += 4;
             });
             
-            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 2: IKEA Case Study</h2>';
-            htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex2q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>CRM-Instrumente:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex2q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Orientierung:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex2q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            yPos += 6;
+            addText('AUFGABE 2: IKEA Case Study', true, true);
+            addText(`Nutzenversprechen: ${document.getElementById('ex2q1').value || '(Keine Antwort)'}`);
+            addText(`CRM-Instrumente: ${document.getElementById('ex2q2').value || '(Keine Antwort)'}`);
+            addText(`Orientierung: ${document.getElementById('ex2q3').value || '(Keine Antwort)'}`);
             
-            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 3: Starbucks Fallanalyse</h2>';
-            htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex3q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Kundenerlebnis:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex3q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Kundenbindung:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex3q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Service-Dominant Logic:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex3q4').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Italien:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex3q5').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            yPos += 6;
+            addText('AUFGABE 3: Starbucks', true, true);
+            addText(`Nutzenversprechen: ${document.getElementById('ex3q1').value || '(Keine Antwort)'}`);
+            addText(`Kundenerlebnis: ${document.getElementById('ex3q2').value || '(Keine Antwort)'}`);
+            addText(`Kundenbindung: ${document.getElementById('ex3q3').value || '(Keine Antwort)'}`);
+            addText(`Service-Dominant Logic: ${document.getElementById('ex3q4').value || '(Keine Antwort)'}`);
+            addText(`Italien: ${document.getElementById('ex3q5').value || '(Keine Antwort)'}`);
             
-            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 4: Fitnessstudio Train4U</h2>';
-            htmlContent += '<p><strong>Slogan:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex4q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Konkrete Maßnahmen:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex4q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '<p><strong>Werbestrategie:</strong></p>';
-            htmlContent += '<p>' + (document.getElementById('ex4q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
-            htmlContent += '</div>';
+            yPos += 6;
+            addText('AUFGABE 4: Train4U', true, true);
+            addText(`Slogan: ${document.getElementById('ex4q1').value || '(Keine Antwort)'}`);
+            addText(`Maßnahmen: ${document.getElementById('ex4q2').value || '(Keine Antwort)'}`);
+            addText(`Werbestrategie: ${document.getElementById('ex4q3').value || '(Keine Antwort)'}`);
             
-            const element = document.createElement('div');
-            element.innerHTML = htmlContent;
-            
-            const opt = {
-                margin: 10,
-                filename: 'Marketing-Übung-Antworten.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2, useCORS: true },
-                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
-            };
-            
-            html2pdf().set(opt).from(element).save();
+            doc.save('Marketing-Übung-Antworten.pdf');
         }
-
-        document.addEventListener('input', e => {
-            if (e.target.tagName === 'TEXTAREA') localStorage.setItem(e.target.id, e.target.value);
-        });
     </script>
 </body>
 </html>
