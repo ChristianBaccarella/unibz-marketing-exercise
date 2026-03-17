@@ -677,19 +677,6 @@
         .content::-webkit-scrollbar-thumb:hover {
             background: var(--gray-400);
         }
-
-        /* Hidden PDF export element */
-        #pdfExport {
-            display: none;
-            position: absolute;
-            left: -10000px;
-            width: 210mm;
-            height: 297mm;
-            padding: 20px;
-            background: white;
-            font-size: 12px;
-            line-height: 1.5;
-        }
     </style>
 </head>
 <body>
@@ -849,7 +836,7 @@
                                         <label for="tg3" class="radio-label">Frauen</label>
                                     </div>
                                     <div class="radio-item">
-                                        <input type="radio" id="tg4" name="targetGroup" value="Über 50 Jahre" onchange="toggleOption(this, 'targetGroup')">
+                                        <input type="radio" id="tg4" name="targetGroup" value="Personen über 50 Jahre" onchange="toggleOption(this, 'targetGroup')">
                                         <label for="tg4" class="radio-label">Über 50 Jahre</label>
                                     </div>
                                 </div>
@@ -967,9 +954,6 @@
         </div>
     </div>
 
-    <!-- Hidden PDF export container -->
-    <div id="pdfExport"></div>
-
     <script>
         let currentExercise = 0;
         let timeRemaining = 90 * 60;
@@ -985,7 +969,7 @@
                 Airbnb: { problem: "Bietet Alternative zu Hotels - authentische, lokale Unterkünfte zu besseren Preisen.", value: "Authentische Erfahrungen, Kosteneinsparung, Flexibilität und lokale Verbindung.", example: "Ein Zimmer bei einem Locals zu mieten löst das Problem, echte Orte zu erleben, nicht nur Hotels." },
                 Netflix: { problem: "Beendet das Problem der begrenzten Filmauswahl und starrer Programmzeiten - stattdessen unbegrenzte Inhalte jederzeit verfügbar.", value: "Personalisierte Empfehlungen, Originalinhalte, beeindruckende Vielfalt, vorhersagbare Kosten, Zugang auf allen Geräten.", example: "Die intelligente Empfehlung 'Basierend auf deinen Interessen' zeigt, dass Netflix nicht einfach nur einen Katalog anbietet, sondern den Film kennt, den SIE sehen möchten." }
             },
-            exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
+            exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planningstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
             exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: (1) Loyalty-Programm mit Rewards und exklusiven Angeboten für Stammkunden, (2) Mobile App mit Bezahlung, Personalisierung und Kommunikation.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien hat Starbucks Schwierigkeiten, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italienischer Kaffee ist kurzes, intensives Ritual an der Theke - nicht zum Verweilen gedacht, (3) Harte Konkurrenz durch lokale Bars mit Tradition, (4) Ablehnung von amerikanischer Massenproduktion von Kulturmomenten." },
             exercise4: { q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern ein Ort für echte Transformation und persönliches Wachstum. Beispiel: 'Dein Fitnessstudio, das dir wirklich zuhört - mit maßgeschneiderten Trainings und einer Community, die deinen Erfolg mitfeiert.'", q2: "Konkrete Maßnahmen: (1) Buddy-Matching-Programm für neue Mitglieder mit erfahrenen Trainern, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen zur Vermeidung von Anfängerfehlern, (3) Wöchentliche Gruppen-Challenges mit erreichbaren Zielen und Belohnungen, (4) Mobile App zum Tracking von Fortschritten mit Visualisierung und Community-Feed, (5) Flexible Öffnungszeiten + Online-Live-Kurse für Berufstätige, (6) Monatliche Success-Stories von Mitgliedern als Inspiration, (7) Pay-Per-Session Modell ohne Langzeitvertrag.", q3: "Werbestrategie: (1) Authentische Before-After-Stories auf Instagram/TikTok - echte Menschen, echte Transformationen, nicht retouchiert, (2) Hyper-lokale Facebook-Kampagnen mit Geo-Targeting auf 5km um das Studio, (3) Partnerschaften mit lokalen Influencern (mit 5k-50k Follower, nicht Mega-Influencer) die den Studio-Lifestyle leben, (4) Grassroots: Kostenlose Fitness-Pop-ups in Parks und auf Märkten, (5) Referral-Programm: 1 Monat gratis für jede geworbene Person, (6) Google Ads mit Keywords 'Fitnessstudio ohne Vertrag' und 'Fitness für Anfänger in [Stadt]'." }
         };
@@ -997,13 +981,13 @@
             exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'transformation', 'wachstum', 'ort'], q2: ['buddy', 'training', 'app', 'tracking', 'session', 'erfolg'], q3: ['instagram', 'authentisch', 'lokal', 'facebook', 'referral', 'parks'] }
         };
 
-        // MASSIV ERWEITERTE VP-Templates
+        // VERBESSERTE VP-Templates mit besserer Grammatik
         const vpDatabase = {
             'Berufstätige-Zeitmangel-Gemeinschaft': [
                 "Train4U versteht, dass deine Zeit kostbar ist. Wir bieten dir 30-minütige Power-Trainings, die wissenschaftlich optimiert sind. Das Beste: Du trainierst nicht allein. Eine Community von Berufstätigen unterstützt dich und feiert deine Fortschritte.",
                 "Für Berufstätige ohne Zeit: 30-Minuten-Trainings, die wirken. Plus eine Community, die dich jeden Tag pusht.",
                 "Train4U: Effiziente Trainings, echte Gemeinschaft. Perfekt für Berufstätige, die wenig Zeit haben.",
-                "Train4U ist dein Time-Hacker für Fitness. Statt stundenlanges Pumpak - 30 Minuten wissenschaftlich getuned. Und du machst es nicht allein: eine Community von Menschen, die verstehen, wie dein Leben funktioniert.",
+                "Train4U ist dein Time-Hacker für Fitness. Statt stundenlanges Pumpen - 30 Minuten wissenschaftlich getuned. Und du machst es nicht allein: eine Community von Menschen, die verstehen, wie dein Leben funktioniert.",
                 "Fitness sollte nicht in Konkurrenz zu deiner Karriere stehen. Train4U bietet effiziente Trainings UND eine Community, die diese Balance versteht.",
                 "Train4U ist dein Fitnessstudio für Menschen, die ihr Leben ernst nehmen. 30 Minuten, die mehr bringen als 3 Stunden Mainstream. Eine Community, die nicht über Fitness spricht - sie LEBT sie gemeinsam.",
                 "Berufstätige trainieren anders: smart, effizient, zusammen. Train4U ist der Ort, wo deine Karriere und Fitness nicht konkurrieren - sie unterstützen sich gegenseitig."
@@ -1072,25 +1056,25 @@
                 "Mütter, Karrierefrauen, alle: Train4U bietet die Flexibilität, die du brauchst.",
                 "Train4U respektiert, dass dein Leben komplex ist - und macht Fitness trotzdem möglich."
             ],
-            'Über 50-Flexibilität-Persönliche Betreuung': [
+            'Personen über 50 Jahre-Flexibilität-Persönliche Betreuung': [
                 "Train4U: Dein bestes Jahrzehnt fängt JETZT an. Trainer, die verstehen, dass Knieverletzungen real sind.",
-                "Mit 50+ trainierst du smart, nicht hart. Train4U weiß wie.",
-                "Train4U ist designt für Menschen 50+: Flexibilität, Verständnis, Ergebnisse.",
+                "Mit über 50 trainierst du smart, nicht hart. Train4U weiß wie.",
+                "Train4U ist designt für Personen über 50 Jahren: Flexibilität, Verständnis, Ergebnisse.",
                 "Trainieren im besten Alter: Train4U versteht deinen Körper und respektiert ihn.",
-                "50+ ist nicht zu alt - es ist die beste Zeit. Train4U zeigt dir wie."
+                "Über 50 ist nicht zu alt - es ist die beste Zeit. Train4U zeigt dir wie."
             ],
-            'Über 50-Keine Expertise-Messbare Resultate': [
+            'Personen über 50 Jahre-Keine Expertise-Messbare Resultate': [
                 "Train4U: Wissenschaft, nicht Ratschläge. DEXA-Scans, Bluttests, echte Messungen.",
-                "Du siehst objektiv: mein Körper wird BESSER. Das ist Train4U für 50+.",
-                "Für Menschen 50+, die Beweise wollen: Train4U misst alles wissenschaftlich.",
+                "Du siehst objektiv: mein Körper wird BESSER. Das ist Train4U für Personen über 50.",
+                "Für Menschen über 50, die Beweise wollen: Train4U misst alles wissenschaftlich.",
                 "Trainieren mit Messungen: Train4U zeigt dir nicht nur Gefühle, sondern echte Ergebnisse.",
-                "50+ verdient wissenschaftliche Betreuung - und genau das bietet Train4U."
+                "Wer über 50 ist, verdient wissenschaftliche Betreuung - und genau das bietet Train4U."
             ],
-            'Über 50-Selbstoptimierung-Gemeinschaft': [
-                "Train4U: Du wirst nicht älter, du wirst STÄRKER. Eine Gruppe von Menschen 50+, die aufsteigen.",
-                "50+ ist deine beste Phase. Train4U verbindet dich mit anderen, die das leben.",
-                "Mit 50+ kannst du stärker sein als mit 30 - wenn du es richtig machst. Train4U zeigt dir wie.",
-                "Train4U ist für Menschen 50+, die gerade anfangen - ihre beste Version zu werden.",
+            'Personen über 50 Jahre-Selbstoptimierung-Gemeinschaft': [
+                "Train4U: Du wirst nicht älter, du wirst STÄRKER. Eine Gruppe von Personen über 50, die aufsteigen.",
+                "Über 50 ist deine beste Phase. Train4U verbindet dich mit anderen, die das leben.",
+                "Mit über 50 kannst du stärker sein als mit 30 - wenn du es richtig machst. Train4U zeigt dir wie.",
+                "Train4U ist für Personen über 50, die gerade anfangen - ihre beste Version zu werden.",
                 "Dein neues Normal ist fit, energetisch, lebendig. Train4U macht das möglich."
             ]
         };
@@ -1121,7 +1105,8 @@
                 const randomIndex = Math.floor(Math.random() * templates.length);
                 vp = templates[randomIndex];
             } else {
-                vp = `Train4U ist für ${tg}, die mit ${pb} kämpfen. Wir bieten dir ${vl} - damit Fitness endlich funktioniert und zu deinem Leben passt, nicht umgekehrt.`;
+                // Besserer Fallback mit korrekter Grammatik
+                vp = `Train4U ist für ${tg}, die mit ${pb} kämpfen. Wir bieten dir ${vl} - damit Fitness endlich funktioniert und wirklich zu deinem Leben passt.`;
             }
             
             document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
@@ -1302,62 +1287,61 @@
         function exportPDF() {
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             
-            let content = '<h1>Marketing-Übung - Ihre Antworten</h1>';
-            content += '<p><strong>Freie Universität Bozen</strong></p>';
-            content += '<p>Datum: ' + new Date().toLocaleDateString('de-DE') + '</p>';
-            content += '<hr>';
+            let htmlContent = '<div style="font-family: Arial, sans-serif; padding: 20px; line-height: 1.6;">';
+            htmlContent += '<h1>Marketing-Übung - Ihre Antworten</h1>';
+            htmlContent += '<p><strong>Freie Universität Bozen</strong></p>';
+            htmlContent += '<p>Datum: ' + new Date().toLocaleDateString('de-DE') + '</p>';
+            htmlContent += '<hr style="border: none; border-top: 1px solid #ccc; margin: 20px 0;">';
             
-            content += '<h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>';
-            
+            htmlContent += '<h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>';
             selected.forEach((c, i) => {
-                content += '<h3>' + c + '</h3>';
-                content += '<p><strong>Problem:</strong></p>';
-                content += '<p>' + (document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)') + '</p>';
-                content += '<p><strong>Nutzenversprechen:</strong></p>';
-                content += '<p>' + (document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)') + '</p>';
-                content += '<p><strong>Beispiel:</strong></p>';
-                content += '<p>' + (document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)') + '</p>';
-                content += '<hr>';
+                htmlContent += '<h3 style="color: #1F7FD4; margin-top: 20px;">' + c + '</h3>';
+                htmlContent += '<p><strong>Problem:</strong></p>';
+                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+                htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
+                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+                htmlContent += '<p><strong>Beispiel:</strong></p>';
+                htmlContent += '<p>' + (document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+                htmlContent += '<hr style="border: none; border-top: 1px solid #eee; margin: 15px 0;">';
             });
             
-            content += '<h2>Aufgabe 2: IKEA Case Study</h2>';
-            content += '<p><strong>Nutzenversprechen:</strong></p>';
-            content += '<p>' + (document.getElementById('ex2q1').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>CRM-Instrumente:</strong></p>';
-            content += '<p>' + (document.getElementById('ex2q2').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Orientierung:</strong></p>';
-            content += '<p>' + (document.getElementById('ex2q3').value || '(Keine Antwort)') + '</p>';
-            content += '<hr>';
+            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 2: IKEA Case Study</h2>';
+            htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex2q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>CRM-Instrumente:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex2q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Orientierung:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex2q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
             
-            content += '<h2>Aufgabe 3: Starbucks Fallanalyse</h2>';
-            content += '<p><strong>Nutzenversprechen:</strong></p>';
-            content += '<p>' + (document.getElementById('ex3q1').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Kundenerlebnis:</strong></p>';
-            content += '<p>' + (document.getElementById('ex3q2').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Kundenbindung:</strong></p>';
-            content += '<p>' + (document.getElementById('ex3q3').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Service-Dominant Logic:</strong></p>';
-            content += '<p>' + (document.getElementById('ex3q4').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Italien:</strong></p>';
-            content += '<p>' + (document.getElementById('ex3q5').value || '(Keine Antwort)') + '</p>';
-            content += '<hr>';
+            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 3: Starbucks Fallanalyse</h2>';
+            htmlContent += '<p><strong>Nutzenversprechen:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex3q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Kundenerlebnis:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex3q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Kundenbindung:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex3q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Service-Dominant Logic:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex3q4').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Italien:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex3q5').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
             
-            content += '<h2>Aufgabe 4: Fitnessstudio Train4U</h2>';
-            content += '<p><strong>Slogan:</strong></p>';
-            content += '<p>' + (document.getElementById('ex4q1').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Konkrete Maßnahmen:</strong></p>';
-            content += '<p>' + (document.getElementById('ex4q2').value || '(Keine Antwort)') + '</p>';
-            content += '<p><strong>Werbestrategie:</strong></p>';
-            content += '<p>' + (document.getElementById('ex4q3').value || '(Keine Antwort)') + '</p>';
+            htmlContent += '<h2 style="page-break-before: always;">Aufgabe 4: Fitnessstudio Train4U</h2>';
+            htmlContent += '<p><strong>Slogan:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex4q1').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Konkrete Maßnahmen:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex4q2').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '<p><strong>Werbestrategie:</strong></p>';
+            htmlContent += '<p>' + (document.getElementById('ex4q3').value || '(Keine Antwort)').replace(/\n/g, '<br>') + '</p>';
+            htmlContent += '</div>';
             
-            const element = document.getElementById('pdfExport');
-            element.innerHTML = content;
+            const element = document.createElement('div');
+            element.innerHTML = htmlContent;
             
             const opt = {
                 margin: 10,
                 filename: 'Marketing-Übung-Antworten.pdf',
                 image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { scale: 2 },
+                html2canvas: { scale: 2, useCORS: true },
                 jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
             };
             
