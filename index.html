@@ -8,345 +8,438 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
-:root { --primary: #1F7FD4; --primary-light: #E8F4FD; --success: #10B981; --warning: #F59E0B; --danger: #EF4444; --gray-50: #F9FAFB; --gray-100: #F3F4F6; --gray-200: #E5E7EB; --text-primary: #111827; --text-secondary: #6B7280; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif; background: var(--gray-50); color: var(--text-primary); line-height: 1.6; }
-.container { max-width: 600px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
-.header { padding: 16px 20px; border-bottom: 1px solid var(--gray-100); text-align: center; }
-.header-logo { font-size: 28px; font-weight: 700; color: #0066CC; }
-.timer-bar { padding: 16px 20px; background: var(--primary-light); border-bottom: 1px solid var(--gray-200); display: flex; justify-content: space-between; }
-.timer { font-size: 18px; font-weight: 700; color: var(--primary); font-family: 'Courier New', monospace; }
-.content { flex: 1; overflow-y: auto; padding: 24px 20px 40px; }
-.landing-page { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; min-height: 100%; }
-.landing-icon { font-size: 80px; margin-bottom: 24px; }
-.landing-page h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
-.landing-page p { font-size: 16px; color: var(--text-secondary); margin-bottom: 12px; }
-.start-button { margin-top: 32px; padding: 16px 40px; background: var(--primary); color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
-.exercise { display: none; }
-.exercise.active { display: block; }
-.task-counter { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 24px; }
-.exercise h2 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
-.exercise-description { font-size: 15px; color: var(--text-secondary); margin-bottom: 28px; padding: 16px; background: var(--gray-50); border-radius: 12px; border-left: 4px solid var(--primary); }
-.question-group { margin-bottom: 28px; }
-.question-label { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: block; }
-.checkbox-group { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
-.checkbox-item { position: relative; }
-.checkbox-item input[type="checkbox"] { position: absolute; opacity: 0; }
-.checkbox-label { display: flex; align-items: center; justify-content: center; padding: 12px; border: 2px solid var(--gray-200); border-radius: 12px; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
-.checkbox-label.checked { border-color: var(--primary); background: var(--primary-light); color: var(--primary); font-weight: 600; }
-.generator-option { padding: 10px; background: white; border: 2px solid var(--gray-200); border-radius: 10px; font-size: 13px; text-align: center; cursor: pointer; font-weight: 500; transition: all 0.3s; }
-.generator-option.selected { background: var(--primary); border-color: var(--primary); color: white; }
-.generator-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
-.generator-section { padding: 16px; background: var(--primary-light); border-radius: 12px; margin-bottom: 20px; }
-.generator-title { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px; }
-textarea { width: 100%; padding: 14px; font-size: 15px; border: 2px solid var(--gray-200); border-radius: 12px; font-family: inherit; resize: vertical; min-height: 110px; }
-textarea:focus { outline: none; border-color: var(--primary); box-shadow: 0 0 0 3px rgba(31, 127, 212, 0.1); }
-.generate-btn { width: 100%; padding: 12px; background: var(--primary); color: white; border: none; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
-.generated-vp { padding: 14px; background: white; border-radius: 10px; border-left: 4px solid var(--success); font-size: 14px; color: var(--text-primary); line-height: 1.6; margin-bottom: 12px; }
-.copy-btn { display: block; margin-top: 12px; padding: 10px 16px; background: var(--success); color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; width: 100%; }
-.button-section { display: none; gap: 12px; padding: 0 20px 24px; position: sticky; bottom: 0; background: white; border-top: 1px solid var(--gray-100); }
-.button-section.active { display: flex; }
-.btn { flex: 1; padding: 14px 16px; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-.btn-primary { background: var(--primary); color: white; }
-.btn-secondary { background: var(--gray-100); color: var(--text-primary); }
-.score-section { display: none; }
-.score-section.active { display: block; }
-.score-icon { font-size: 64px; text-align: center; margin-bottom: 20px; }
-.score-section h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; text-align: center; }
-.score-section p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; text-align: center; }
-.feedback-section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--gray-200); }
-.feedback-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
-.feedback-item { margin-bottom: 24px; padding: 16px; background: var(--gray-50); border-radius: 12px; }
-.feedback-item h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; }
-.rating-row { display: flex; gap: 12px; margin-bottom: 16px; align-items: flex-start; }
-.rating-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; color: white; flex-shrink: 0; font-size: 18px; }
-.rating-icon.green { background: var(--success); }
-.rating-icon.yellow { background: var(--warning); }
-.rating-icon.red { background: var(--danger); }
-.rating-text { color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
-.rating-text strong { color: var(--text-primary); display: block; margin-bottom: 4px; }
-.error-message { color: var(--danger); font-size: 13px; font-weight: 600; margin-top: 8px; display: none; }
-.export-section { margin-top: 24px; padding: 20px; background: var(--gray-50); border-radius: 12px; border: 2px solid var(--success); text-align: center; }
-.export-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
-.export-btn { padding: 14px 32px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F9FAFB; color: #111827; }
+.container { max-width: 600px; margin: 0 auto; background: white; min-height: 100vh; }
+.header { padding: 16px; text-align: center; border-bottom: 1px solid #E5E7EB; }
+.logo { font-size: 28px; font-weight: 700; color: #0066CC; }
+.timer-bar { padding: 16px; background: #E8F4FD; border-bottom: 1px solid #E5E7EB; display: none; text-align: center; }
+.timer { font-size: 20px; font-weight: 700; color: #1F7FD4; font-family: monospace; }
+.content { padding: 24px; min-height: 60vh; }
+.page { display: none; }
+.page.show { display: block; }
+.landing { text-align: center; padding: 80px 20px; }
+.landing h1 { font-size: 36px; font-weight: 700; margin: 20px 0; }
+.landing p { font-size: 16px; color: #6B7280; margin: 12px 0; }
+.start-btn { margin-top: 32px; padding: 16px 48px; background: #1F7FD4; color: white; border: none; border-radius: 12px; font-size: 16px; font-weight: 600; cursor: pointer; }
+.task-title { font-size: 12px; color: #1F7FD4; font-weight: 700; text-transform: uppercase; margin-bottom: 12px; }
+.task-h { font-size: 24px; font-weight: 700; margin-bottom: 16px; }
+.task-desc { font-size: 15px; color: #6B7280; background: #F9FAFB; padding: 16px; border-radius: 12px; border-left: 4px solid #1F7FD4; margin-bottom: 24px; }
+.q-group { margin-bottom: 24px; }
+.q-label { font-size: 15px; font-weight: 600; margin-bottom: 12px; display: block; }
+.radio-group { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+.radio-item { position: relative; }
+.radio-item input { display: none; }
+.radio-label { display: block; padding: 12px; border: 2px solid #E5E7EB; border-radius: 12px; text-align: center; font-size: 14px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+.radio-item input:checked + .radio-label { border-color: #1F7FD4; background: #E8F4FD; color: #1F7FD4; font-weight: 600; }
+textarea { width: 100%; padding: 14px; border: 2px solid #E5E7EB; border-radius: 12px; font-family: inherit; font-size: 14px; resize: vertical; min-height: 100px; }
+textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgba(31, 127, 212, 0.1); }
+.gen-section { background: #E8F4FD; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+.gen-title { font-size: 14px; font-weight: 600; color: #1F7FD4; margin-bottom: 12px; }
+.gen-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.gen-opt { padding: 10px; background: white; border: 2px solid #E5E7EB; border-radius: 10px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
+.gen-opt.sel { background: #1F7FD4; border-color: #1F7FD4; color: white; }
+.gen-btn { width: 100%; padding: 12px; background: #1F7FD4; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
+.slogan-box { padding: 14px; background: white; border-left: 4px solid #10B981; border-radius: 10px; margin-bottom: 12px; }
+.copy-btn { width: 100%; padding: 10px; background: #10B981; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; }
+.result { display: none; text-align: center; padding: 40px 20px; }
+.result.show { display: block; }
+.result-icon { font-size: 64px; margin-bottom: 20px; }
+.result h2 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+.feedback { margin: 32px 0; padding-top: 24px; border-top: 1px solid #E5E7EB; text-align: left; }
+.fb-item { margin-bottom: 24px; padding: 16px; background: #F9FAFB; border-radius: 12px; }
+.fb-h { font-size: 14px; font-weight: 700; color: #1F7FD4; text-transform: uppercase; margin-bottom: 12px; }
+.rating { display: flex; gap: 12px; margin-bottom: 12px; align-items: flex-start; }
+.rating-icon { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; flex-shrink: 0; }
+.rating-icon.green { background: #10B981; }
+.rating-icon.yellow { background: #F59E0B; }
+.rating-icon.red { background: #EF4444; }
+.rating-text { font-size: 13px; color: #6B7280; }
+.rating-text strong { color: #111827; display: block; margin-bottom: 4px; }
+.export { margin-top: 24px; padding: 20px; background: #F9FAFB; border: 2px solid #10B981; border-radius: 12px; text-align: center; }
+.export-btn { padding: 14px 32px; background: #10B981; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
+.buttons { padding: 20px 24px; border-top: 1px solid #E5E7EB; display: none; gap: 12px; }
+.buttons.show { display: flex; }
+.btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn-primary { background: #1F7FD4; color: white; }
+.btn-secondary { background: #F3F4F6; color: #111827; }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header"><div class="header-logo">unibz</div></div>
-    <div class="timer-bar" id="timerBar" style="display:none">
-        <div style="font-size:12px;font-weight:600;color:var(--primary)">⏱ ZEIT</div>
-        <div class="timer" id="timer">90:00</div>
-    </div>
+    <div class="header"><div class="logo">unibz</div></div>
+    <div class="timer-bar"><div class="timer" id="timer">90:00</div></div>
     <div class="content">
-        <div id="landing" class="landing-page">
-            <div class="landing-icon">🎓</div>
-            <h1>Marketing-Übung</h1>
-            <p style="color:var(--primary);font-weight:600">Heute probieren wir etwas anderes.</p>
-            <p>Aufgaben hier lesen und direkt eintragen.</p>
-            <p>Nach jeder Aufgabe besprechen wir Ergebnisse.</p>
-            <p style="color:var(--primary);font-weight:600;font-size:18px;margin-top:20px">Viel Spaß! 🚀</p>
-            <button class="start-button" onclick="startApp()">Los geht's</button>
-        </div>
-
-        <div class="exercise" id="exercise1">
-            <div class="task-counter">Aufgabe 1 / 4</div>
-            <h2>Nutzenversprechen analysieren</h2>
-            <div class="exercise-description">Wählen Sie genau 2 Unternehmen und analysieren Sie das Nutzenversprechen.</div>
-            <div class="question-group">
-                <label class="question-label">2 Unternehmen wählen:</label>
-                <div class="checkbox-group">
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="Apple"><label class="checkbox-label">Apple</label></div>
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="Spotify"><label class="checkbox-label">Spotify</label></div>
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="dm"><label class="checkbox-label">dm</label></div>
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="Ryanair"><label class="checkbox-label">Ryanair</label></div>
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="Airbnb"><label class="checkbox-label">Airbnb</label></div>
-                    <div class="checkbox-item"><input type="checkbox" name="comp" value="Netflix"><label class="checkbox-label">Netflix</label></div>
-                </div>
-                <div class="error-message" id="compError">Genau 2 Unternehmen auswählen!</div>
+        <div id="landing" class="page show">
+            <div class="landing">
+                <div style="font-size:80px;margin-bottom:24px">🎓</div>
+                <h1>Marketing-Übung</h1>
+                <p><span style="color:#1F7FD4;font-weight:600">Heute probieren wir etwas anderes.</span></p>
+                <p>Aufgaben lesen und direkt eintragen.</p>
+                <p>Nach jeder Aufgabe besprechen wir zusammen.</p>
+                <p style="color:#1F7FD4;font-weight:600;font-size:18px;margin-top:20px">Viel Erfolg! 🚀</p>
+                <button class="start-btn" onclick="startApp()">Los geht's</button>
             </div>
-            <div id="companyQuestions"></div>
         </div>
 
-        <div class="exercise" id="exercise2">
-            <div class="task-counter">Aufgabe 2 / 4</div>
-            <h2>IKEA Case Study</h2>
-            <div class="exercise-description">IKEA demokratisiert Design für breite Bevölkerung.</div>
-            <div class="question-group"><label class="question-label">Nutzenversprechen?</label><textarea id="e2q1"></textarea></div>
-            <div class="question-group"><label class="question-label">3 CRM-Instrumente?</label><textarea id="e2q2"></textarea></div>
-            <div class="question-group"><label class="question-label">Marketing oder Verkauf?</label><textarea id="e2q3"></textarea></div>
+        <div id="task1" class="page">
+            <div class="task-title">Aufgabe 1 / 4</div>
+            <div class="task-h">Nutzenversprechen analysieren</div>
+            <div class="task-desc">Wählen Sie zwei beliebige Unternehmen und analysieren Sie deren Nutzenversprechen.</div>
+            
+            <div class="q-group">
+                <div class="q-label">Unternehmen 1:</div>
+                <div class="radio-group">
+                    <div class="radio-item"><input type="radio" name="comp1" value="Apple" id="c1a"><label for="c1a" class="radio-label">Apple</label></div>
+                    <div class="radio-item"><input type="radio" name="comp1" value="Spotify" id="c1b"><label for="c1b" class="radio-label">Spotify</label></div>
+                    <div class="radio-item"><input type="radio" name="comp1" value="dm" id="c1c"><label for="c1c" class="radio-label">dm</label></div>
+                    <div class="radio-item"><input type="radio" name="comp1" value="Ryanair" id="c1d"><label for="c1d" class="radio-label">Ryanair</label></div>
+                    <div class="radio-item"><input type="radio" name="comp1" value="Airbnb" id="c1e"><label for="c1e" class="radio-label">Airbnb</label></div>
+                    <div class="radio-item"><input type="radio" name="comp1" value="Netflix" id="c1f"><label for="c1f" class="radio-label">Netflix</label></div>
+                </div>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">Für <strong id="comp1name">Unternehmen 1</strong> - Problem:</div>
+                <textarea id="c1problem"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Nutzenversprechen:</div>
+                <textarea id="c1value"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Beispiel:</div>
+                <textarea id="c1example"></textarea>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">Unternehmen 2:</div>
+                <div class="radio-group">
+                    <div class="radio-item"><input type="radio" name="comp2" value="Apple" id="c2a"><label for="c2a" class="radio-label">Apple</label></div>
+                    <div class="radio-item"><input type="radio" name="comp2" value="Spotify" id="c2b"><label for="c2b" class="radio-label">Spotify</label></div>
+                    <div class="radio-item"><input type="radio" name="comp2" value="dm" id="c2c"><label for="c2c" class="radio-label">dm</label></div>
+                    <div class="radio-item"><input type="radio" name="comp2" value="Ryanair" id="c2d"><label for="c2d" class="radio-label">Ryanair</label></div>
+                    <div class="radio-item"><input type="radio" name="comp2" value="Airbnb" id="c2e"><label for="c2e" class="radio-label">Airbnb</label></div>
+                    <div class="radio-item"><input type="radio" name="comp2" value="Netflix" id="c2f"><label for="c2f" class="radio-label">Netflix</label></div>
+                </div>
+            </div>
+
+            <div class="q-group">
+                <div class="q-label">Für <strong id="comp2name">Unternehmen 2</strong> - Problem:</div>
+                <textarea id="c2problem"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Nutzenversprechen:</div>
+                <textarea id="c2value"></textarea>
+            </div>
+            <div class="q-group">
+                <div class="q-label">Beispiel:</div>
+                <textarea id="c2example"></textarea>
+            </div>
         </div>
 
-        <div class="exercise" id="exercise3">
-            <div class="task-counter">Aufgabe 3 / 4</div>
-            <h2>Starbucks Analyse</h2>
-            <div class="exercise-description">Starbucks verkauft Erlebnis, nicht nur Kaffee.</div>
-            <div class="question-group"><label class="question-label">Nutzenversprechen?</label><textarea id="e3q1"></textarea></div>
-            <div class="question-group"><label class="question-label">Kundenerlebnis Beispiel?</label><textarea id="e3q2"></textarea></div>
-            <div class="question-group"><label class="question-label">2 Kundenbindungs-Instrumente?</label><textarea id="e3q3"></textarea></div>
-            <div class="question-group"><label class="question-label">Service-Dominant Logic?</label><textarea id="e3q4"></textarea></div>
-            <div class="question-group"><label class="question-label">Probleme in Italien?</label><textarea id="e3q5"></textarea></div>
+        <div id="task2" class="page">
+            <div class="task-title">Aufgabe 2 / 4</div>
+            <div class="task-h">IKEA Case Study</div>
+            <div class="task-desc">IKEA demokratisiert Design für breite Bevölkerung.</div>
+            <div class="q-group"><div class="q-label">Nutzenversprechen?</div><textarea id="e2q1"></textarea></div>
+            <div class="q-group"><div class="q-label">3 CRM-Instrumente?</div><textarea id="e2q2"></textarea></div>
+            <div class="q-group"><div class="q-label">Marketing oder Verkauf?</div><textarea id="e2q3"></textarea></div>
         </div>
 
-        <div class="exercise" id="exercise4">
-            <div class="task-counter">Aufgabe 4 / 4</div>
-            <h2>Train4U Fitnessstudio</h2>
-            <div class="exercise-description">Fitnessstudio verliert Kunden. Entwickeln Sie Strategie.</div>
-            <div class="question-group">
-                <label class="question-label">Slogan generieren:</label>
-                <div class="generator-section">
-                    <div class="generator-title">💡 Slogan-Generator</div>
-                    <div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;margin-bottom:8px">Zielgruppe?</div>
-                    <div class="generator-options">
-                        <div class="generator-option" onclick="pickGen(this,'g')">Berufstätige</div>
-                        <div class="generator-option" onclick="pickGen(this,'g')">Anfänger</div>
-                        <div class="generator-option" onclick="pickGen(this,'g')">Frauen</div>
-                        <div class="generator-option" onclick="pickGen(this,'g')">50+</div>
+        <div id="task3" class="page">
+            <div class="task-title">Aufgabe 3 / 4</div>
+            <div class="task-h">Starbucks Analyse</div>
+            <div class="task-desc">Starbucks verkauft nicht Kaffee, sondern ein Erlebnis.</div>
+            <div class="q-group"><div class="q-label">Nutzenversprechen?</div><textarea id="e3q1"></textarea></div>
+            <div class="q-group"><div class="q-label">Kundenerlebnis Beispiel?</div><textarea id="e3q2"></textarea></div>
+            <div class="q-group"><div class="q-label">2 Kundenbindungs-Instrumente?</div><textarea id="e3q3"></textarea></div>
+            <div class="q-group"><div class="q-label">Service-Dominant Logic?</div><textarea id="e3q4"></textarea></div>
+            <div class="q-group"><div class="q-label">Probleme in Italien?</div><textarea id="e3q5"></textarea></div>
+        </div>
+
+        <div id="task4" class="page">
+            <div class="task-title">Aufgabe 4 / 4</div>
+            <div class="task-h">Train4U Fitnessstudio</div>
+            <div class="task-desc">Das Studio verliert Kunden. Entwickeln Sie eine Rettungsstrategie.</div>
+            <div class="q-group">
+                <div class="q-label">Slogan generieren:</div>
+                <div class="gen-section">
+                    <div class="gen-title">💡 Slogan-Generator</div>
+                    
+                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Zielgruppe?</div>
+                    <div class="gen-options">
+                        <div class="gen-opt" onclick="pickOpt(this,'g','Berufstätige')">Berufstätige</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'g','Anfänger')">Anfänger</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'g','Frauen')">Frauen</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'g','50+')">50+</div>
                     </div></div>
-                    <div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;margin-bottom:8px">Problem?</div>
-                    <div class="generator-options">
-                        <div class="generator-option" onclick="pickGen(this,'p')">Zeitmangel</div>
-                        <div class="generator-option" onclick="pickGen(this,'p')">Motivation</div>
-                        <div class="generator-option" onclick="pickGen(this,'p')">Expertise</div>
-                        <div class="generator-option" onclick="pickGen(this,'p')">Erfolge</div>
+                    
+                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Problem?</div>
+                    <div class="gen-options">
+                        <div class="gen-opt" onclick="pickOpt(this,'p','Zeitmangel')">Zeitmangel</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'p','Motivation')">Motivation</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'p','Expertise')">Expertise</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'p','Erfolge')">Erfolge</div>
                     </div></div>
-                    <div style="margin-bottom:12px"><div style="font-size:12px;font-weight:600;margin-bottom:8px">Wert?</div>
-                    <div class="generator-options">
-                        <div class="generator-option" onclick="pickGen(this,'v')">Gemeinschaft</div>
-                        <div class="generator-option" onclick="pickGen(this,'v')">Flexibilität</div>
-                        <div class="generator-option" onclick="pickGen(this,'v')">Trainer</div>
-                        <div class="generator-option" onclick="pickGen(this,'v')">Erfolg</div>
+                    
+                    <div><div style="font-size:12px;font-weight:600;margin-bottom:8px">Wert?</div>
+                    <div class="gen-options">
+                        <div class="gen-opt" onclick="pickOpt(this,'v','Gemeinschaft')">Gemeinschaft</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'v','Flexibilität')">Flexibilität</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'v','Trainer')">Trainer</div>
+                        <div class="gen-opt" onclick="pickOpt(this,'v','Erfolg')">Erfolg</div>
                     </div></div>
-                    <button class="generate-btn" onclick="makeSlogan()">Generieren</button>
-                    <div id="slogan"></div>
+                    
+                    <button class="gen-btn" onclick="makeSlogan()">🎯 Generieren</button>
+                    <div id="sloganbox"></div>
                 </div>
                 <textarea id="e4q1"></textarea>
             </div>
-            <div class="question-group"><label class="question-label">Maßnahmen?</label><textarea id="e4q2"></textarea></div>
-            <div class="question-group"><label class="question-label">Werbestrategie?</label><textarea id="e4q3"></textarea></div>
+            <div class="q-group"><div class="q-label">Konkrete Maßnahmen?</div><textarea id="e4q2"></textarea></div>
+            <div class="q-group"><div class="q-label">Werbestrategie?</div><textarea id="e4q3"></textarea></div>
         </div>
 
-        <div class="score-section" id="scoreSection">
-            <div class="score-icon">✅</div>
+        <div id="results" class="page result">
+            <div class="result-icon">✅</div>
             <h2>Fertig!</h2>
-            <p>Ihre Ergebnisse mit Musterlösungen:</p>
-            <div id="feedback"></div>
-            <div class="export-section">
-                <div class="export-title">PDF exportieren</div>
-                <button class="export-btn" onclick="makePDF()">📥 PDF</button>
+            <p>Ihre Ergebnisse mit Musterlösungen und Feedback:</p>
+            <div id="fb"></div>
+            <div class="export">
+                <button class="export-btn" onclick="makePDF()">📥 PDF herunterladen</button>
             </div>
         </div>
     </div>
-    <div class="button-section" id="buttons">
-        <button class="btn btn-secondary" id="back" onclick="back()" style="display:none">← Zurück</button>
-        <button class="btn btn-primary" id="next" onclick="next()">Weiter →</button>
-        <button class="btn btn-primary" id="finish" onclick="finish()" style="display:none">✓ Fertig</button>
+
+    <div class="buttons" id="buttons">
+        <button class="btn btn-secondary" id="backbtn" onclick="goBack()" style="display:none">← Zurück</button>
+        <button class="btn btn-primary" id="nextbtn" onclick="goNext()">Weiter →</button>
+        <button class="btn btn-primary" id="finbtn" onclick="finish()" style="display:none">✓ Fertig</button>
     </div>
 </div>
 
 <script>
-let step = 0, time = 5400, timer, gen = {g:'',p:'',v:''};
-const slogans = {'Berufstätige-Zeitmangel-Gemeinschaft':['30 Min. Max. Mit Team.','Effizient. Zusammen. Stark.'],'Berufstätige-Zeitmangel-Motivation':['Mit Trainer. Stark.','Professionell. Effektiv.'],'Berufstätige-Zeitmangel-Expertise':['Mit Experte. Richtig.','Professionell. Schnell.'],'Berufstätige-Zeitmangel-Erfolge':['Kurz. Erfolg. Motivation.','30 Min. = Ergebnis.'],'Anfänger-Zeitmangel-Gemeinschaft':['Mit Gruppe. Leicht.','Deine Crew wartet.'],'Anfänger-Zeitmangel-Motivation':['Mit Trainer. Sicher.','Von Tag 1. Richtig.'],'Anfänger-Zeitmangel-Expertise':['Mit Experte. Richtig.','Professionell. Sicher.'],'Anfänger-Zeitmangel-Erfolge':['Schnell. Erfolg. Motivation.','In 2 Wochen. Sichtbar.'],'Frauen-Zeitmangel-Gemeinschaft':['Mit Frauen. Verstanden.','Für Frauen. Von Frauen.'],'Frauen-Zeitmangel-Motivation':['Mit Trainerin. Verstanden.','Eine Trainerin. Für dich.'],'Frauen-Zeitmangel-Expertise':['Mit Expertin. Richtig.','Trainerin. Verständnisvoll.'],'Frauen-Zeitmangel-Erfolge':['Kurz. Sichtbar. Für dich.','Messbar. Motivierend.'],'50+-Zeitmangel-Gemeinschaft':['Zeit kostbar. Zusammen.','Mit Gleichgesinnten. Stark.'],'50+-Zeitmangel-Motivation':['Mit Trainer 50+. Richtig.','Ein Trainer. Der versteht.'],'50+-Zeitmangel-Expertise':['Mit Experte 50+. Sicher.','Trainer. Respektvoll.'],'50+-Zeitmangel-Erfolge':['Zahlen wichtig. Sichtbar.','Erfolg. Messbar.']};
-const ans = {Apple:{p:'Technologie vereinfachen',v:'Design, Ökosystem, Innovation',e:'iPhone - intuitiv'},Spotify:{p:'Musikverfügbarkeit',v:'Zugang, Empfehlungen',e:'Discover Weekly'},dm:{p:'Produkte beratbar machen',v:'Vielfalt, Beratung, Service',e:'Fachberatung vor Ort'},Ryanair:{p:'Fliegen demokratisieren',v:'Ultra-günstig, häufig, Mobilität',e:'50€ Flüge'},Airbnb:{p:'Authentische Erfahrungen',v:'Echte Begegnungen, Preis, Lokal',e:'Wohnung bei Person'},Netflix:{p:'Programmzeiten aufheben',v:'Jederzeit, personalisiert, Original',e:'Algorithmus kennt dich'}};
+let step = 0, time = 5400, timer, gen = {g:'', p:'', v:''};
 
-document.querySelectorAll('input[name="comp"]').forEach(cb=>cb.addEventListener('change',()=>{
-  let cnt = document.querySelectorAll('input[name="comp"]:checked').length;
-  if(cnt>2) cb.checked=false;
-  updateCheck();
-  showComp();
-}));
+const solutions = {
+    Apple: {
+        p: 'Apple löst das Problem der technologischen Komplexität, indem das Unternehmen hochkomplexe Technologie in intuitive, benutzerfreundliche Geräte übersetzt.',
+        v: 'Das Nutzenversprechen von Apple besteht aus Premium-Design, nahtloser Ökosystem-Integration zwischen Geräten, und Innovation, die das Leben einfacher macht.',
+        e: 'Das iPhone ist perfekt: Es vereinfacht Technologie durch klare Bedienung. Es funktioniert, bevor man die Anleitung liest.'
+    },
+    Spotify: {
+        p: 'Spotify löst das Problem begrenzter Musikverfügbarkeit, indem es Millionen von Songs sofort verfügbar macht.',
+        v: 'Das Nutzenversprechen besteht aus unbegrenztem Musikzugang, personalisierten Empfehlungen durch KI, und Convenience.',
+        e: 'Discover Weekly zeigt es perfekt: Spotify versteht nicht nur, welche Musik verfügbar ist – es versteht, was jeder einzelne Nutzer liebt.'
+    },
+    dm: {
+        p: 'dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar. Mit 50 ähnlichen Cremes braucht jeder Kunde Expert:innen-Wissen.',
+        v: 'Das Nutzenversprechen besteht aus Produktvielfalt, persönlicher Fachberatung vor Ort durch geschulte Mitarbeiter:innen, und gute Preise.',
+        e: 'Beratung vor Ort löst das echte Problem: Die Mitarbeiter:innen können sagen, welche Creme bei trockener Haut besser ist – das ist echter Mehrwert.'
+    },
+    Ryanair: {
+        p: 'Ryanair löst das Problem, dass Fliegen für normale Menschen zu teuer war. Das Unternehmen demokratisiert Flugverkehr.',
+        v: 'Das Nutzenversprechen besteht aus ultra-günstigen Ticketpreisen, häufigen Verbindungen, und echter Mobilität für alle.',
+        e: '50-Euro-Flüge von Berlin nach Rom ermöglichen Europareisen für Menschen mit kleinerem Budget. Das ist echter Marktwandel.'
+    },
+    Airbnb: {
+        p: 'Airbnb bietet echte, lokale Erfahrungen statt anonyme Hotelzimmer. Airbnb schafft echte Begegnung zwischen Menschen und Orten.',
+        v: 'Das Nutzenversprechen besteht aus authentischen Erlebnissen, besseren Preisen als Hotels, und Unterstützung der lokalen Wirtschaft.',
+        e: 'Eine Wohnung bei einer echten Person in Barcelona statt ein anonymes Hotelzimmer zeigt es: Airbnb verkauft Erlebnisse und Authentizität.'
+    },
+    Netflix: {
+        p: 'Netflix endet das Problem von starren Programmzeiten. Vorher konnten Zuschauer:innen nur schauen, was im TV-Programm lief.',
+        v: 'Das Nutzenversprechen besteht aus unbegrenzten Inhalten jederzeit verfügbar, hochwertig personalisierten Empfehlungen, und Original-Content.',
+        e: 'Die Algorithmen zeigen es: Netflix weiß nicht nur, WAS verfügbar ist – es weiß, WAS du schauen möchtest. Die Startseite sieht bei jeder Person anders aus.'
+    }
+};
 
-function updateCheck(){
-  document.querySelectorAll('input[name="comp"]').forEach(cb=>{
-    cb.nextElementSibling.classList.toggle('checked',cb.checked);
-  });
+const slogans = {
+    'Berufstätige-Zeitmangel-Gemeinschaft': ['30 Min. Maximum. Mit deinem Team.', 'Effizient. Zusammen. Stärker.'],
+    'Berufstätige-Zeitmangel-Motivation': ['Mit Trainer. Effizient.', 'Professionell. Schnell. Stark.'],
+    'Berufstätige-Zeitmangel-Expertise': ['Mit Experte. Richtig.', 'Professionell. Sicher.'],
+    'Berufstätige-Zeitmangel-Erfolge': ['Kurz trainiert. Schnell Erfolg.', '30 Minuten = Veränderung.'],
+    'Anfänger-Zeitmangel-Gemeinschaft': ['Mit Gruppe. Leicht.', 'Deine Anfänger-Crew.'],
+    'Anfänger-Zeitmangel-Motivation': ['Mit Trainer. Sicher.', 'Von Tag 1. Richtig.'],
+    'Anfänger-Zeitmangel-Expertise': ['Mit Experte. Richtig.', 'Professionell. Sicher.'],
+    'Anfänger-Zeitmangel-Erfolge': ['Schnell anfangen. Schnell Erfolg.', 'In 2 Wochen sichtbar.'],
+    'Frauen-Zeitmangel-Gemeinschaft': ['Mit Frauen verstanden.', 'Für Frauen von Frauen.'],
+    'Frauen-Zeitmangel-Motivation': ['Mit Trainerin verstanden.', 'Eine Trainerin für dich.'],
+    'Frauen-Zeitmangel-Expertise': ['Mit Expertin. Richtig.', 'Trainerin. Verständnisvoll.'],
+    'Frauen-Zeitmangel-Erfolge': ['Kurz. Sichtbar. Für dich.', 'Messbar. Motivierend.'],
+    '50+-Zeitmangel-Gemeinschaft': ['Zeit kostbar. Zusammen.', 'Mit Gleichgesinnten stark.'],
+    '50+-Zeitmangel-Motivation': ['Mit Trainer 50+. Richtig.', 'Ein Trainer der versteht.'],
+    '50+-Zeitmangel-Expertise': ['Mit Experte 50+. Sicher.', 'Trainer. Respektvoll.'],
+    '50+-Zeitmangel-Erfolge': ['Zahlen wichtig. Sichtbar.', 'Erfolg messbar.']
+};
+
+document.querySelectorAll('input[name="comp1"]').forEach(r => {
+    r.addEventListener('change', () => {
+        document.getElementById('comp1name').textContent = r.value;
+    });
+});
+
+document.querySelectorAll('input[name="comp2"]').forEach(r => {
+    r.addEventListener('change', () => {
+        document.getElementById('comp2name').textContent = r.value;
+    });
+});
+
+function pickOpt(el, cat, val) {
+    document.querySelectorAll(`#${el.parentElement.id} .gen-opt`).forEach(o => o.classList.remove('sel'));
+    el.classList.add('sel');
+    gen[cat] = val;
+    document.getElementById('sloganbox').innerHTML = '';
 }
 
-function showComp(){
-  let el = document.getElementById('companyQuestions');
-  el.innerHTML = '';
-  let sel = Array.from(document.querySelectorAll('input[name="comp"]:checked')).map(x=>x.value);
-  sel.forEach((c,i)=>{
-    el.innerHTML += `<h3 style="color:var(--primary);font-weight:600;margin:20px 0 12px">${c}</h3>
-      <div class="question-group"><label class="question-label">Problem?</label><textarea id="c${i}p"></textarea></div>
-      <div class="question-group"><label class="question-label">Nutzenversprechen?</label><textarea id="c${i}v"></textarea></div>
-      <div class="question-group"><label class="question-label">Beispiel?</label><textarea id="c${i}e"></textarea></div>`;
-  });
+function makeSlogan() {
+    if (!gen.g || !gen.p || !gen.v) return alert('Wählen Sie bitte alle 3 Kategorien!');
+    let k = `${gen.g}-${gen.p}-${gen.v}`;
+    let s = (slogans[k] || ['Train4U!'])[Math.floor(Math.random() * (slogans[k]?.length || 1))];
+    document.getElementById('sloganbox').innerHTML = `<div class="slogan-box">"${s}"<button class="copy-btn" onclick="copySlogan('${s.replace(/'/g, "\\'")}')">📋 Kopieren</button></div>`;
 }
 
-function pickGen(el,cat){
-  el.parentElement.querySelectorAll('.generator-option').forEach(x=>x.classList.remove('selected'));
-  el.classList.add('selected');
-  gen[cat===' 'g':'g':cat=='p'?'p':'v'] = el.textContent;
-  document.getElementById('slogan').innerHTML='';
+function copySlogan(s) {
+    document.getElementById('e4q1').value = s;
 }
 
-function makeSlogan(){
-  if(!gen.g||!gen.p||!gen.v) return alert('Wählen Sie alle 3!');
-  let k = `${gen.g}-${gen.p=='Zeitmangel'?'Zeitmangel':gen.p=='Motivation'?'Motivation':gen.p=='Expertise'?'Expertise':'Erfolge'}-${gen.v}`;
-  let s = (slogans[k]||['Train4U!'])[Math.random()*slogans[k].length|0];
-  document.getElementById('slogan').innerHTML=`<div class="generated-vp">"${s}"<button class="copy-btn" onclick="copySlogan('${s}')">Kopieren</button></div>`;
+function startApp() {
+    document.getElementById('landing').classList.remove('show');
+    document.getElementById('task1').classList.add('show');
+    document.getElementById('buttons').classList.add('show');
+    document.querySelector('.timer-bar').style.display = 'block';
+    startTimer();
+    updateNav();
 }
 
-function copySlogan(s){
-  document.getElementById('e4q1').value = s;
+function startTimer() {
+    timer = setInterval(() => {
+        let m = Math.floor(time / 60), s = time % 60;
+        document.getElementById('timer').textContent = `${m}:${s < 10 ? '0' : ''}${s}`;
+        time--;
+        if (time < 0) finish();
+    }, 1000);
 }
 
-function startApp(){
-  document.getElementById('landing').style.display = 'none';
-  document.getElementById('exercise1').classList.add('active');
-  document.getElementById('buttons').classList.add('active');
-  document.getElementById('timerBar').style.display = 'flex';
-  startTimer();
-  updateCheck();
-  showComp();
+function updateNav() {
+    document.getElementById('backbtn').style.display = step > 0 ? 'flex' : 'none';
+    document.getElementById('nextbtn').style.display = step < 4 ? 'flex' : 'none';
+    document.getElementById('finbtn').style.display = step === 4 ? 'flex' : 'none';
 }
 
-function startTimer(){
-  timer = setInterval(()=>{
-    let m = Math.floor(time/60), s = time%60;
-    document.getElementById('timer').textContent = `${m}:${s<10?'0':''}${s}`;
-    time--;
-    if(time<0) finish();
-  },1000);
+function goBack() {
+    document.getElementById(`task${step}`).classList.remove('show');
+    document.getElementById(`results`).classList.remove('show');
+    step--;
+    document.getElementById(`task${step}`).classList.add('show');
+    updateNav();
 }
 
-function updateBtn(){
-  document.getElementById('back').style.display = step>0?'flex':'none';
-  document.getElementById('next').style.display = step<3?'flex':'none';
-  document.getElementById('finish').style.display = step==3?'flex':'none';
+function goNext() {
+    step++;
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    if (step === 5) {
+        document.getElementById('results').classList.add('show');
+        finish();
+    } else {
+        document.getElementById(`task${step}`).classList.add('show');
+    }
+    updateNav();
 }
 
-function back(){
-  step--;
-  document.querySelectorAll('.exercise').forEach(e=>e.classList.remove('active'));
-  document.getElementById(`exercise${step+1}`).classList.add('active');
-  updateBtn();
+function finish() {
+    clearInterval(timer);
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
+    document.getElementById('results').classList.add('show');
+    document.getElementById('buttons').style.display = 'none';
+    document.querySelector('.timer-bar').style.display = 'none';
+    
+    let html = '<div class="fb-item"><div class="fb-h">Aufgabe 1 - Nutzenversprechen</div>';
+    
+    let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
+    let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
+    
+    if (c1) {
+        let p1 = (document.getElementById('c1problem').value || '').split(/\s+/).length;
+        let v1 = (document.getElementById('c1value').value || '').split(/\s+/).length;
+        let e1 = (document.getElementById('c1example').value || '').split(/\s+/).length;
+        
+        html += `<strong>${c1}</strong>
+            <div class="rating"><div class="rating-icon ${p1 > 100 ? 'green' : p1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}</div></div>
+            <div class="rating"><div class="rating-icon ${v1 > 100 ? 'green' : v1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzen:</strong> ${solutions[c1].v}</div></div>
+            <div class="rating"><div class="rating-icon ${e1 > 100 ? 'green' : e1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Beispiel:</strong> ${solutions[c1].e}</div></div>`;
+    }
+    
+    if (c2) {
+        let p2 = (document.getElementById('c2problem').value || '').split(/\s+/).length;
+        let v2 = (document.getElementById('c2value').value || '').split(/\s+/).length;
+        let e2 = (document.getElementById('c2example').value || '').split(/\s+/).length;
+        
+        html += `<strong>${c2}</strong>
+            <div class="rating"><div class="rating-icon ${p2 > 100 ? 'green' : p2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}</div></div>
+            <div class="rating"><div class="rating-icon ${v2 > 100 ? 'green' : v2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzen:</strong> ${solutions[c2].v}</div></div>
+            <div class="rating"><div class="rating-icon ${e2 > 100 ? 'green' : e2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Beispiel:</strong> ${solutions[c2].e}</div></div>`;
+    }
+    
+    html += '</div>';
+    
+    document.getElementById('fb').innerHTML = html;
 }
 
-function next(){
-  if(step==0){
-    let cnt = document.querySelectorAll('input[name="comp"]:checked').length;
-    if(cnt!=2) return document.getElementById('compError').style.display='block';
-    document.getElementById('compError').style.display='none';
-  }
-  step++;
-  document.querySelectorAll('.exercise').forEach(e=>e.classList.remove('active'));
-  document.getElementById(`exercise${step+1}`).classList.add('active');
-  updateBtn();
+function makePDF() {
+    const {jsPDF} = window.jspdf;
+    const doc = new jsPDF();
+    let y = 20;
+    const h = doc.internal.pageSize.getHeight();
+    const w = doc.internal.pageSize.getWidth();
+    const m = 15, max = w - 2 * m;
+    
+    function add(txt, bold = false) {
+        if (y > h - 20) { doc.addPage(); y = 20; }
+        doc.setFont('Arial', bold ? 'bold' : 'normal');
+        doc.setFontSize(bold ? 12 : 10);
+        let lines = doc.splitTextToSize(txt, max);
+        doc.text(lines, m, y);
+        y += 5 * lines.length + 2;
+    }
+    
+    add('Marketing-Übung - Ihre Antworten', true);
+    add(new Date().toLocaleDateString('de-DE'));
+    y += 5;
+    
+    let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
+    let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
+    
+    add('Aufgabe 1: Unternehmen', true);
+    if (c1) {
+        add(c1 + ':', true);
+        add(document.getElementById('c1problem').value || '-');
+        add(document.getElementById('c1value').value || '-');
+        add(document.getElementById('c1example').value || '-');
+    }
+    if (c2) {
+        add(c2 + ':', true);
+        add(document.getElementById('c2problem').value || '-');
+        add(document.getElementById('c2value').value || '-');
+        add(document.getElementById('c2example').value || '-');
+    }
+    
+    add('Aufgabe 2: IKEA', true);
+    add(document.getElementById('e2q1').value || '-');
+    add(document.getElementById('e2q2').value || '-');
+    add(document.getElementById('e2q3').value || '-');
+    
+    add('Aufgabe 3: Starbucks', true);
+    for (let i = 1; i <= 5; i++) add(document.getElementById(`e3q${i}`).value || '-');
+    
+    add('Aufgabe 4: Train4U', true);
+    add(document.getElementById('e4q1').value || '-');
+    add(document.getElementById('e4q2').value || '-');
+    add(document.getElementById('e4q3').value || '-');
+    
+    doc.save('Marketing-Übung.pdf');
 }
 
-function finish(){
-  clearInterval(timer);
-  document.querySelectorAll('.exercise').forEach(e=>e.classList.remove('active'));
-  document.getElementById('scoreSection').classList.add('active');
-  document.getElementById('buttons').style.display='none';
-  document.getElementById('timerBar').style.display='none';
-  
-  let html = '<div class="feedback-item"><h4>Aufgabe 1</h4>';
-  let sel = Array.from(document.querySelectorAll('input[name="comp"]:checked')).map(x=>x.value);
-  sel.forEach((c,i)=>{
-    let p = (document.getElementById(`c${i}p`).value||'').split(/\s+/).length;
-    let v = (document.getElementById(`c${i}v`).value||'').split(/\s+/).length;
-    let e = (document.getElementById(`c${i}e`).value||'').split(/\s+/).length;
-    let rp = p>100?'green':p>50?'yellow':'red';
-    let rv = v>100?'green':v>50?'yellow':'red';
-    let re = e>100?'green':e>50?'yellow':'red';
-    html += `<strong>${c}</strong><div class="rating-row"><div class="rating-icon ${rp}">●</div><div class="rating-text"><strong>Problem:</strong> ${ans[c].p}</div></div>
-      <div class="rating-row"><div class="rating-icon ${rv}">●</div><div class="rating-text"><strong>Nutzen:</strong> ${ans[c].v}</div></div>
-      <div class="rating-row"><div class="rating-icon ${re}">●</div><div class="rating-text"><strong>Beispiel:</strong> ${ans[c].e}</div></div>`;
-  });
-  html += '</div>';
-  
-  document.getElementById('feedback').innerHTML = html;
-}
-
-function makePDF(){
-  const {jsPDF} = window.jspdf;
-  const doc = new jsPDF();
-  let y = 20;
-  const h = doc.internal.pageSize.getHeight();
-  const w = doc.internal.pageSize.getWidth();
-  const m = 15, max = w-2*m;
-  
-  function add(txt, bold=false){
-    if(y>h-20){doc.addPage(); y=20;}
-    doc.setFont('Arial', bold?'bold':'normal');
-    doc.setFontSize(bold?12:10);
-    let lines = doc.splitTextToSize(txt, max);
-    doc.text(lines, m, y);
-    y += 5*lines.length+2;
-  }
-  
-  add('Marketing-Übung', true);
-  add(`${new Date().toLocaleDateString()}`);
-  y += 5;
-  
-  add('Aufgabe 1', true);
-  let sel = Array.from(document.querySelectorAll('input[name="comp"]:checked')).map(x=>x.value);
-  sel.forEach((c,i)=>{
-    add(`${c}:`, true);
-    add(document.getElementById(`c${i}p`).value||'-');
-    add(document.getElementById(`c${i}v`).value||'-');
-    add(document.getElementById(`c${i}e`).value||'-');
-  });
-  
-  add('Aufgabe 2', true);
-  add(document.getElementById('e2q1').value||'-');
-  add(document.getElementById('e2q2').value||'-');
-  add(document.getElementById('e2q3').value||'-');
-  
-  add('Aufgabe 3', true);
-  for(let i=1;i<=5;i++) add(document.getElementById(`e3q${i}`).value||'-');
-  
-  add('Aufgabe 4', true);
-  add(document.getElementById('e4q1').value||'-');
-  add(document.getElementById('e4q2').value||'-');
-  add(document.getElementById('e4q3').value||'-');
-  
-  doc.save('Marketing-Übung.pdf');
-}
-
-updateBtn();
+updateNav();
 </script>
 </body>
 </html>
