@@ -262,7 +262,6 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
     <div class="buttons" id="buttons">
         <button class="btn btn-secondary" id="backbtn" onclick="goBack()" style="display:none">← Zurück</button>
         <button class="btn btn-primary" id="nextbtn" onclick="goNext()">Weiter →</button>
-        <button class="btn btn-primary" id="finbtn" onclick="finish()" style="display:none">✓ Abschließen</button>
     </div>
 </div>
 
@@ -285,7 +284,7 @@ const solutions = {
     },
     dm: { 
         p: 'dm löst das Problem der Produktauswahl, Beratungsbedürftigkeit und fehlender sozialer Verantwortung. Mit großer Vielfalt brauchen Kunden Expert:innen-Wissen und Vertrauen in die Qualität.', 
-        v: 'Ein typischer dm-Kunde m��chte qualitativ hochwertige Drogerie- und Gesundheitsprodukte, gute Beratung, gute Preise und Unternehmen, die sozial und ökologisch verantwortungsvoll handeln.', 
+        v: 'Ein typischer dm-Kunde möchte qualitativ hochwertige Drogerie- und Gesundheitsprodukte, gute Beratung, gute Preise und Unternehmen, die sozial und ökologisch verantwortungsvoll handeln.', 
         e: 'dm sticht durch kompetente Fachberatung vor Ort, riesige Produktvielfalt mit hoher Qualität, faire Preise, Nachhaltigkeit in der Beschaffung und soziales Engagement heraus.' 
     },
     Ryanair: { 
@@ -364,9 +363,11 @@ function goBack() {
 }
 
 function goNext() {
-    if (currentPage < 5) {
+    if (currentPage < 4) {
         currentPage++;
         updateDisplay();
+    } else if (currentPage === 4) {
+        finish();
     }
 }
 
@@ -375,8 +376,8 @@ function updateDisplay() {
     document.getElementById('page' + currentPage).classList.add('show');
     
     document.getElementById('backbtn').style.display = currentPage > 0 ? 'flex' : 'none';
-    document.getElementById('nextbtn').style.display = currentPage < 5 ? 'flex' : 'none';
-    document.getElementById('finbtn').style.display = currentPage === 4 ? 'flex' : 'none';
+    document.getElementById('nextbtn').textContent = currentPage === 4 ? '✓ Abschließen' : 'Weiter →';
+    document.getElementById('nextbtn').style.display = 'flex';
     
     if (currentPage === 1) {
         document.getElementById('buttons').classList.add('show');
