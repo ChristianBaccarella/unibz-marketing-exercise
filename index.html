@@ -58,6 +58,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 .rating-icon.red { background: #EF4444; }
 .rating-text { font-size: 13px; color: #6B7280; line-height: 1.5; }
 .rating-text strong { color: #111827; display: block; margin-bottom: 4px; }
+.rating-text .score { color: #1F7FD4; font-weight: 600; font-size: 12px; margin-top: 4px; }
 .export { margin-top: 24px; padding: 20px; background: #F9FAFB; border: 2px solid #10B981; border-radius: 12px; text-align: center; }
 .export-btn { padding: 14px 32px; background: #10B981; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; }
 .buttons { padding: 20px 24px; border-top: 1px solid #E5E7EB; display: none; gap: 12px; }
@@ -228,7 +229,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                         </div>
                     </div>
                     
-                    <button class="gen-btn" onclick="makeSlogan()">🎯 Slogan generieren!</button>
+                    <button class="gen-btn" onclick="makeSlogan()">��� Slogan generieren!</button>
                     <div id="sloganbox"></div>
                 </div>
                 <div class="q-label" style="margin-top:16px">Ihre Slogan-Idee:</div>
@@ -251,10 +252,10 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
             <p>Hier sind Ihre Ergebnisse mit Musterlösungen und Bewertung:</p>
             <div class="feedback" id="fb"></div>
             <div style="text-align:left;margin-top:24px;padding-top:24px;border-top:1px solid #E5E7EB">
-                <div style="font-size:14px;font-weight:700;color:#1F7FD4;text-transform:uppercase;margin-bottom:12px">🚦 Bewertungssystem:</div>
-                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#10B981;flex-shrink:0"></div><strong>Grün:</strong> Ausführliche Antwort (>100 Wörter)</div></div>
-                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#F59E0B;flex-shrink:0"></div><strong>Gelb:</strong> Teilweise ausführlich (50-100 Wörter)</div></div>
-                <div style="display:flex;gap:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EF4444;flex-shrink:0"></div><strong>Rot:</strong> Zu kurz (<50 Wörter)</div></div>
+                <div style="font-size:14px;font-weight:700;color:#1F7FD4;text-transform:uppercase;margin-bottom:12px">🎯 Bewertungssystem:</div>
+                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#10B981;flex-shrink:0"></div><strong>Grün (80-100%):</strong> Ähnlichkeit zur Musterlösung sehr hoch</div></div>
+                <div style="display:flex;gap:12px;margin-bottom:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#F59E0B;flex-shrink:0"></div><strong>Gelb (50-79%):</strong> Ähnlichkeit zur Musterlösung teilweise</div></div>
+                <div style="display:flex;gap:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EF4444;flex-shrink:0"></div><strong>Rot (<50%):</strong> Ähnlichkeit zur Musterlösung gering</div></div>
             </div>
             <div class="export">
                 <button class="export-btn" onclick="makePDF()">📥 PDF herunterladen</button>
@@ -344,6 +345,36 @@ const slogans = {
     '50+-Zeitmangel-Expertise': ['Mit Experte 50+. Sicher.', 'Ein Trainer, der respektiert.', 'Expertise für 50+. Spezialisiert.', 'Trainer kennt 50+ Körper.', 'Sicher trainieren. Mit 50+.'],
     '50+-Zeitmangel-Erfolg': ['Mit 50+ sind Zahlen wichtig.', 'Sichtbare Erfolge mit 50+.', 'Messbarer Erfolg. Ab 50+.', 'Mit 50+. Mit Erfolg.', 'Altersgerecht. Erfolgreich. Nachhaltig.']
 };
+
+// Funktion zur Berechnung der Ähnlichkeit zwischen zwei Texten
+function calculateSimilarity(userText, solutionText) {
+    if (!userText || userText.trim().length === 0) return 0;
+    
+    const normalize = (text) => text.toLowerCase().trim().split(/\s+/).filter(w => w.length > 2);
+    const userWords = normalize(userText);
+    const solutionWords = normalize(solutionText);
+    
+    if (solutionWords.length === 0) return 0;
+    
+    let matches = 0;
+    userWords.forEach(word => {
+        solutionWords.forEach(sWord => {
+            if (sWord.includes(word) || word.includes(sWord)) {
+                matches++;
+            }
+        });
+    });
+    
+    const similarity = (matches / Math.max(userWords.length, solutionWords.length)) * 100;
+    return Math.min(similarity, 100);
+}
+
+// Funktion zur Bestimmung der Farbe basierend auf Ähnlichkeit
+function getSimilarityColor(percentage) {
+    if (percentage >= 80) return 'green';
+    if (percentage >= 50) return 'yellow';
+    return 'red';
+}
 
 document.querySelectorAll('input[name="comp1"]').forEach(r => {
     r.addEventListener('change', () => {
@@ -472,44 +503,46 @@ function finish() {
     let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
     
     if (c1 && solutions[c1]) {
-        let p1 = (document.getElementById('c1problem').value || '').split(/\s+/).length;
-        let v1 = (document.getElementById('c1value').value || '').split(/\s+/).length;
-        let e1 = (document.getElementById('c1example').value || '').split(/\s+/).length;
-        html += `<strong>${c1}</strong><div class="rating"><div class="rating-icon ${p1 > 100 ? 'green' : p1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}</div></div><div class="rating"><div class="rating-icon ${v1 > 100 ? 'green' : v1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c1].v}</div></div><div class="rating"><div class="rating-icon ${e1 > 100 ? 'green' : e1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c1].e}</div></div>`;
+        let p1Sim = calculateSimilarity(document.getElementById('c1problem').value, solutions[c1].p);
+        let v1Sim = calculateSimilarity(document.getElementById('c1value').value, solutions[c1].v);
+        let e1Sim = calculateSimilarity(document.getElementById('c1example').value, solutions[c1].e);
+        
+        html += `<strong>${c1}</strong><div class="rating"><div class="rating-icon ${getSimilarityColor(p1Sim)}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}<div class="score">Ähnlichkeit: ${p1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(v1Sim)}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c1].v}<div class="score">Ähnlichkeit: ${v1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e1Sim)}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c1].e}<div class="score">Ähnlichkeit: ${e1Sim.toFixed(0)}%</div></div></div>`;
     }
     if (c2 && solutions[c2]) {
-        let p2 = (document.getElementById('c2problem').value || '').split(/\s+/).length;
-        let v2 = (document.getElementById('c2value').value || '').split(/\s+/).length;
-        let e2 = (document.getElementById('c2example').value || '').split(/\s+/).length;
-        html += `<strong>${c2}</strong><div class="rating"><div class="rating-icon ${p2 > 100 ? 'green' : p2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}</div></div><div class="rating"><div class="rating-icon ${v2 > 100 ? 'green' : v2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c2].v}</div></div><div class="rating"><div class="rating-icon ${e2 > 100 ? 'green' : e2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c2].e}</div></div>`;
+        let p2Sim = calculateSimilarity(document.getElementById('c2problem').value, solutions[c2].p);
+        let v2Sim = calculateSimilarity(document.getElementById('c2value').value, solutions[c2].v);
+        let e2Sim = calculateSimilarity(document.getElementById('c2example').value, solutions[c2].e);
+        
+        html += `<strong>${c2}</strong><div class="rating"><div class="rating-icon ${getSimilarityColor(p2Sim)}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}<div class="score">Ähnlichkeit: ${p2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(v2Sim)}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c2].v}<div class="score">Ähnlichkeit: ${v2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e2Sim)}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c2].e}<div class="score">Ähnlichkeit: ${e2Sim.toFixed(0)}%</div></div></div>`;
     }
     html += '</div>';
     
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 2 - IKEA</div>';
-    let e2q1 = (document.getElementById('e2q1').value || '').split(/\s+/).length;
-    let e2q2 = (document.getElementById('e2q2').value || '').split(/\s+/).length;
-    let e2q3 = (document.getElementById('e2q3').value || '').split(/\s+/).length;
-    html += `<div class="rating"><div class="rating-icon ${e2q1 > 100 ? 'green' : e2q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}</div></div>
-    <div class="rating"><div class="rating-icon ${e2q2 > 100 ? 'green' : e2q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}</div></div>
-    <div class="rating"><div class="rating-icon ${e2q3 > 100 ? 'green' : e2q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}</div></div></div>`;
+    let e2q1Sim = calculateSimilarity(document.getElementById('e2q1').value, task2Solutions.q1);
+    let e2q2Sim = calculateSimilarity(document.getElementById('e2q2').value, task2Solutions.q2);
+    let e2q3Sim = calculateSimilarity(document.getElementById('e2q3').value, task2Solutions.q3);
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e2q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}<div class="score">Ähnlichkeit: ${e2q1Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e2q2Sim)}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}<div class="score">Ähnlichkeit: ${e2q2Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e2q3Sim)}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}<div class="score">Ähnlichkeit: ${e2q3Sim.toFixed(0)}%</div></div></div></div>`;
     
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 3 - Starbucks</div>';
-    let e3q1 = (document.getElementById('e3q1').value || '').split(/\s+/).length;
-    let e3q2 = (document.getElementById('e3q2').value || '').split(/\s+/).length;
-    let e3q3 = (document.getElementById('e3q3').value || '').split(/\s+/).length;
-    let e3q4 = (document.getElementById('e3q4').value || '').split(/\s+/).length;
-    html += `<div class="rating"><div class="rating-icon ${e3q1 > 100 ? 'green' : e3q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}</div></div>
-    <div class="rating"><div class="rating-icon ${e3q2 > 100 ? 'green' : e3q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}</div></div>
-    <div class="rating"><div class="rating-icon ${e3q3 > 100 ? 'green' : e3q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q3}</div></div>
-    <div class="rating"><div class="rating-icon ${e3q4 > 100 ? 'green' : e3q4 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q4}</div></div></div>`;
+    let e3q1Sim = calculateSimilarity(document.getElementById('e3q1').value, task3Solutions.q1);
+    let e3q2Sim = calculateSimilarity(document.getElementById('e3q2').value, task3Solutions.q2);
+    let e3q3Sim = calculateSimilarity(document.getElementById('e3q3').value, task3Solutions.q3);
+    let e3q4Sim = calculateSimilarity(document.getElementById('e3q4').value, task3Solutions.q4);
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e3q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}<div class="score">Ähnlichkeit: ${e3q1Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q2Sim)}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}<div class="score">Ähnlichkeit: ${e3q2Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q3Sim)}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q3}<div class="score">Ähnlichkeit: ${e3q3Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q4Sim)}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q4}<div class="score">Ähnlichkeit: ${e3q4Sim.toFixed(0)}%</div></div></div></div>`;
     
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 4 - Train4U</div>';
-    let e4q1 = (document.getElementById('e4q1').value || '').split(/\s+/).length;
-    let e4q2 = (document.getElementById('e4q2').value || '').split(/\s+/).length;
-    let e4q3 = (document.getElementById('e4q3').value || '').split(/\s+/).length;
-    html += `<div class="rating"><div class="rating-icon ${e4q1 > 100 ? 'green' : e4q1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Slogan:</strong> ${task4Solutions.q1}</div></div>
-    <div class="rating"><div class="rating-icon ${e4q2 > 100 ? 'green' : e4q2 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Maßnahmen:</strong> ${task4Solutions.q2}</div></div>
-    <div class="rating"><div class="rating-icon ${e4q3 > 100 ? 'green' : e4q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}</div></div></div>`;
+    let e4q1Sim = calculateSimilarity(document.getElementById('e4q1').value, task4Solutions.q1);
+    let e4q2Sim = calculateSimilarity(document.getElementById('e4q2').value, task4Solutions.q2);
+    let e4q3Sim = calculateSimilarity(document.getElementById('e4q3').value, task4Solutions.q3);
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e4q1Sim)}">●</div><div class="rating-text"><strong>Slogan:</strong> ${task4Solutions.q1}<div class="score">Ähnlichkeit: ${e4q1Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e4q2Sim)}">●</div><div class="rating-text"><strong>Maßnahmen:</strong> ${task4Solutions.q2}<div class="score">Ähnlichkeit: ${e4q2Sim.toFixed(0)}%</div></div></div>
+    <div class="rating"><div class="rating-icon ${getSimilarityColor(e4q3Sim)}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}<div class="score">Ähnlichkeit: ${e4q3Sim.toFixed(0)}%</div></div></div></div>`;
     
     document.getElementById('fb').innerHTML = html;
 }
