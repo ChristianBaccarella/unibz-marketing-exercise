@@ -49,7 +49,7 @@
         
         /* Header */
         .header {
-            padding: 20px 20px;
+            padding: 16px 20px;
             border-bottom: 1px solid var(--gray-100);
             display: flex;
             align-items: center;
@@ -61,14 +61,13 @@
         }
         
         .header-logo {
-            height: 45px;
+            height: 35px;
             display: flex;
             align-items: center;
-        }
-        
-        .header-logo svg {
-            height: 100%;
-            object-fit: contain;
+            font-size: 28px;
+            font-weight: 700;
+            color: #0066CC;
+            letter-spacing: -1px;
         }
         
         /* Timer */
@@ -603,13 +602,7 @@
     <div class="container">
         <!-- Header -->
         <div class="header">
-            <div class="header-logo">
-                <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg">
-                    <!-- unibz Logo -->
-                    <text x="30" y="280" font-size="200" font-weight="bold" fill="#0066CC">unibz</text>
-                    <rect x="300" y="370" width="200" height="20" fill="#0066CC"/>
-                </svg>
-            </div>
+            <div class="header-logo">unibz</div>
         </div>
         
         <!-- Timer -->
@@ -683,17 +676,17 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Was ist das zentrale Nutzenversprechen von IKEA.</label>
+                        <label class="question-label">Was ist das zentrale Nutzenversprechen von IKEA?</label>
                         <textarea id="ex2q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche Instrumente nutzt IKEA zur Kundenbindung (CRM). Geben Sie drei konkrete Beispiele.</label>
+                        <label class="question-label">Welche Instrumente nutzt IKEA zur Kundenbindung (CRM)? Geben Sie drei konkrete Beispiele.</label>
                         <textarea id="ex2q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung. Warum.</label>
+                        <label class="question-label">Verfolgt IKEA eher eine Verkaufs- oder Marketingorientierung? Warum?</label>
                         <textarea id="ex2q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -707,27 +700,27 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Was ist das zentrale Nutzenversprechen von Starbucks.</label>
+                        <label class="question-label">Was ist das zentrale Nutzenversprechen von Starbucks?</label>
                         <textarea id="ex3q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Wie versucht Starbucks, ein Kundenerlebnis zu kreieren. Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
+                        <label class="question-label">Wie versucht Starbucks, ein Kundenerlebnis zu kreieren? Geben Sie ein konkretes Beispiel anhand eines selbst ausgedachten Starbucks-Besuches.</label>
                         <textarea id="ex3q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche Instrumente nutzt Starbucks zur Kundenbindung.</label>
+                        <label class="question-label">Welche Instrumente nutzt Starbucks zur Kundenbindung? Geben Sie zwei konkrete Beispiele.</label>
                         <textarea id="ex3q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Warum könnte Starbucks als Beispiel für Service-Dominant Logic gelten.</label>
+                        <label class="question-label">Warum könnte Starbucks als Beispiel für Service-Dominant-Logic gelten?</label>
                         <textarea id="ex3q4" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Warum könnte dieses Modell gerade in Italien nicht so erfolgreich sein.</label>
+                        <label class="question-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten erfolgreich zu sein?</label>
                         <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -741,7 +734,7 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Wie könnte das Nutzenversprechen dieses Fitnessstudios lauten.</label>
+                        <label class="question-label">Wie könnte das Nutzenversprechen dieses Fitnessstudios lauten?</label>
                         
                         <div class="generator-section">
                             <div class="generator-title">💡 Value Proposition Generator</div>
@@ -761,7 +754,7 @@
                                 <div class="generator-options" id="problem">
                                     <div class="generator-option" onclick="toggleOption(this, 'problem')">Zeitmangel</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Motivation</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Einsamkeit</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Selbstoptimierung</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Expertise</div>
                                 </div>
                             </div>
@@ -772,7 +765,7 @@
                                     <div class="generator-option" onclick="toggleOption(this, 'value')">Gemeinschaft</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'value')">Flexibilität</div>
                                     <div class="generator-option" onclick="toggleOption(this, 'value')">Persönliche Betreuung</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Resultate sichtbar</div>
+                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Messbare Resultate</div>
                                 </div>
                             </div>
                             
@@ -784,12 +777,12 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche konkreten Maßnahmen könnte das Studio unternehmen, damit die Kunden wieder in das Studio kommen.</label>
+                        <label class="question-label">Welche konkreten Maßnahmen könnte das Studio unternehmen, damit die Kunden wieder in das Studio kommen?</label>
                         <textarea id="ex4q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Welche konkrete Werbestrategie würden Sie hier empfehlen.</label>
+                        <label class="question-label">Welche konkrete Werbestrategie würden Sie hier empfehlen? Denken Sie sich eine kurze Strategie aus, um Ihre oben gewählte Zielgruppe anzusprechen.</label>
                         <textarea id="ex4q3" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -852,27 +845,33 @@
                 IKEA: { problem: "Macht Möbel und Wohnen erschwinglich für Menschen mit kleinem Budget.", value: "Demokratisierung von Design, Erschwinglichkeit, DIY-Aspekt, Inspiration.", example: "Flach verpackte, erschwingliche Möbel lösen das Problem, dass Wohnen günstiger sein kann." }
             },
             exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
-            exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: Loyalty-Programm (Rewards), Mobile App mit Bezahlung und Personalisierung, regelmäßige limitierte Produkte, konsistentes Kundenerlebnis weltweit.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien weniger erfolgreich, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italiens Café ist soziales Ritual mit kurzer, intensiver Interaktion, nicht 'Third Place', (3) Preiswettbewerb mit lokalen Bars, (4) Ablehnung von amerikanischer 'Massification' von Kultur." },
-            exercise4: { q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern eine Gemeinschaft für Gesundheit und persönliche Transformation. Beispiel: 'Dein Weg zu einem fitteren, glücklicheren Ich - mit Menschen an deiner Seite, die dich verstehen und unterstützen.'", q2: "Konkrete Maßnahmen: (1) Buddy-System - neue Mitglieder werden mit erfahrenen Mitgliedern gepaart, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen, (3) Wöchentliche Gruppen-Challenges mit Preisen, (4) Mobile App mit Trainings-Tracking und Community, (5) Flexible Öffnungszeiten und Online-Kurse, (6) Regelmäßige Erfolgsgeschichten von Mitgliedern teilen, (7) Cost-per-Visit Modell statt Abo.", q3: "Werbestrategie: (1) Authentische Success Stories auf Instagram/TikTok - echte Transformationen zeigen, (2) Facebook-Werbung zielgerichtet auf 'Anfänger' und 'Fitness-Interessierte', (3) Lokale Influencer-Kooperationen, (4) Grassroots-Marketing: Kostenlose Schnupperkurse in Parks, (5) Referral-Programm - Mitglieder bekommen Bonus wenn sie Freunde werben, (6) Google Ads für 'Fitnessstudio in [Stadt]' mit starkem CTA." }
+            exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: (1) Loyalty-Programm mit Rewards und exklusiven Angeboten für Stammkunden, (2) Mobile App mit Bezahlung, Personalisierung und Kommunikation.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien hat Starbucks Schwierigkeiten, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italienischer Kaffee ist kurzes, intensives Ritual an der Theke - nicht zum Verweilen gedacht, (3) Harte Konkurrenz durch lokale Bars mit Tradition, (4) Ablehnung von amerikanischer Massenproduktion von Kulturmomenten." },
+            exercise4: { q1: "Train4U sollte nicht nur ein Fitnessstudio sein, sondern ein Ort für echte Transformation und persönliches Wachstum. Beispiel: 'Dein Fitnessstudio, das dir wirklich zuhört - mit maßgeschneiderten Trainings und einer Community, die deinen Erfolg mitfeiert.'", q2: "Konkrete Maßnahmen: (1) Buddy-Matching-Programm für neue Mitglieder mit erfahrenen Trainern, (2) Kostenlose Personal-Training-Sessions in den ersten 4 Wochen zur Vermeidung von Anfängerfehlern, (3) Wöchentliche Gruppen-Challenges mit erreichbaren Zielen und Belohnungen, (4) Mobile App zum Tracking von Fortschritten mit Visualisierung und Community-Feed, (5) Flexible Öffnungszeiten + Online-Live-Kurse für Berufstätige, (6) Monatliche Success-Stories von Mitgliedern als Inspiration, (7) Pay-Per-Session Modell ohne Langzeitvertrag.", q3: "Werbestrategie: (1) Authentische Before-After-Stories auf Instagram/TikTok - echte Menschen, echte Transformationen, nicht retouchiert, (2) Hyper-lokale Facebook-Kampagnen mit Geo-Targeting auf 5km um das Studio, (3) Partnerschaften mit lokalen Influencern (mit 5k-50k Follower, nicht Mega-Influencer) die den Studio-Lifestyle leben, (4) Grassroots: Kostenlose Fitness-Pop-ups in Parks und auf Märkten, (5) Referral-Programm: 1 Monat gratis für jede geworbene Person, (6) Google Ads mit Keywords 'Fitnessstudio ohne Vertrag' und 'Fitness für Anfänger in [Stadt]'." }
         };
 
         const keywords = {
             exercise1: { problem: ['problem', 'löst', 'bedürfnis', 'bedarf', 'schwierigkeit'], value: ['nutzen', 'versprechen', 'vorteil', 'wert', 'differenzierung'], example: ['beispiel', 'konkret', 'zeigt', 'etwa', 'z.b'] },
             exercise2: { q1: ['nutzen', 'versprechen', 'wert', 'design', 'erschwinglich'], q2: ['crm', 'kundenbindung', 'family', 'programm', 'loyalty'], q3: ['marketing', 'orientierung', 'kunde', 'kundenbedürfnis', 'geschäftsmodell'] },
-            exercise3: { q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft'], q2: ['erlebnis', 'atmosphäre', 'beispiel', 'besuch', 'name'], q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards'], q4: ['service-dominant', 'service', 'wert', 'erlebnis', 'beziehung'], q5: ['italien', 'kultur', 'café', 'bar', 'espresso'] },
-            exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'unterstützung', 'transformation'], q2: ['buddy', 'training', 'community', 'flexibel', 'app'], q3: ['instagram', 'influencer', 'lokal', 'referral', 'social media'] }
+            exercise3: { q1: ['nutzen', 'versprechen', 'third place', 'erlebnis', 'gemeinschaft'], q2: ['erlebnis', 'atmosphäre', 'beispiel', 'besuch', 'name'], q3: ['kundenbindung', 'loyalty', 'app', 'programm', 'rewards'], q4: ['service-dominant', 'service', 'wert', 'erlebnis', 'beziehung'], q5: ['italien', 'kultur', 'café', 'bar', 'espresso', 'schwierigkeit'] },
+            exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'transformation', 'wachstum', 'ort'], q2: ['buddy', 'training', 'app', 'tracking', 'session', 'erfolg'], q3: ['instagram', 'authentisch', 'lokal', 'facebook', 'referral', 'parks'] }
         };
 
+        // Deutlich umfangreichere und intelligentere VP-Templates
         const vpTemplates = {
-            'Berufstätige-Zeitmangel-Gemeinschaft': "Train4U ist dein Studio für Berufstätige mit wenig Zeit. Kurze, effiziente Trainings in einer unterstützenden Gemeinschaft – Fitness die in deinen Alltag passt.",
-            'Berufstätige-Zeitmangel-Flexibilität': "Fitness ohne Kompromisse: Train4U bietet maximale Flexibilität für Berufstätige. Trainiere wann du willst – vor Arbeit, mittags oder abends.",
-            'Berufstätige-Keine Motivation-Gemeinschaft': "Train4U ist mehr als ein Fitnessstudio – es ist eine Community von Berufstätigen, die sich gegenseitig motivieren. Allein trainieren war gestern.",
-            'Anfänger-Keine Motivation-Persönliche Betreuung': "Du findest allein keinen Einstieg? Train4U begleitet dich persönlich. Professionelle Trainer, anfängerfreundliche Kurse, Menschen die an deinem Erfolg interessiert sind.",
-            'Anfänger-Keine Expertise-Persönliche Betreuung': "Keine Angst vor dem ersten Tag. Train4U macht Fitness einfach: Kostenlose Einführungen, Trainer die Zeit für dich haben, und Anfänger-Kurse die wirklich funktionieren.",
-            'Frauen-Keine Motivation-Gemeinschaft': "Train4U ist ein Ort für Frauen, die gemeinsam trainieren. Motiviert durch andere, ohne Druck – mit Menschen die dich verstehen.",
-            'Frauen-Einsamkeit-Gemeinschaft': "Fitness sollte Spaß machen. Train4U ist ein Treffpunkt für Frauen, die sich fit und verbunden fühlen wollen. Trainieren mit Freundinnen.",
-            'Über 50 Jahre-Flexibilität-Persönliche Betreuung': "Train4U verstärkt deine Gesundheit im besten Alter. Flexible Zeiten, altersgerechte Trainings und Trainer die deine Bedürfnisse kennen.",
-            'Über 50 Jahre-Keine Expertise-Resultate sichtbar': "Du wolltest immer fitter sein? Train4U zeigt dir wie. Gezielte Programme für dein Alter, sichtbare Fortschritte, professionelle Begleitung."
+            'Berufstätige-Zeitmangel-Gemeinschaft': "Train4U: Fitness ohne Schuldgefühle. Wir wissen, dass deine Zeit kostbar ist - deshalb bieten wir 30-Minuten-Power-Trainings, die funktionieren. Und du tust es nicht allein: Eine Community von Berufstätigen wie dir, die um 6 Uhr morgens oder nach Feierabend zusammen stärker wird.",
+            'Berufstätige-Zeitmangel-Flexibilität': "Train4U: Dein Fitnessstudio passt sich dir an, nicht umgekehrt. Open 24/7, Live-Online-Kurse um Mitternacht, Trainings in nur 20 Minuten - Fitness, wenn DU Zeit hast, nicht wenn WIR Öffnungszeiten haben.",
+            'Berufstätige-Zeitmangel-Persönliche Betreuung': "Train4U: Kein Zeit für Fehler. Unsere Personal Trainer kommen zu DIR - ins Büro, in den Park, zu Hause. Eine Person, ein Plan, kein Umschweif, maximale Effizienz.",
+            'Berufstätige-Keine Motivation-Gemeinschaft': "Train4U ist dein Accountability-Partner. Wir verbinden dich mit anderen ehrgeizigen Berufstätigen, die dich jeden Tag pushen. Wenn du nicht kommst, vermisst man dich hier - und das Gefühl ist unbezahlbar.",
+            'Berufstätige-Selbstoptimierung-Persönliche Betreuung': "Train4U: Optimierung ist unser Geschäft. Datengestützte Trainingspläne, DNA-basierte Ernährungsanalyse, wöchentliche Fortschrittsmetriken - du wirst jede Woche messbar besser.",
+            'Anfänger-Keine Motivation-Gemeinschaft': "Train4U bricht deine Anfänger-Angst auf. Hier trainieren alle auf ihrem Level - niemand schaut auf dich, weil ALLE wissen, wie es sich anfühlt, bei Null anzufangen.",
+            'Anfänger-Keine Expertise-Persönliche Betreuung': "Train4U: Dein Anfang ist unser Erfolg. Kostenlose 1-zu-1 Einführung, ein fester Trainer, der deine Form checkt, Fehler korrigiert, dir Vertrauen gibt. Nach 4 Wochen weißt du genau, was du tust.",
+            'Anfänger-Selbstoptimierung-Persönliche Betreuung': "Train4U: Von Anfänger zu verbesserter Version deiner selbst - strukturiert. Wir haben einen bewährten 12-Wochen-Plan: Woche 1-4 Basis, Woche 5-8 Stärke, Woche 9-12 Ausdauer. Du siehst Fortschritt, nicht Chaos.",
+            'Frauen-Keine Motivation-Gemeinschaft': "Train4U: Dieser Ort ist FÜR DICH designt - von Frauen, mit Trainerinnen, umgeben von Frauen auf der gleichen Reise. Keine Konkurrenz, nur gegenseitige Unterstützung.",
+            'Frauen-Selbstoptimierung-Gemeinschaft': "Train4U: Fitness ist Selbstliebe. Wir trainieren nicht, um die Welt zu beeindrucken - wir trainieren, weil WIR uns beeindrucken wollen. Eine Community, die dich nicht verurteilt, sondern feiert.",
+            'Frauen-Zeitmangel-Flexibilität': "Train4U: Dein Fitnessstudio versteht dein Leben. Mama-Freundliche Kurse mit Kinderbetreuung, 15-Minuten-Trainings für echte Menschen mit echtem Leben.",
+            'Über 50 Jahre-Flexibilität-Persönliche Betreuung': "Train4U: Dein bestes Jahrzehnt fängt JETZT an. Trainer, die verstehen, dass Knieverletzungen real sind. Kurse, die Kraft aufbauen, nicht zerstören. Flexibility, nicht Kaputt-Training.",
+            'Über 50 Jahre-Keine Expertise-Messbare Resultate': "Train4U: Wissenschaft, nicht Guesswork. Dexa-Scans zeigen echte Knochendichte-Gewinne, Blutproben tracken Herzgesundheit - du siehst wirklich, wie viel besser dein Körper wird.",
+            'Über 50 Jahre-Selbstoptimierung-Gemeinschaft': "Train4U: Du wirst nicht älter, du wirst stärker. Eine Gruppe von Menschen 50+, die nicht aufgeben, sondern aufsteigen. Dein neues normal ist 'fit und energetisch'."
         };
 
         function generateVP() {
@@ -889,7 +888,7 @@
             let vp = vpTemplates[key];
             
             if (!vp) {
-                vp = `Train4U ist für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit Fitness wirklich funktioniert.`;
+                vp = `Train4U ist für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit Fitness wirklich funktioniert und in dein Leben passt.`;
             }
             
             document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
@@ -956,11 +955,11 @@
                 div.innerHTML = `
                     <h3 style="font-size: 16px; font-weight: 600; color: var(--primary); margin: 20px 0 12px;">${c}</h3>
                     <div class="question-group">
-                        <label class="question-label">Welches Problem löst ${c} für seine Kundinnen und Kunden.</label>
+                        <label class="question-label">Welches Problem löst ${c} für seine Kundinnen und Kunden?</label>
                         <textarea id="ex1_${i}_q1" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${c}.</label>
+                        <label class="question-label">Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${c}?</label>
                         <textarea id="ex1_${i}_q2" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                     <div class="question-group">
