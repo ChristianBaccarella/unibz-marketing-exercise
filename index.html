@@ -118,7 +118,7 @@
             cursor: pointer;
             transition: var(--transition);
         }
-        .checkbox-item input[type="checkbox"]:checked + .checkbox-label {
+        .checkbox-label.checked {
             border-color: var(--primary);
             background: var(--primary-light);
             color: var(--primary);
@@ -313,27 +313,27 @@
                         <label class="question-label">Wählen Sie zwei Unternehmen:</label>
                         <div class="checkbox-group">
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company1" name="companies" value="Apple" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company1" name="companies" value="Apple" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company1" class="checkbox-label">Apple</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company2" name="companies" value="Spotify" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company2" name="companies" value="Spotify" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company2" class="checkbox-label">Spotify</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company3" name="companies" value="dm" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company3" name="companies" value="dm" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company3" class="checkbox-label">dm</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company4" name="companies" value="Ryanair" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company4" name="companies" value="Ryanair" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company4" class="checkbox-label">Ryanair</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company5" name="companies" value="Airbnb" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company5" name="companies" value="Airbnb" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company5" class="checkbox-label">Airbnb</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company6" name="companies" value="Netflix" onchange="handleCompanyChange()">
+                                <input type="checkbox" id="company6" name="companies" value="Netflix" onchange="updateCheckboxStyle(); handleCompanyChange()">
                                 <label for="company6" class="checkbox-label">Netflix</label>
                             </div>
                         </div>
@@ -414,7 +414,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
-                                <div class="generator-options" id="tg-options">
+                                <div class="generator-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Berufstätige</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Anfänger</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Frauen</div>
@@ -424,7 +424,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welches Problem?</div>
-                                <div class="generator-options" id="pb-options">
+                                <div class="generator-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Zeitmangel</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Motivation</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Expertise</div>
@@ -434,7 +434,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welcher Mehrwert?</div>
-                                <div class="generator-options" id="vl-options">
+                                <div class="generator-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Gemeinschaft</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Flexibilität</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Personal Trainer</div>
@@ -514,18 +514,18 @@
         let genOptions = { tg: '', pb: '', vl: '' };
 
         const vpLibrary = {
-            'Berufstätige-Zeitmangel-Gemeinschaft': ["30 Minuten. Maximale Ergebnisse. Mit deinem Team.", "Effizient trainiert. Zusammen stärker.", "Kurz und kraftvoll – trainieren mit Sinn für Zeit.", "Für Profis: Fitness, die in deinen Zeitplan passt."],
-            'Berufstätige-Zeitmangel-Flexibilität': ["24/7 Fitness für dein Leben – nicht umgekehrt.", "Trainiere um 5 Uhr oder nachts. Hier geht beides.", "Dein Fitnessstudio funktioniert, wenn du es brauchst."],
+            'Berufstätige-Zeitmangel-Gemeinschaft': ["30 Minuten. Maximale Ergebnisse. Mit deinem Team.", "Effizient trainiert. Zusammen stärker.", "Kurz und kraftvoll.", "Für Profis: Fitness, die passt."],
+            'Berufstätige-Zeitmangel-Flexibilität': ["24/7 Fitness für dein Leben.", "Trainiere um 5 Uhr oder nachts.", "Dein Studio funktioniert, wenn du es brauchst."],
             'Berufstätige-Zeitmangel-PersonalTrainer': ["Effizienz trainiert sich nicht allein.", "30 Minuten mit dem richtigen Plan.", "Professionelle Trainings für Profis."],
-            'Berufstätige-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell Erfolg.", "30 Minuten täglich = messbare Veränderung."],
-            'Berufstätige-Motivationsmangel-Gemeinschaft': ["Allein trainieren ist einsam. Bei Train4U nicht.", "Mit der richtigen Gruppe trainiert sich's leichter."],
+            'Berufstätige-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell Erfolg.", "30 Minuten täglich = Veränderung."],
+            'Berufstätige-Motivationsmangel-Gemeinschaft': ["Allein trainieren ist einsam. Bei uns nicht.", "Mit der richtigen Gruppe trainiert sich's leichter."],
             'Berufstätige-Motivationsmangel-Flexibilität': ["Trainiere, wenn die Motivation da ist.", "24/7 Zugang für deine Motivation."],
-            'Berufstätige-Motivationsmangel-PersonalTrainer': ["Motivation braucht Expertise.", "Mit einem Trainer wird Unwille zu Willenskraft."],
+            'Berufstätige-Motivationsmangel-PersonalTrainer': ["Motivation braucht Expertise.", "Mit einem Trainer wird es besser."],
             'Berufstätige-Motivationsmangel-GarantierteErgebnisse': ["Erfolg motiviert stärker.", "Messbare Ergebnisse = Motivation."],
             'Anfänger-Zeitmangel-Gemeinschaft': ["Anfangen mit der richtigen Gruppe.", "Deine Anfänger-Crew wartet."],
             'Anfänger-Zeitmangel-Flexibilität': ["Flexible Zeiten für dein Anfangen.", "24/7 für deinen Start."],
             'Anfänger-Zeitmangel-PersonalTrainer': ["Mit Trainer anfangen = sicherer Start.", "Professionelle Anleitung."],
-            'Anfänger-Zeitmangel-GarantierteErgebnisse': ["Erste Erfolge in 2 Wochen.", "Erfolg vom ersten Trainingstag."],
+            'Anfänger-Zeitmangel-GarantierteErgebnisse': ["Erste Erfolge in 2 Wochen.", "Erfolg vom ersten Tag."],
             'Frauen-Zeitmangel-Gemeinschaft': ["Mit Frauen, die dich verstehen.", "Frauenpower in kompakter Form."],
             'Frauen-Zeitmangel-Flexibilität': ["Mama + Karriere + Fitness = möglich.", "Für Frauen mit echtem Leben."],
             'Frauen-Zeitmangel-PersonalTrainer': ["Trainerin, die dein Leben kennt.", "Von Frau zu Frau."],
@@ -538,34 +538,43 @@
 
         const feedbackData = {
             exercise1: {
-                Apple: { problem: "Apple löst das Problem der technologischen Komplexität.", value: "Premium-Design, Ökosystem, Innovation.", example: "iPhone vereinfacht Technologie." },
-                Spotify: { problem: "Spotify löst Musikverfügbarkeit.", value: "Unbegrenzter Zugang, Personalisierung.", example: "Discover Weekly zeigt Verständnis." },
-                dm: { problem: "dm macht Produkte zugänglich.", value: "Vielfalt, Beratung, Convenience.", example: "Beratung vor Ort." },
-                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr.", value: "Ultra-günstig, häufig.", example: "50€ Flüge." },
-                Airbnb: { problem: "Airbnb bietet echte Erfahrungen.", value: "Authentisch, preiswert, flexibel.", example: "Echte Person." },
-                Netflix: { problem: "Netflix endet starre Programmzeiten.", value: "Personalisiert, Original, überall.", example: "Netflix weiß deine Vorlieben." }
+                Apple: { problem: "Löst technologische Komplexität.", value: "Premium-Design, Ökosystem, Innovation.", example: "iPhone vereinfacht." },
+                Spotify: { problem: "Löst Musikverfügbarkeit.", value: "Unbegrenzter Zugang, Personalisierung.", example: "Discover Weekly." },
+                dm: { problem: "Macht Produkte zugänglich.", value: "Vielfalt, Beratung, Convenience.", example: "Beratung vor Ort." },
+                Ryanair: { problem: "Demokratisiert Flugverkehr.", value: "Ultra-günstig, häufig.", example: "50€ Flüge." },
+                Airbnb: { problem: "Bietet echte Erfahrungen.", value: "Authentisch, preiswert, flexibel.", example: "Echte Person." },
+                Netflix: { problem: "Endet starre Programmzeiten.", value: "Personalisiert, Original, überall.", example: "Netflix kennt deine Vorlieben." }
             },
             exercise2: { q1: "IKEA demokratisiert Design.", q2: "CRM: Familie, Tools, Showrooms", q3: "IKEA: Marketingorientierung." },
-            exercise3: { q1: "Starbucks = Third Place", q2: "Erlebnis: Atmosphäre, Personal, Personalisierung", q3: "Loyalty-Programm + App", q4: "Service-Dominant: Wert in Interaktion", q5: "Italien: Lokale Café-Kultur" },
-            exercise4: { q1: "Transformation mit Betreuung", q2: "Buddy-System, Sessions, Challenges", q3: "Authentische Stories, lokale Kampagnen" }
+            exercise3: { q1: "Starbucks = Third Place", q2: "Erlebnis: Atmosphäre, Personal", q3: "Loyalty + App", q4: "Service-Dominant: Wert in Interaktion", q5: "Italien: Café-Kultur" },
+            exercise4: { q1: "Transformation mit Betreuung", q2: "Buddy-System, Sessions", q3: "Authentische Stories" }
         };
+
+        function updateCheckboxStyle() {
+            const checkboxes = document.querySelectorAll('input[name="companies"]');
+            checkboxes.forEach(cb => {
+                const label = cb.nextElementSibling;
+                if (cb.checked) {
+                    label.classList.add('checked');
+                } else {
+                    label.classList.remove('checked');
+                }
+            });
+        }
 
         function handleCompanyChange() {
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked'));
             if (selected.length > 2) {
                 selected[selected.length - 1].checked = false;
+                updateCheckboxStyle();
             }
             renderCompanyQuestions();
             saveAll();
         }
 
         function selectGenOption(elem, category) {
-            // Entferne selected von ALLEN Optionen in dieser Kategorie
-            const categoryMap = { 'tg': 'tg-options', 'pb': 'pb-options', 'vl': 'vl-options' };
-            const container = document.getElementById(categoryMap[category]);
-            container.querySelectorAll('.generator-option').forEach(el => el.classList.remove('selected'));
-            
-            // Füge selected zum geklickten Element hinzu
+            const parent = elem.parentElement;
+            parent.querySelectorAll('.generator-option').forEach(el => el.classList.remove('selected'));
             elem.classList.add('selected');
             genOptions[category] = elem.textContent.trim();
             
@@ -598,6 +607,7 @@
             renderCompanyQuestions();
             loadAll();
             updateButtonVisibility();
+            updateCheckboxStyle();
         }
 
         function startTimer() {
@@ -625,7 +635,7 @@
                         <textarea id="ex1_${i}_q1" onchange="saveAll()"></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Was ist das Nutzenversprechen von ${c}?</label>
+                        <label class="question-label">Was ist das Nutzenversprechen?</label>
                         <textarea id="ex1_${i}_q2" onchange="saveAll()"></textarea>
                     </div>
                     <div class="question-group">
