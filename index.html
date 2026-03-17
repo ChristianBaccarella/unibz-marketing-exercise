@@ -408,13 +408,13 @@ function finish() {
     let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
     let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
     
-    if (c1) {
+    if (c1 && solutions[c1]) {
         let p1 = (document.getElementById('c1problem').value || '').split(/\s+/).length;
         let v1 = (document.getElementById('c1value').value || '').split(/\s+/).length;
         let e1 = (document.getElementById('c1example').value || '').split(/\s+/).length;
         html += `<strong>${c1}</strong><div class="rating"><div class="rating-icon ${p1 > 100 ? 'green' : p1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}</div></div><div class="rating"><div class="rating-icon ${v1 > 100 ? 'green' : v1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c1].v}</div></div><div class="rating"><div class="rating-icon ${e1 > 100 ? 'green' : e1 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c1].e}</div></div>`;
     }
-    if (c2) {
+    if (c2 && solutions[c2]) {
         let p2 = (document.getElementById('c2problem').value || '').split(/\s+/).length;
         let v2 = (document.getElementById('c2value').value || '').split(/\s+/).length;
         let e2 = (document.getElementById('c2example').value || '').split(/\s+/).length;
