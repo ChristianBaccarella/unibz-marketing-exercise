@@ -316,16 +316,6 @@
             font-size: 14px;
             color: var(--text-primary);
             line-height: 1.6;
-            font-style: italic;
-            min-height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .generated-vp.loading {
-            color: var(--text-secondary);
-            font-style: normal;
         }
         
         .copy-btn {
@@ -549,16 +539,6 @@
             align-items: center;
             gap: 10px;
         }
-
-        .api-key-notice {
-            padding: 12px;
-            background: var(--warning);
-            color: #78350f;
-            border-radius: 8px;
-            font-size: 12px;
-            margin-bottom: 16px;
-            display: none;
-        }
     </style>
 </head>
 <body>
@@ -692,11 +672,7 @@
                         <label class="question-label">Wie könnte der Slogan dieses Fitnessstudios lauten? Nutzen Sie den Generator und passen Sie die Antwort an, wenn Sie wollen.</label>
                         
                         <div class="generator-section">
-                            <div class="generator-title">💡 Slogan-Generator (KI-gesteuert)</div>
-                            
-                            <div class="api-key-notice" id="apiKeyNotice">
-                                ⚠️ Hinweis: Der Generator benötigt einen Anthropic API-Schlüssel. Bitte als Browser-Umgebungsvariable setzen oder im Code konfigurieren.
-                            </div>
+                            <div class="generator-title">💡 Slogan-Generator</div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
@@ -728,7 +704,7 @@
                                 </div>
                             </div>
                             
-                            <button class="generate-btn" onclick="generateVPWithAI()" id="generateBtn">🎯 Slogan mit KI generieren</button>
+                            <button class="generate-btn" onclick="generateVP()">🎯 Slogan generieren</button>
                             <div id="generatedVP"></div>
                         </div>
                         
@@ -798,58 +774,371 @@
         let timeRemaining = 90 * 60;
         let timerInterval;
         let genOptions = { tg: '', pb: '', vl: '' };
+        let usedSlogans = new Set(); // Verhindert doppelte Slogans
 
-        // WICHTIG: Setze hier deinen Anthropic API Key ein
-        // Du kannst einen kostenlosen Key auf https://www.anthropic.com/account/keys bekommen
-        const ANTHROPIC_API_KEY = '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'; // Ersetze mit deinem echten Key
+        // MASSIVE DATENBANK MIT PROFESSIONELLEN SLOGANS
+        const vpLibrary = {
+            'Berufstätige-Zeitmangel-Gemeinschaft': [
+                "30 Minuten. Maximale Ergebnisse. Mit deinem Team.",
+                "Effizient trainiert. Zusammen stärker. Train4U.",
+                "Kurz und kraftvoll – trainieren mit Sinn für Zeit.",
+                "Für Profis: Fitness, die in deinen Zeitplan passt.",
+                "Train schnell. Train smart. Train gemeinsam.",
+                "Der schnellste Weg zum Erfolg. Zusammen.",
+                "Kompakt trainiert. Gemeinsam gewonnen.",
+                "Zeitsparend und effektiv mit echten Menschen.",
+                "30 Minuten pro Tag ändern dein Leben mit deiner Crew.",
+                "Kurze Sessions. Langfristige Freundschaften. Train4U.",
+                "Effiziente Trainings für echte Profis.",
+                "Mit deinem Team trainiert es sich schneller.",
+                "Powertraining in Kurzform – zusammen stärker.",
+                "Schnell fit mit Menschen, die verstehen."
+            ],
+            'Berufstätige-Zeitmangel-Flexibilität': [
+                "24/7 Fitness für dein Leben – nicht umgekehrt.",
+                "Trainiere um 5 Uhr oder nachts. Hier geht beides.",
+                "Dein Fitnessstudio funktioniert, wenn du es brauchst.",
+                "Flexible Zeiten. Echte Ergebnisse. Train4U.",
+                "Keine Ausreden mehr: Wir sind immer da.",
+                "Online oder vor Ort – deine Wahl, dein Timing.",
+                "Trainiere, wenn du Zeit hast, nicht wenn wir offen sind.",
+                "24/7 verfügbar für dein stressiges Leben.",
+                "Flexibilität, die deinem Job entspricht.",
+                "Fitnessstudio, das sich nach DIR richtet.",
+                "Rund um die Uhr für deine Trainingsziele.",
+                "Dein Rhythmus, deine Zeiten, deine Fitness.",
+                "Morning oder Night – deine Entscheidung.",
+                "Immer offen. Immer für dich."
+            ],
+            'Berufstätige-Zeitmangel-PersonalTrainer': [
+                "Effizienz trainiert sich nicht allein – mit deinem Trainer.",
+                "30 Minuten mit dem richtigen Plan machen den Unterschied.",
+                "Professionelle Trainings für professionelle Menschen.",
+                "Keine Zeit für Umschweife. Dein Trainer weiß, wie es geht.",
+                "Smart trainieren. Mit Expertise an der Seite.",
+                "Professionelle Betreuung für maximale Effizienz.",
+                "In 30 Minuten zu echten Ergebnissen.",
+                "Dein Trainer optimiert jede Minute deiner Zeit.",
+                "Wertvolle Zeit investieren. Garantierte Resultate.",
+                "Mit deinem Trainer jeden Tag besser.",
+                "Expertise, die Zeit spart und wirkt.",
+                "Professioneller Coach für professionelle Ergebnisse.",
+                "Effizienz mit persönlichem Coaching.",
+                "Dein Time-Manager im Fitnessstudio."
+            ],
+            'Berufstätige-Zeitmangel-GarantierteErgebnisse': [
+                "Kurz trainiert. Schnell Erfolg. Lange Motivation.",
+                "30 Minuten täglich = messbare Veränderung.",
+                "Train4U: Effizienz, die zählt.",
+                "Keine Zeit für Umwege. Direkter Weg zu deinen Zielen.",
+                "Trainingstime = Resultat-Time.",
+                "Schnell fit. Schnell sichtbar. Schnell motiviert.",
+                "Von Tag 1 siehst du Fortschritt.",
+                "Zeit ist kostbar – hier wird sie zu Erfolg.",
+                "Sichtbare Ergebnisse in kurzer Zeit.",
+                "Effizienz, die sich auszahlt.",
+                "Jede Minute zählt – jede bringt Erfolg.",
+                "Schnelle Erfolge für schnelle Menschen.",
+                "Zeitsparend UND ergebnisorientiert.",
+                "In kürzester Zeit zu maximalen Resultaten."
+            ],
+            'Berufstätige-Motivationsmangel-Gemeinschaft': [
+                "Allein trainieren ist einsam. Bei Train4U nicht.",
+                "Mit der richtigen Gruppe trainiert sich's leichter.",
+                "Deine Fitness-Community wartet.",
+                "Zusammen zum Ziel. Zusammen am stärksten.",
+                "Motivation durch Gemeinschaft. Das ist Train4U.",
+                "Nie wieder allein im Fitnessstudio.",
+                "Mit deinen Leuten wird Fitness zur Routine.",
+                "Die beste Motivation sitzt neben dir.",
+                "Gemeinsam macht Training Spaß.",
+                "Mit einer starken Community bist du unaufhaltsam.",
+                "Deine Gruppe = deine Kraft.",
+                "Zusammen trainieren, zusammen wachsen.",
+                "Community power für deinen Erfolg.",
+                "Echte Menschen. Echte Motivation. Echte Erfolge."
+            ],
+            'Berufstätige-Motivationsmangel-Flexibilität': [
+                "Trainiere, wenn die Motivation da ist – bei uns immer möglich.",
+                "Keine Öffnungszeiten-Frustration mehr. 24/7 Zugang.",
+                "Wann immer du bereit bist. Wir sind bereit.",
+                "Flexibility schafft Kontinuität. Kontinuität schafft Erfolg.",
+                "Trainieren, wenn DU es willst. Nicht wenn das Studio offen hat.",
+                "Motivation zu jeder Tageszeit. 24/7.",
+                "Trainiere, wann du wach und motiviert bist.",
+                "Keine starren Zeiten. Nur dein Rhythmus.",
+                "Für jeden Motivations-Moment verfügbar.",
+                "Flexible Optionen = keine Ausreden.",
+                "Trainieren nach deinem Energie-Level.",
+                "Jederzeit bereit, wenn du bereit bist.",
+                "Motivation kennt keine Öffnungszeiten.",
+                "Flexibel, weil Motivation nicht pünktlich ist."
+            ],
+            'Berufstätige-Motivationsmangel-PersonalTrainer': [
+                "Motivation braucht Expertise. Dein Trainer hat beides.",
+                "Mit einem Trainer wird Unwille zu Willenskraft.",
+                "Professionelle Betreuung = professionelle Motivation.",
+                "Ein Trainer, der an dich glaubt. Das ändert alles.",
+                "Dein Trainer IST deine Motivation.",
+                "Mit jemandem, der dich kennt, trainierst du besser.",
+                "Ein Trainer, der versteht, warum du aufgeben möchtest.",
+                "Motivation trifft Expertise – das ist Train4U.",
+                "Mit deinem Trainer geht es nie flach.",
+                "Persönliche Betreuung = persönliche Erfolge.",
+                "Ein Trainer, der nicht akzeptiert, dass du aufgibst.",
+                "Mit Unterstützung wird Motivation zur Routine.",
+                "Dein persönlicher Motivation-Coach.",
+                "Ein Trainer, der dich kennt und daran glaubt."
+            ],
+            'Berufstätige-Motivationsmangel-GarantierteErgebnisse': [
+                "Erfolg motiviert stärker als jede Rede.",
+                "Messbare Ergebnisse = messbare Motivation.",
+                "Erste kleine Erfolge führen zu großem Durchhaltevermögen.",
+                "Sichtbare Fortschritte, die motivieren.",
+                "Train4U: Erfolg ist der beste Trainer.",
+                "Schnelle Siege bauen echte Motivation.",
+                "Erfolg sehen = weitermachen wollen.",
+                "Von Woche 1: Ergebnisse, die motivieren.",
+                "Jeder kleine Fortschritt zählt.",
+                "Erfolg ist die beste Motivation.",
+                "Messbare Ziele. Messbare Erfolge. Messbare Motivation.",
+                "Mit jedem Erfolg wächst die Lust weiterzumachen.",
+                "Echte Ergebnisse = echte Motivation.",
+                "Motivation durch messbare Erfolge."
+            ],
+            'Anfänger-Zeitmangel-Gemeinschaft': [
+                "Anfangen passt in jeden Zeitplan – mit der richtigen Gruppe.",
+                "Kurze Trainings für Anfänger. Mit Support.",
+                "15 Minuten, die zählen. Mit deinem Team.",
+                "Effizient anfangen. Zusammen anfangen.",
+                "Train4U für Anfänger: Kurz, einfach, zusammen.",
+                "Mit anderen Anfängern verlierst du die Angst.",
+                "Gemeinsam anfangen ist leichter als allein.",
+                "Deine Anfänger-Crew wartet auf dich.",
+                "Kurze Sessions mit echtem Support.",
+                "Anfangen in einer Gruppe von Anfängern.",
+                "Mit Gleichgesinnten den Anfang machen.",
+                "Kurz, unkompliziert, zusammen – das ist dein Anfang.",
+                "Gemeinsam den ersten Schritt.",
+                "Anfänger-freundlich und zeiteffizient."
+            ],
+            'Anfänger-Zeitmangel-Flexibilität': [
+                "Anfangen bedeutet nicht in ein enges Zeitfenster passen.",
+                "Flexible Zeiten für flexibles Anfangen.",
+                "24/7 verfügbar für deinen perfekten Anfang.",
+                "Starte, wenn du bereit bist. Nicht wenn wir offen haben.",
+                "Dein Anfang. Dein Tempo. Dein Studio.",
+                "Trainiere in der Zeit, die dir passt.",
+                "Keine Terminstress für Anfänger.",
+                "Anfangen im eigenen Rhythmus.",
+                "Flexible Kurse für flexible Anfänger.",
+                "Dein perfekter Startzeitpunkt existiert – bei uns.",
+                "24/7 Anfänger-freundlich.",
+                "Anfangen, wann es für DICH passt.",
+                "Dein Tempo. Deine Zeit. Dein Anfang.",
+                "Flexibel von Tag 1 an."
+            ],
+            'Anfänger-Zeitmangel-PersonalTrainer': [
+                "Mit einem Trainer anfangen = Fehler von Anfang an vermeiden.",
+                "Professionelle Anleitung vom ersten Tag.",
+                "Dein Trainer macht Anfänger-Fehler unmöglich.",
+                "Kurze, effektive Trainings von deinem Trainer.",
+                "Train4U: Der richtige Start für Anfänger.",
+                "Ein Trainer, der Anfänger versteht.",
+                "Mit professioneller Hilfe schneller zum Profi.",
+                "Anfänger-gerechtes Coaching von Tag 1.",
+                "Ein Trainer für deinen erfolgreichen Anfang.",
+                "Mit Expertise wirst du schneller zur Expertin.",
+                "Professionelle Anfänger-Betreuung.",
+                "Der beste Start dank professioneller Anleitung.",
+                "Mit Trainer = sicherer Anfang.",
+                "Professionell anfangen. Nachhaltig erfolgen."
+            ],
+            'Anfänger-Zeitmangel-GarantierteErgebnisse': [
+                "Schnell anfangen. Schnell Erfolg sehen. Weitermachen.",
+                "Erste Erfolge in 2 Wochen. Garantiert.",
+                "Anfänger-Erfolg ist der beste Motivator.",
+                "Train4U: Erfolg vom ersten Trainingstag.",
+                "Anfangen, das wirkt. Von Anfang an.",
+                "Sichtbare Veränderung schon beim Anfang.",
+                "Schnelle Erfolge für schnelle Anfänger-Fortschritte.",
+                "Mit jedem Training besser werden.",
+                "Erfolg motiviert – auch beim Anfang.",
+                "Von Tag 1 merkst du Veränderung.",
+                "Anfänger-Erfolge, die motivieren.",
+                "Schnelle kleine Wins für großes Durchhaltevermögen.",
+                "Erfolg vom Start weg.",
+                "Anfänger-Erfolgsgeschichte schreiben."
+            ],
+            'Frauen-Zeitmangel-Gemeinschaft': [
+                "Kurz trainiert. Mit Frauen, die dich verstehen.",
+                "Für Frauen von Frauen: Zeit + Gemeinschaft.",
+                "Mit der richtigen Frauengruppe macht Zeit mehr aus.",
+                "Zusammen stärker. In kürzerer Zeit.",
+                "Train4U für Frauen: Effizient und zusammen.",
+                "Mit Frauen trainieren ist anders – besser.",
+                "15 Minuten mit deinen Frauen.",
+                "Mit deinen Schwestern im Sport.",
+                "Frauenpower in kompakter Form.",
+                "Mit Frauen, die DEIN Leben verstehen.",
+                "Kurz, intensiv, weiblich – das ist echte Fitness.",
+                "Mit Frauen, die dich verstehen, trainiert es sich leichter.",
+                "Für Frauen. Von Frauen. Mit Frauen.",
+                "Weibliche Kraft. Kurze Zeit. Große Erfolge."
+            ],
+            'Frauen-Zeitmangel-Flexibilität': [
+                "Mama-Zeit. Karriere-Zeit. Fitness-Zeit. Alles möglich.",
+                "Kinderbetreuung + Flexible Zeiten = Fitness ist machbar.",
+                "Für Frauen mit echtem Leben.",
+                "Flexibilität, die Frauen-Leben respektiert.",
+                "Train4U: Fitnessstudio für echte Frauenleben.",
+                "Trainiere, wenn dein Frauenleben es erlaubt.",
+                "Flexible Fitness für flexible Frauen.",
+                "Mit Kinderbetreuung. Mit deinem Timing.",
+                "Keine Stress-Öffnungszeiten.",
+                "Dein Leben. Dein Timing. Deine Fitness.",
+                "Flexibilität, die Mütter brauchen.",
+                "24/7 für Frauen mit echtem Alltag.",
+                "Realistische Fitness für reale Frauen.",
+                "Flexibel, weil Frauenleben komplex ist."
+            ],
+            'Frauen-Zeitmangel-PersonalTrainer': [
+                "Mit einer Trainerin, die versteht – wird Zeitdruck zu Effizienz.",
+                "Professionelle Frauenbetreuung für Zeitmanagement.",
+                "Deine Trainerin ist selbst Mama und Profi.",
+                "Mit Expertise wird Frauenzeit zu Resultat.",
+                "Train4U: Von Frauen für Frauen – effizient.",
+                "Eine Trainerin, die dein Leben kennt.",
+                "Mit einer Frau, die das Gleiche erlebt.",
+                "Professionelle Unterstützung für deine Zeitnot.",
+                "Deine Trainerin weiß, wie du tickst.",
+                "Mit Verständnis für dein Frauenleben.",
+                "Eine Trainerin, die keine Ausreden akzeptiert.",
+                "Expertise von einer Frau für dich.",
+                "Trainerin, die dich UND dein Leben versteht.",
+                "Von Frau zu Frau. Professionell und persönlich."
+            ],
+            'Frauen-Zeitmangel-GarantierteErgebnisse': [
+                "Kurz trainiert. Schnell Erfolg. Endlich Zeit für DICH.",
+                "15 Minuten pro Tag = sichtbare Veränderung in 3 Wochen.",
+                "Erfolg motiviert – noch mehr Zeit für Fitness zu nehmen.",
+                "Wenn Frauen Ergebnisse sehen, hören sie nicht auf.",
+                "Messbarer Erfolg = Fitness wird zur Priorität.",
+                "Effizient trainiert = Zeit für Wichtiges.",
+                "Schnelle Erfolge = weniger Zeitdruck.",
+                "Mit kurzen Trainings zu großen Ergebnissen.",
+                "Erfolg, der sichtbar ist und Freude macht.",
+                "In wenig Zeit viel erreichen.",
+                "Frauen-Erfolge, die zählen.",
+                "Ergebnisse, die du SEHEN willst."
+            ],
+            '50plus-Zeitmangel-Gemeinschaft': [
+                "Mit 50+ wird Zeit kostbar. Hier wird sie sinnvoll genutzt.",
+                "Kurze, intensive Trainings mit deiner Altersgruppe.",
+                "Mit 50+: Zusammen trainiert es sich besser.",
+                "Train4U: Fitness für 50+ mit Sinn.",
+                "Mit deinen 50+ Jahren stärker werden.",
+                "Mit Gleichgesinnten 50+ noch stärker.",
+                "Kurze, effektive Sessions mit deinen Leuten.",
+                "Mit 50+ zur Topform.",
+                "Zusammen 50+ fit bleiben.",
+                "Mit deinen 50ern die beste Zeit deines Lebens.",
+                "Kurz trainiert, langfristig gesund.",
+                "Mit 50+: Effizient und gemeinsam.",
+                "50+: Kurz trainiert. Lange gelebt.",
+                "Mit deiner Generation. Für deine Gesundheit."
+            ],
+            '50plus-Zeitmangel-Flexibilität': [
+                "Mit 50+ kennt man seinen Rhythmus. Hier passt sich Fitness an.",
+                "24/7 verfügbar für 50+ Lebensrhythmus.",
+                "Trainiere in deiner besten Tageszeit.",
+                "Mit 50+: Flexibilität respektiert deinen Körper.",
+                "Train4U: Fitness nach deinem 50+ Tempo.",
+                "Flexible Zeiten, die zu 50+ passen.",
+                "Trainiere, wenn dein Körper bereit ist.",
+                "24/7 Zugang für 50+ Menschen.",
+                "Mit 50+: Keine Zeitstress mehr.",
+                "Nach deinem 50+ Rhythmus trainieren.",
+                "Flexibilität für deine Lebenssituation.",
+                "Mit 50+ machen wir alles flexibel.",
+                "Dein Körper. Dein Tempo. Dein Plan.",
+                "Intelligente Flexibilität für intelligentes Altern."
+            ],
+            '50plus-Zeitmangel-PersonalTrainer': [
+                "Mit 50+: Ein Trainer, der deinen Körper KENNT.",
+                "Professionelle 50+ Betreuung. Das macht den Unterschied.",
+                "Dein Trainer versteht 50+ Biomechanik.",
+                "Mit Expertise wird 50+ zu deinem stärksten Jahrzehnt.",
+                "Train4U: Expertise für 50+ Fitness.",
+                "Ein Trainer, der 50+ kennt und respektiert.",
+                "Mit jemandem trainieren, der versteht.",
+                "Professionelle Betreuung für deinen 50+ Körper.",
+                "Ein Trainer, der dich nicht überlastet.",
+                "Mit Verständnis für 50+ Grenzen und Potenzial.",
+                "Ein Trainer nur für 50+.",
+                "Expertise, die 50+ respektiert.",
+                "50+ verdient einen 50+ Trainer.",
+                "Professionell. Verständnisvoll. Erfolgreich."
+            ],
+            '50plus-Zeitmangel-GarantierteErgebnisse': [
+                "Mit 50+ sind Zahlen wichtig – hier siehst du sie.",
+                "Kurzes Training. Echte Ergebnisse. Schnell messbar.",
+                "Wenn du mit 50+ Erfolg siehst, machst du weiter.",
+                "Messbarer Fortschritt motiviert am meisten.",
+                "Mit 50+ will man sehen dass Zeit zählt – hier sieht man es.",
+                "Sichtbare Erfolge mit 50+.",
+                "50+ trainiert mit Grund – hier sind die Ergebnisse.",
+                "Echte Resultate für echte Menschen.",
+                "Mit 50+ zu messbarem Erfolg.",
+                "Erfolg, der zählt und sichtbar ist.",
+                "Effiziente Trainings = schnelle Erfolge.",
+                "50+ - zu Sichtbarem Erfolg."
+            ]
+        };
 
         const feedbackData = {
             exercise1: {
-                Apple: { problem: "Apple löst das Problem der technologischen Komplexität – indem es intuitive, benutzerfreundliche Geräte schafft.", value: "Premium-Design, Ökosystem-Integration, Status und Innovation.", example: "Das iPhone vereinfacht Technologie durch klare Bedienung." },
-                Spotify: { problem: "Spotify löst das Problem begrenzter Musikverfügbarkeit – statt CDs zu kaufen, hast du Zugang zu Millionen Songs.", value: "Unbegrenzter Musikzugang, personalisierte Empfehlungen, Convenience und Preis.", example: "Discover Weekly zeigt: Spotify versteht, was du liebst." },
-                dm: { problem: "dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar.", value: "Vielfalt, Fachberatung vor Ort, Convenience und gute Preise.", example: "Beratung vor Ort löst: Welches Produkt passt zu MIR?" },
-                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr – Menschen können jetzt reisen, die sich das sonst nicht leisten könnten.", value: "Ultra-günstige Flüge, häufige Verbindungen, transparente Kosten.", example: "50-Euro-Flüge ermöglichen echte Mobilität für breite Bevölkerung." },
-                Airbnb: { problem: "Airbnb bietet echte, lokale Erfahrungen – nicht nur ein Hotelzimmer.", value: "Authentische Erlebnisse, bessere Preise, Flexibilität und Lokalverbindung.", example: "Eine Wohnung bei einer echten Person: Erlebnisse, nicht nur Unterkunft." },
-                Netflix: { problem: "Netflix endet das Problem starrer Programmzeiten und begrenzter Auswahl.", value: "Personalisierte Empfehlungen, Original-Content, Vielfalt, faire Kosten.", example: "Netflix weiß nicht nur WAS verfügbar ist – es weiß WAS du schauen möchtest." }
+                Apple: { problem: "Apple löst das Problem der technologischen Komplexität – indem es intuitive, benutzerfreundliche Geräte schafft.", value: "Premium-Design, Ökosystem-Integration, Status und Innovation.", example: "Das iPhone vereinfacht Technologie durch klare Bedienung – nicht einfach nur ein Telefon mit vielen Funktionen." },
+                Spotify: { problem: "Spotify löst das Problem begrenzter Musikverfügbarkeit – statt CDs zu kaufen, hast du Zugang zu Millionen Songs.", value: "Unbegrenzter Musikzugang, personalisierte Empfehlungen, Convenience und Preis.", example: "Discover Weekly zeigt: Spotify versteht nicht einfach Musik – es versteht, was du liebst." },
+                dm: { problem: "dm macht Drogerie- und Gesundheitsprodukte zugänglich und beratbar – nicht einfach nur verfügbar.", value: "Vielfalt, Fachberatung vor Ort, Convenience und gute Preise.", example: "Beratung vor Ort löst das echte Problem: Welches Produkt passt zu MIR?" },
+                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr – Menschen, die sonst nicht fliegen könnten, können jetzt reisen.", value: "Ultra-günstige Flüge, häufige Verbindungen, transparente Kosten.", example: "50-Euro-Flüge ermöglichen echte Mobilität für breite Bevölkerung." },
+                Airbnb: { problem: "Airbnb bietet echte, lokale Erfahrungen – nicht nur ein Hotelzimmer.", value: "Authentische Erlebnisse, bessere Preise, Flexibilität und Lokalverbindung.", example: "Eine Wohnung bei einer echten Person zeigt: Airbnb verkauft Erlebnisse, nicht nur Unterkunft." },
+                Netflix: { problem: "Netflix endet das Problem starrer Programmzeiten und begrenzter Auswahl – unbegrenzte Inhalte, jederzeit.", value: "Personalisierte Empfehlungen, Original-Content, Vielfalt, faire Kosten, überall verfügbar.", example: "'Basierend auf deinen Interessen' zeigt: Netflix weiß nicht nur WAS verfügbar ist – es weiß WAS du schauen möchtest." }
             },
             exercise2: { 
-                q1: "IKEA demokratisiert gutes Design – qualitativ hochwertige Möbel für breite Bevölkerung erschwinglich.",
-                q2: "CRM: (1) IKEA Family Programm mit personalisierten Angeboten (2) Planungstools und Online-Shopping (3) Showroom-Erlebnisse",
-                q3: "IKEA verfolgt Marketingorientierung: Das Geschäftsmodell ist auf KUNDENBEDÜRFNISSE ausgerichtet."
+                q1: "IKEA demokratisiert gutes Design – indem es qualitativ hochwertige Möbel für breite Bevölkerung erschwinglich macht.",
+                q2: "CRM: (1) IKEA Family Programm mit personalisierten Angeboten und Rabatten (2) Planungstools und Online-Shopping (3) Showroom-Erlebnisse mit Inspirationsräumen",
+                q3: "IKEA verfolgt Marketingorientierung: Das gesamte Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume) ist auf KUNDENBEDÜRFNISSE ausgerichtet."
             },
             exercise3: { 
-                q1: "Starbucks verkauft nicht nur Kaffee – es verkauft den 'Third Place'.",
-                q2: "Erlebnis: Atmosphäre, Personal, Personalisierung, Musik, WLAN.",
-                q3: "Kundenbindung: (1) Loyalty-Programm (2) Mobile App mit personalisierten Offers",
-                q4: "Service-Dominant Logic: Wert entsteht in der Interaktion, nicht im Kaffee.",
-                q5: "Italien: Starke Café-Kultur, anderes Ritual, lokale Tradition, Ablehnung von Kommerzialisierung"
+                q1: "Starbucks verkauft nicht nur Kaffee – es verkauft den 'Third Place': einen Ort zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Erlebnis.",
+                q2: "Erlebnis-Kreation: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Du betrittst Starbucks, wirst vom Namen begrüßt, erhältst DEINEN persönlichen Kaffee, sitzt in gemütlicher Atmosphäre mit WLAN.",
+                q3: "Kundenbindung: (1) Loyalty-Programm mit Punkten/Rabatten (2) Mobile App mit Bezahlung, Bestellhistorie und personalisierten Offers",
+                q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkt (Kaffee) – es verkauft einen Service (Erlebnis, Beziehung, Gemeinschaft). Der Wert entsteht in der Interaktion.",
+                q5: "Italien-Schwierigkeiten: (1) Starke etablierte Café-Kultur mit authentischen lokalen Bars (2) Italienisches Kaffee-Ritual ist kurz und intensiv an der Theke (3) Lokale Bars haben Tradition und Loyalität (4) Ablehnung der amerikanischen Kommerzialisierung"
             },
             exercise4: { 
-                q1: "Ein echtes Fitnessstudio-Erlebnis: Transformation mit Betreuung und Erfolg.",
-                q2: "Maßnahmen: Buddy-System, Personal Sessions, Challenges, App, flexible Zeiten",
-                q3: "Werbestrategie: Authentische Stories, lokale Kampagnen, Micro-Influencer, Events"
+                q1: "Ein echtes Fitnessstudio-Erlebnis: Nicht einfach Geräte, sondern ein Ort, wo Transformation möglich ist – mit Betreuung und Erfolg.",
+                q2: "Maßnahmen: (1) Buddy-System für Anfänger (2) Kostenlose Personal Sessions erste 4 Wochen (3) Wöchentliche Challenges mit erreichbaren Zielen (4) App zum Fortschritt-Tracking (5) Flexible Zeiten + Online-Live-Kurse",
+                q3: "Werbestrategie: Authentische Before-After-Stories von echten Menschen, lokale Facebook-Kampagnen, Partnerschaften mit lokalen Micro-Influencern, kostenlose Events in Parks, Referral-Programm, Google Ads mit lokalen Keywords"
             }
         };
 
         function selectOption(elem, category) {
-            // Entferne vorherige Auswahl in dieser Kategorie
+            // Entferne ALLE Selektionen in dieser Kategorie
             elem.parentElement.querySelectorAll('.generator-option').forEach(el => {
                 el.classList.remove('selected');
             });
             // Setze neue Auswahl
             elem.classList.add('selected');
             genOptions[category] = elem.textContent.trim();
+            // Zurücksetzen des Used-Slogans wenn neuer Generator-Set gewählt wird
+            usedSlogans.clear();
         }
 
-        async function generateVPWithAI() {
+        function generateVP() {
             if (!genOptions.tg || !genOptions.pb || !genOptions.vl) {
                 alert('Bitte wählen Sie aus jeder Kategorie eine Option aus!');
-                return;
-            }
-
-            if (ANTHROPIC_API_KEY === 'YOUR_API_KEY_HERE') {
-                alert('Bitte setze deinen Anthropic API Key im Code ein!');
-                document.getElementById('apiKeyNotice').style.display = 'block';
                 return;
             }
 
@@ -857,58 +1146,26 @@
             const generatedVP = document.getElementById('generatedVP');
             
             generateBtn.disabled = true;
-            generatedVP.innerHTML = '<div class="generated-vp loading">⏳ KI generiert Slogan...</div>';
+            generatedVP.innerHTML = '<div class="generated-vp" style="justify-content: center;">⏳ Generiere Slogan...</div>';
 
-            try {
-                const prompt = `Du bist ein professioneller Marketing-Spezialist für Fitnessstudios.
-
-Erstelle einen prägnanten, professionellen Marketingslogan für das Fitnessstudio "Train4U" basierend auf folgenden Parametern:
-
-Zielgruppe: ${genOptions.tg}
-Gelöstes Problem: ${genOptions.pb}
-Hauptmehrwert: ${genOptions.vl}
-
-Anforderungen:
-- Der Slogan soll 1-2 Sätze lang sein
-- Er soll professionell, ermutigend und spezifisch sein
-- Er soll das Problem und die Lösung klar machen
-- Er sollte Handlungsaufforderung enthalten
-- Er darf nicht zu generisch sein
-- Er sollte die deutsche Sprache elegant verwenden
-
-Gib NUR den Slogan aus, ohne weitere Erklärungen oder Anführungszeichen.`;
-
-                const response = await fetch('https://api.anthropic.com/v1/messages', {
-                    method: 'POST',
-                    headers: {
-                        'x-api-key': ANTHROPIC_API_KEY,
-                        'anthropic-version': '2023-06-01',
-                        'content-type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        model: 'claude-3-5-sonnet-20241022',
-                        max_tokens: 200,
-                        messages: [{
-                            role: 'user',
-                            content: prompt
-                        }]
-                    })
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API Error: ${response.statusText}`);
-                }
-
-                const data = await response.json();
-                const slogan = data.content[0].text.trim();
-
-                generatedVP.innerHTML = `<div class="generated-vp">"${slogan}"<button class="copy-btn" onclick="copyText('ex4q1', '${slogan.replace(/'/g, "\\'")}')">📋 In Antwort kopieren</button></div>`;
-            } catch (error) {
-                console.error('API Error:', error);
-                generatedVP.innerHTML = `<div class="generated-vp" style="border-left-color: var(--danger); color: var(--danger);">❌ Fehler: ${error.message}</div>`;
-            } finally {
+            // Kleine Verzögerung für visuelles Feedback
+            setTimeout(() => {
+                const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
+                const templates = vpLibrary[key] || ['Train4U: Fitness, die funktioniert.'];
+                
+                // Finde einen Slogan, der noch nicht verwendet wurde
+                let vp;
+                let attempts = 0;
+                do {
+                    vp = templates[Math.floor(Math.random() * templates.length)];
+                    attempts++;
+                } while (usedSlogans.has(vp) && attempts < 10);
+                
+                usedSlogans.add(vp);
+                
+                generatedVP.innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyText('ex4q1', '${vp.replace(/'/g, "\\'")}')">📋 In Antwort kopieren</button></div>`;
                 generateBtn.disabled = false;
-            }
+            }, 300);
         }
 
         function copyText(id, text) {
@@ -956,15 +1213,15 @@ Gib NUR den Slogan aus, ohne weitere Erklärungen oder Anführungszeichen.`;
                 div.innerHTML = `
                     <h3 style="font-size: 16px; font-weight: 600; color: var(--primary); margin: 20px 0 12px;">${c}</h3>
                     <div class="question-group">
-                        <label class="question-label">Problem?</label>
+                        <label class="question-label">Welches Problem löst ${c} für seine Kundinnen und Kunden?</label>
                         <textarea id="ex1_${i}_q1" onchange="saveAll()"></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Nutzenversprechen?</label>
+                        <label class="question-label">Was ist aus ihrer Sicht das zentrale Nutzenversprechen von ${c}?</label>
                         <textarea id="ex1_${i}_q2" onchange="saveAll()"></textarea>
                     </div>
                     <div class="question-group">
-                        <label class="question-label">Beispiel?</label>
+                        <label class="question-label">Geben Sie ein konkretes Beispiel, woran man sieht, dass ${c} ein Problem löst.</label>
                         <textarea id="ex1_${i}_q3" onchange="saveAll()"></textarea>
                     </div>
                 `;
@@ -1061,7 +1318,7 @@ Gib NUR den Slogan aus, ohne weitere Erklärungen oder Anführungszeichen.`;
             let html = '<div class="feedback-title">📊 Bewertung Ihrer Antworten</div>';
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             
-            html += '<div class="feedback-item"><h4>Aufgabe 1</h4>';
+            html += '<div class="feedback-item"><h4>Aufgabe 1 - Nutzenversprechen</h4>';
             selected.forEach((c, i) => {
                 const text1 = document.getElementById(`ex1_${i}_q1`).value;
                 const text2 = document.getElementById(`ex1_${i}_q2`).value;
@@ -1143,21 +1400,23 @@ Gib NUR den Slogan aus, ohne weitere Erklärungen oder Anführungszeichen.`;
             });
             
             addText('AUFGABE 2: IKEA', true);
-            addText(`${document.getElementById('ex2q1').value || '-'}`);
-            addText(`${document.getElementById('ex2q2').value || '-'}`);
-            addText(`${document.getElementById('ex2q3').value || '-'}`);
+            addText(`Nutzenversprechen: ${document.getElementById('ex2q1').value || '-'}`);
+            addText(`CRM: ${document.getElementById('ex2q2').value || '-'}`);
+            addText(`Orientierung: ${document.getElementById('ex2q3').value || '-'}`);
             yPos += 3;
             
             addText('AUFGABE 3: Starbucks', true);
-            for (let i = 1; i <= 5; i++) {
-                addText(`${document.getElementById(`ex3q${i}`).value || '-'}`);
-            }
+            addText(`Nutzenversprechen: ${document.getElementById('ex3q1').value || '-'}`);
+            addText(`Kundenerlebnis: ${document.getElementById('ex3q2').value || '-'}`);
+            addText(`Kundenbindung: ${document.getElementById('ex3q3').value || '-'}`);
+            addText(`Service-Dominant Logic: ${document.getElementById('ex3q4').value || '-'}`);
+            addText(`Italien: ${document.getElementById('ex3q5').value || '-'}`);
             yPos += 3;
             
             addText('AUFGABE 4: Train4U', true);
-            addText(`${document.getElementById('ex4q1').value || '-'}`);
-            addText(`${document.getElementById('ex4q2').value || '-'}`);
-            addText(`${document.getElementById('ex4q3').value || '-'}`);
+            addText(`Slogan: ${document.getElementById('ex4q1').value || '-'}`);
+            addText(`Maßnahmen: ${document.getElementById('ex4q2').value || '-'}`);
+            addText(`Werbestrategie: ${document.getElementById('ex4q3').value || '-'}`);
             
             doc.save('Marketing-Übung-Antworten.pdf');
         }
