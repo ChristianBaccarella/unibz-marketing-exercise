@@ -254,25 +254,147 @@ let currentExercise = 0;
 let timeRemaining = 90 * 60;
 let timerInterval;
 let genOptions = { tg: '', pb: '', vl: '' };
+let lastGeneratedVP = '';
+
+// Maps display text in the generator to vpLibrary key format
+const textToKey = {
+  'Berufstätige': 'Berufstätige', 'Anfänger': 'Anfänger', 'Frauen': 'Frauen', 'Über 50 Jahre': '50plus',
+  'Zeitmangel': 'Zeitmangel', 'Keine Motivation': 'Motivationsmangel', 'Keine Expertise': 'KeineExpertise', 'Keine Erfolge': 'KeineErfolge',
+  'Gemeinschaft': 'Gemeinschaft', 'Flexibilität': 'Flexibilität', 'Personal Trainer': 'PersonalTrainer', 'Garantierte Ergebnisse': 'GarantierteErgebnisse'
+};
 
 const vpLibrary = {
-  'Berufstätige-Zeitmangel-Gemeinschaft': ["30 Minuten. Maximale Ergebnisse. Mit deinem Team.","Effizient trainiert. Zusammen stärker.","Kurz und kraftvoll – trainieren mit Sinn."],
-  'Berufstätige-Zeitmangel-Flexibilität': ["24/7 Fitness für dein Leben.","Trainiere um 5 Uhr oder nachts.","Dein Studio funktioniert, wenn du es brauchst."],
-  'Berufstätige-Zeitmangel-PersonalTrainer': ["Mit deinem Trainer. Effizient.","Professionelle Trainings für Profis.","30 Minuten mit Plan machen den Unterschied."],
-  'Berufstätige-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell Erfolg.","30 Minuten = messbare Veränderung."],
-  'Anfänger-Zeitmangel-Gemeinschaft': ["Mit der Gruppe anfangen ist leichter.","Deine Anfänger-Crew wartet."],
-  'Anfänger-Zeitmangel-Flexibilität': ["Flexible Zeiten für flexibles Anfangen.","24/7 für deinen Anfang."],
-  'Anfänger-Zeitmangel-PersonalTrainer': ["Mit Trainer = Fehler vermeiden.","Professionelle Anleitung vom Tag 1."],
-  'Anfänger-Zeitmangel-GarantierteErgebnisse': ["Schnell anfangen. Schnell Erfolg.","Erste Erfolge in 2 Wochen."],
-  'Frauen-Zeitmangel-Gemeinschaft': ["Mit Frauen, die dich verstehen.","Für Frauen von Frauen."],
-  'Frauen-Zeitmangel-Flexibilität': ["Mama + Karriere + Fitness.","Für Frauen mit echtem Leben."],
-  'Frauen-Zeitmangel-PersonalTrainer': ["Mit einer Trainerin, die versteht.","Eine Trainerin für dein Leben."],
-  'Frauen-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell sichtbar.","Messbarer Erfolg."],
-  '50plus-Zeitmangel-Gemeinschaft': ["Mit 50+ wird Zeit kostbar.","Mit Gleichgesinnten stärker."],
-  '50plus-Zeitmangel-Flexibilität': ["Mit 50+ kennt man seinen Rhythmus.","24/7 für 50+."],
-  '50plus-Zeitmangel-PersonalTrainer': ["Mit 50+: Ein Trainer, der dich kennt.","Ein Trainer, der respektiert."],
-  '50plus-Zeitmangel-GarantierteErgebnisse': ["Mit 50+ sind Zahlen wichtig.","Sichtbare Erfolge."]
+  // Berufstätige
+  'Berufstätige-Zeitmangel-Gemeinschaft': ["30 Minuten. Maximale Ergebnisse. Mit deinem Team.", "Effizient trainiert. Zusammen stärker.", "Kurz und kraftvoll – trainieren mit Sinn."],
+  'Berufstätige-Zeitmangel-Flexibilität': ["24/7 Fitness für dein Leben.", "Trainiere um 5 Uhr oder nachts.", "Dein Studio funktioniert, wenn du es brauchst."],
+  'Berufstätige-Zeitmangel-PersonalTrainer': ["Mit deinem Trainer. Effizient.", "Professionelle Trainings für Profis.", "30 Minuten mit Plan machen den Unterschied."],
+  'Berufstätige-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell Erfolg.", "30 Minuten = messbare Veränderung."],
+  'Berufstätige-Motivationsmangel-Gemeinschaft': ["Dein Team wartet. Keine Ausreden.", "Zusammen ist Aufstehen leichter.", "Deine Community hält dich am Laufen."],
+  'Berufstätige-Motivationsmangel-Flexibilität': ["Trainiere wann du willst – kein Zwang, nur Ergebnisse.", "Dein Studio. Deine Zeit. Deine Regeln."],
+  'Berufstätige-Motivationsmangel-PersonalTrainer': ["Ein Trainer, der dich kennt und antreibt.", "Motivation inklusive – dein persönlicher Trainer wartet."],
+  'Berufstätige-Motivationsmangel-GarantierteErgebnisse': ["Ergebnisse, die dich weitermachen lassen.", "Garantiert Erfolg – garantiert motiviert."],
+  'Berufstätige-KeineExpertise-Gemeinschaft': ["Lerne in der Gruppe. Wachse als Team.", "Keine Ahnung? Deine Community hilft."],
+  'Berufstätige-KeineExpertise-Flexibilität': ["Lerne flexibel – wir erklären den Rest.", "Kein Vorwissen nötig. Dein Tempo zählt."],
+  'Berufstätige-KeineExpertise-PersonalTrainer': ["Dein Trainer erklärt alles. Schritt für Schritt.", "Vom Einsteiger zum Profi – mit dem richtigen Trainer."],
+  'Berufstätige-KeineExpertise-GarantierteErgebnisse': ["Null Erfahrung? Garantiert Ergebnisse.", "Wir machen dich zum Profi – und das merkt man."],
+  'Berufstätige-KeineErfolge-Gemeinschaft': ["Endlich Ergebnisse – mit dem richtigen Team.", "Gemeinsam den Durchbruch schaffen."],
+  'Berufstätige-KeineErfolge-Flexibilität': ["Flexibel bleiben, Ziele endlich erreichen.", "Dein Plan. Dein Fortschritt. Endlich."],
+  'Berufstätige-KeineErfolge-PersonalTrainer': ["Dein Trainer bringt dich ans Ziel.", "Kein Fortschritt? Dein Trainer ändert das."],
+  'Berufstätige-KeineErfolge-GarantierteErgebnisse': ["Diesmal wirklich – garantierte Ergebnisse.", "Endlich sichtbare Veränderung. Garantiert."],
+  // Anfänger
+  'Anfänger-Zeitmangel-Gemeinschaft': ["Mit der Gruppe anfangen ist leichter.", "Deine Anfänger-Crew wartet."],
+  'Anfänger-Zeitmangel-Flexibilität': ["Flexible Zeiten für flexibles Anfangen.", "24/7 für deinen Anfang."],
+  'Anfänger-Zeitmangel-PersonalTrainer': ["Mit Trainer = Fehler vermeiden.", "Professionelle Anleitung vom Tag 1."],
+  'Anfänger-Zeitmangel-GarantierteErgebnisse': ["Schnell anfangen. Schnell Erfolg.", "Erste Erfolge in 2 Wochen."],
+  'Anfänger-Motivationsmangel-Gemeinschaft': ["Deine ersten Schritte. Unser Team begleitet dich.", "Anfangen ist leichter als du denkst – wir sind dabei."],
+  'Anfänger-Motivationsmangel-Flexibilität': ["Kein Druck. Keine Angst. Dein Tempo.", "Flexibel einsteigen – auf deine Art."],
+  'Anfänger-Motivationsmangel-PersonalTrainer': ["Dein Trainer macht den ersten Schritt mit dir.", "Kein Mut nötig – dein Trainer hat ihn für dich."],
+  'Anfänger-Motivationsmangel-GarantierteErgebnisse': ["Erste Erfolge garantiert – damit du weitermachst.", "Du fängst an. Wir sorgen für Ergebnisse."],
+  'Anfänger-KeineExpertise-Gemeinschaft': ["Kein Wissen? Kein Problem. Deine Community hilft.", "Anfänger willkommen – alle lernen zusammen."],
+  'Anfänger-KeineExpertise-Flexibilität': ["Lerne in deinem Tempo. Ganz ohne Vorkenntnisse.", "Einsteigen ohne Vorkenntnisse – wir erklären alles."],
+  'Anfänger-KeineExpertise-PersonalTrainer': ["Dein Trainer erklärt jeden Schritt. Von Anfang an.", "Kein Vorwissen? Dein Trainer füllt die Lücken."],
+  'Anfänger-KeineExpertise-GarantierteErgebnisse': ["Von Null zu Ergebnissen – wir machen es möglich.", "Keine Ahnung – trotzdem Erfolg. Garantiert."],
+  'Anfänger-KeineErfolge-Gemeinschaft': ["Zusammen zum ersten Erfolg.", "Mit der richtigen Gruppe klappt es endlich."],
+  'Anfänger-KeineErfolge-Flexibilität': ["Dein Tempo, dein Erfolg – flexibel und realistisch.", "Flexible Wege zum Ziel für Einsteiger."],
+  'Anfänger-KeineErfolge-PersonalTrainer': ["Dein Trainer bringt dich weiter als du glaubst.", "Kein Ergebnis bisher? Dein Trainer ändert das."],
+  'Anfänger-KeineErfolge-GarantierteErgebnisse': ["Garantierter Einstieg in den Erfolg.", "Diesmal klappt es. Versprochen."],
+  // Frauen
+  'Frauen-Zeitmangel-Gemeinschaft': ["Mit Frauen, die dich verstehen.", "Für Frauen von Frauen."],
+  'Frauen-Zeitmangel-Flexibilität': ["Mama + Karriere + Fitness.", "Für Frauen mit echtem Leben."],
+  'Frauen-Zeitmangel-PersonalTrainer': ["Mit einer Trainerin, die versteht.", "Eine Trainerin für dein Leben."],
+  'Frauen-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell sichtbar.", "Messbarer Erfolg."],
+  'Frauen-Motivationsmangel-Gemeinschaft': ["Gemeinsam stärker – für Frauen, die mehr wollen.", "Deine Mädels warten. Kein Aufschub mehr."],
+  'Frauen-Motivationsmangel-Flexibilität': ["Kein Druck. Nur du und dein Training.", "Flexibel und stark – auf deine Art."],
+  'Frauen-Motivationsmangel-PersonalTrainer': ["Deine Trainerin versteht, was dich antreibt.", "Weibliche Begleitung für weibliche Ziele."],
+  'Frauen-Motivationsmangel-GarantierteErgebnisse': ["Sichtbare Ergebnisse – das motiviert weiter.", "Für Frauen, die Ergebnisse sehen wollen."],
+  'Frauen-KeineExpertise-Gemeinschaft': ["Keine Ahnung? In unserer Frauengruppe kein Problem.", "Gemeinsam lernen – ganz ohne Vorkenntnisse."],
+  'Frauen-KeineExpertise-Flexibilität': ["Dein Einsteigerprogramm – flexibel und verständlich.", "Für Frauen. Von Frauen. Ohne Vorkenntnisse."],
+  'Frauen-KeineExpertise-PersonalTrainer': ["Deine Trainerin erklärt alles. Sicher und kompetent.", "Von Anfang an richtig trainieren – mit Trainerin."],
+  'Frauen-KeineExpertise-GarantierteErgebnisse': ["Garantiert Ergebnisse – egal wo du anfängst.", "Kein Wissen nötig – nur Willen und Ergebnisse."],
+  'Frauen-KeineErfolge-Gemeinschaft': ["Zusammen zum Ziel. Endlich.", "Deine Frauen-Community feiert deinen Fortschritt."],
+  'Frauen-KeineErfolge-Flexibilität': ["Dein Weg zu echten Ergebnissen – flexibel und weiblich.", "Keine Ergebnisse bisher? Jetzt schon."],
+  'Frauen-KeineErfolge-PersonalTrainer': ["Deine Trainerin bringt dich ans Ziel.", "Kein Fortschritt? Deine Trainerin ändert das."],
+  'Frauen-KeineErfolge-GarantierteErgebnisse': ["Echte Ergebnisse für echte Frauen. Garantiert.", "Für Frauen, die endlich Ergebnisse sehen."],
+  // 50plus
+  '50plus-Zeitmangel-Gemeinschaft': ["Mit 50+ wird Zeit kostbar.", "Mit Gleichgesinnten stärker."],
+  '50plus-Zeitmangel-Flexibilität': ["Mit 50+ kennt man seinen Rhythmus.", "24/7 für 50+."],
+  '50plus-Zeitmangel-PersonalTrainer': ["Mit 50+: Ein Trainer, der dich kennt.", "Ein Trainer, der respektiert."],
+  '50plus-Zeitmangel-GarantierteErgebnisse': ["Mit 50+ sind Zahlen wichtig.", "Sichtbare Erfolge."],
+  '50plus-Motivationsmangel-Gemeinschaft': ["Mit Gleichgesinnten ist Motivation kein Problem.", "Deine 50+ Community wartet auf dich."],
+  '50plus-Motivationsmangel-Flexibilität': ["In deinem Tempo. Kein Stress. Nur Gesundheit.", "Flexibel und motiviert mit 50+."],
+  '50plus-Motivationsmangel-PersonalTrainer': ["Ein Trainer, der deinen Körper versteht.", "50+ – mit dem richtigen Trainer macht Fitness Spaß."],
+  '50plus-Motivationsmangel-GarantierteErgebnisse': ["Ergebnisse in jedem Alter. Garantiert.", "Mit 50+ endlich Ergebnisse sehen."],
+  '50plus-KeineExpertise-Gemeinschaft': ["Alles wird erklärt. Gemeinsam lernt man leichter.", "Keine Vorkenntnisse nötig. Deine Gruppe hilft."],
+  '50plus-KeineExpertise-Flexibilität': ["Schritt für Schritt – in deinem Tempo.", "Einsteigen jederzeit – ganz ohne Vorkenntnisse."],
+  '50plus-KeineExpertise-PersonalTrainer': ["Dein Trainer erklärt alles – mit Geduld und Erfahrung.", "Professionell begleitet ab der ersten Stunde."],
+  '50plus-KeineExpertise-GarantierteErgebnisse': ["Von Null zu Ergebnissen – auch mit 50+.", "Garantierter Erfolg – egal wie spät der Einstieg."],
+  '50plus-KeineErfolge-Gemeinschaft': ["Zusammen kommt man weiter – auch mit 50+.", "Deine Gruppe feiert deinen Fortschritt."],
+  '50plus-KeineErfolge-Flexibilität': ["Dein Weg zu mehr Vitalität – flexibel und realistisch.", "Endlich Ergebnisse – in deinem Tempo."],
+  '50plus-KeineErfolge-PersonalTrainer': ["Dein Trainer bringt dich ans Ziel – auch mit 50+.", "Mit dem richtigen Trainer endlich Fortschritt spüren."],
+  '50plus-KeineErfolge-GarantierteErgebnisse': ["Garantierter Erfolg – endlich.", "50+ und endlich Ergebnisse. Das versprechen wir."]
 };
+
+const modelSolutions = {
+  Apple: {
+    problem: "Apple löst das Problem der Komplexität moderner Technologie. Viele Menschen fühlen sich von komplizierten Benutzeroberflächen überfordert. Apple macht Technologie intuitiv und für jeden zugänglich.",
+    vp: "Das Nutzenversprechen von Apple lautet: intuitive, elegant gestaltete Produkte, die Technologie vereinfachen. Das Motto 'It just works' beschreibt es treffend – Apple verbindet Design mit Funktion und schafft ein geschlossenes Ökosystem.",
+    example: "Das iPhone revolutionierte die Smartphone-Branche durch sein einfaches Touch-Interface, das iOS-Ökosystem und den App Store – alles nahtlos in einem Gerät vereint und für jeden bedienbar."
+  },
+  Spotify: {
+    problem: "Spotify löst das Problem des eingeschränkten Musikzugangs. Früher musste man Alben kaufen oder illegal herunterladen. Spotify bietet legalen, sofortigen Zugang zu Millionen von Songs für einen günstigen Monatsbeitrag.",
+    vp: "Spotifys Nutzenversprechen: unbegrenzter Musikzugang für eine günstige monatliche Gebühr, ergänzt durch personalisierte KI-basierte Empfehlungen, die mit dem Hörverhalten des Nutzers wachsen und sich anpassen.",
+    example: "Die KI-Funktion 'Discover Weekly' analysiert das Hörverhalten und erstellt automatisch jede Woche eine neue personalisierte Playlist – Musikentdeckung ohne aktive Suche und ohne Aufwand für den Nutzer."
+  },
+  dm: {
+    problem: "dm löst das Problem mangelnder Verfügbarkeit von Drogerie- und Naturkosmetikprodukten zu fairen Preisen mit gleichzeitig kompetenter Beratung in angenehmer Einkaufsatmosphäre.",
+    vp: "dms Nutzenversprechen: breite Produktpalette in Gesundheit, Kosmetik und Naturkosmetik mit persönlicher Beratung, fairen Preisen und hochwertigen Eigenmarken wie 'alverde' und 'Balea'.",
+    example: "Die Eigenmarke 'alverde' macht hochwertige Naturkosmetik erschwinglich – zertifizierte Bio-Inhaltsstoffe zum Drogerie-Preis, was ethisch bewusste Konsumenten anspricht und Vertrauen schafft."
+  },
+  Ryanair: {
+    problem: "Ryanair löst das Problem hoher Flugpreise, die Reisen lange zum Privileg wohlhabender Menschen machten. Viele konnten sich Flugreisen schlicht nicht leisten – Ryanair demokratisiert das Fliegen.",
+    vp: "Ryanairs Nutzenversprechen: Demokratisierung des Fliegens durch extrem niedrige Grundpreise, die Reisen für alle erschwinglich machen. Motto: 'Low Fares. Made Simple.' – Mobilität ohne finanzielle Barrieren.",
+    example: "Durch Streichung von Extras wie kostenlosem Gepäck, Mahlzeiten und Sitzplatzreservierung kann Ryanair Grundpreise unter 10 Euro anbieten und so ein breites Kundensegment ansprechen."
+  },
+  Airbnb: {
+    problem: "Airbnb löst das Problem unpersönlicher, teurer Hotelaufenthalte und macht authentisches, lokales Reisen zugänglich für Menschen, die echte kulturelle Erfahrungen über standardisierte Hoteldienstleistungen stellen.",
+    vp: "Airbnbs Nutzenversprechen: authentische Reiseerfahrungen durch Unterkunft bei lokalen Gastgebern – 'Belong Anywhere'. Günstigere Preise als Hotels plus persönliche Insider-Tipps und echten kulturellen Austausch.",
+    example: "Statt eines anonymen Hotelzimmers übernachtet man in einer lokalen Wohnung, erhält Empfehlungen vom Einheimischen und erlebt die Kultur von innen – echter und persönlicher als jede Pauschalreise."
+  },
+  Netflix: {
+    problem: "Netflix löst das Problem starrer TV-Sendezeiten, teurer DVD-Käufe und des Wartens auf Neuveröffentlichungen. Inhalte waren früher an Zeit und Ort gebunden – Netflix befreit den Konsum davon.",
+    vp: "Netflixs Nutzenversprechen: on-demand Streaming von Tausenden Filmen und Serien, personalisiert durch KI-Algorithmen – jederzeit, überall, auf jedem Gerät für einen günstigen monatlichen Beitrag.",
+    example: "Eigenproduktionen wie 'Stranger Things' oder 'The Crown' schaffen exklusiven Inhalt, der nur auf Netflix verfügbar ist und Abonnenten langfristig bindet und zur Plattform zurückbringt."
+  },
+  IKEA: {
+    nvp: "Das zentrale Nutzenversprechen von IKEA ist 'Demokratisches Design': qualitativ hochwertiges, funktionales und ästhetisches Möbeldesign für möglichst viele Menschen erschwinglich zu machen. IKEA verbindet gutes Design, Funktionalität und niedrige Preise durch effiziente Produktion, Flatpack-Konzept und Selbstmontage.",
+    crm: "1. IKEA Family Kundenkarte: Rabatte, exklusive Angebote und kostenloser Kaffee – belohnt Treue und sammelt wertvolle Kundendaten. 2. IKEA App mit personalisierten Angeboten, digitaler Wohnplanung und AR-Funktion zum virtuellen Aufstellen von Möbeln. 3. IKEA Restaurant: günstige Mahlzeiten halten Kunden länger im Store, schaffen positive Erlebnisse und erhöhen die Wiederkaufrate.",
+    orientation: "IKEA verfolgt eine klare Marketingorientierung. Das Unternehmen analysiert Kundenbedürfnisse (z.B. kleiner Wohnraum in Städten) und entwickelt Produkte speziell dafür (z.B. KALLAX-Regal, STUVA Kinderzimmer). Der Fokus liegt auf langfristiger Kundenzufriedenheit und Kundenbindung, nicht auf kurzfristigem Verkaufsdruck."
+  },
+  Starbucks: {
+    nvp: "Das zentrale Nutzenversprechen von Starbucks ist das 'Third Place'-Konzept: Starbucks ist der dritte Ort zwischen Zuhause und Arbeit – ein komfortabler, sozialer Raum. Kunden kaufen nicht nur Kaffee, sondern ein Erlebnis, eine Atmosphäre und ein Zugehörigkeitsgefühl.",
+    experience: "Starbucks kreiert ein ganzheitliches Kundenerlebnis: persönliche Begrüßung, Schreiben des Kundennamens auf den Becher (Individualität), angenehme Atmosphäre mit Musik und gemütlichen Möbeln, kostenloses WLAN. Der Name auf dem Becher ist ein einfaches, aber wirksames Mittel zur personalisierten Interaktion und schafft eine emotionale Verbindung.",
+    crm1: "1. Starbucks Rewards: Punkte (Stars) für jeden Kauf sammeln, ab bestimmten Schwellen Freigetränke und exklusive Angebote – klassisches Loyalty-Programm mit starker Gamification-Komponente.",
+    crm2: "2. Starbucks App: Mobile Order & Pay (Bestellung im Voraus), personalisierte Empfehlungen basierend auf Kaufhistorie, Push-Notifications mit personalisierten Angeboten und Geburtstagsgratifikationen.",
+    sdl: "Starbucks ist ein Paradebeispiel für Service-Dominant Logic (SDL): Der Wert entsteht nicht beim Kauf des Kaffees, sondern in der gemeinsamen Interaktion zwischen Unternehmen und Kunde (Value Co-Creation). Kunden bringen eigene Bedeutungen mit – Laptop-Arbeit, Meetings, Entspannung – und ko-kreieren so ihren individuellen Wert im Erlebnis.",
+    italy: "In Italien hat Starbucks strukturelle Schwierigkeiten aufgrund der tief verwurzelten Kaffeekultur: Espresso kostet 1 Euro, wird im Stehcafé getrunken und ist eine soziale Routine. Das 'Third Place'-Konzept mit 5+ Euro Preisen kollidiert mit kulturellen Gewohnheiten. Die lokale Konkurrenz durch traditionelle Bar-Cafés ist übermächtig und kulturell verankert."
+  },
+  Train4U: {
+    slogan: "Beispiel-Slogan: 'Train4U – Dein Weg. Dein Tempo. Dein Ergebnis.' oder 'Stärker werden beginnt heute – bei Train4U.' Ein guter Slogan vermittelt das Kernnutzenversprechen klar, ist einprägsam und spricht die Zielgruppe emotional an. Er sollte die Transformation des Kunden in den Mittelpunkt stellen.",
+    measures: "1. Buddy-System: Mitglieder bringen Freunde mit – erstes Monat kostenlos (Empfehlungsmarketing und soziale Bindung). 2. Flexible Trainingspakete für Berufstätige (Früh-/Spät-Zeiten, kurze 30-Min-Intensiveinheiten). 3. Einsteigerprogramme mit zertifizierten Trainern für Anfänger ohne Einschüchterung. 4. Community-Events: 30-Tage-Challenges, Transformationswettbewerbe mit attraktiven Preisen. 5. Kostenfreies Probetraining – niedrige Einstiegshürde und direktes Erlebnis.",
+    strategy: "Lokale Marketingstrategie: 1. Social Media (Instagram/TikTok) – echte Transformationsgeschichten von Mitgliedern als User-Generated Content mit hoher Authentizität. 2. Google My Business optimieren – lokale Suchanfragen wie 'Fitnessstudio in [Stadt]' effektiv abfangen. 3. Kooperationen mit lokalen Unternehmen für attraktive Firmenmitgliedschaften. 4. Empfehlungsmarketing: Rabatte und Prämien für Weiterempfehlungen. 5. Lokale Events und Pop-ups zur Bekanntheitssteigerung im Einzugsgebiet."
+  }
+};
+
+function wordCount(text) {
+  if (!text || text.trim() === '') return 0;
+  return text.trim().split(/\s+/).length;
+}
+
+function getRating(count) {
+  if (count > 100) return { cls: 'green', label: 'Umfassend (>100 Wörter)' };
+  if (count >= 50) return { cls: 'yellow', label: 'Teilweise (50–100 Wörter)' };
+  return { cls: 'red', label: 'Zu kurz (<50 Wörter)' };
+}
 
 function updateCheckboxStyle() {
   document.querySelectorAll('input[name="companies"]').forEach(cb => {
@@ -291,15 +413,15 @@ function handleCompanyChange() {
     selected[selected.length - 1].checked = false;
   }
   updateCheckboxStyle();
-  renderCompanyQuestions();
   saveAll();
+  renderCompanyQuestions();
 }
 
 function selectGenOption(elem, category) {
   const parent = elem.parentElement;
   parent.querySelectorAll('.generator-option').forEach(el => el.classList.remove('selected'));
   elem.classList.add('selected');
-  genOptions[category] = elem.textContent.trim();
+  genOptions[category] = textToKey[elem.textContent.trim()] || elem.textContent.trim();
 }
 
 function generateVP() {
@@ -309,8 +431,8 @@ function generateVP() {
   }
   const key = `${genOptions.tg}-${genOptions.pb}-${genOptions.vl}`;
   const templates = vpLibrary[key] || ['Train4U: Fitness, die funktioniert.'];
-  const vp = templates[Math.floor(Math.random() * templates.length)];
-  document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyText('ex4q1','${vp.replace(/'/g, "\\'")}'">📋 Kopieren</button></div>`;
+  lastGeneratedVP = templates[Math.floor(Math.random() * templates.length)];
+  document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${lastGeneratedVP}"<button class="copy-btn" onclick="copyText('ex4q1', lastGeneratedVP)">📋 Kopieren</button></div>`;
 }
 
 function copyText(id, text) {
@@ -454,7 +576,116 @@ function submitAll() {
   document.getElementById('scoreSection').classList.add('active');
   document.getElementById('buttonSection').style.display = 'none';
   document.getElementById('timerBar').style.display = 'none';
-  let html = '<div class="feedback-title">✅ Fertig!</div>';
+
+  const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
+  let html = '<div class="feedback-title">📊 Ihr Feedback &amp; Musterlösungen</div>';
+
+  // Exercise 1 feedback
+  html += '<div class="feedback-item"><h4>Aufgabe 1: Nutzenversprechen</h4>';
+  if (selected.length === 0) {
+    html += '<p style="color:var(--text-secondary);font-size:13px">Keine Unternehmen ausgewählt.</p>';
+  }
+  selected.forEach((c, i) => {
+    const v1 = document.getElementById(`ex1_${i}_q1`)?.value || '';
+    const v2 = document.getElementById(`ex1_${i}_q2`)?.value || '';
+    const v3 = document.getElementById(`ex1_${i}_q3`)?.value || '';
+    const total = wordCount(v1) + wordCount(v2) + wordCount(v3);
+    const r = getRating(total);
+    const ms = modelSolutions[c];
+    html += `<div class="rating-row">
+      <div class="rating-icon ${r.cls}">✓</div>
+      <div class="rating-text">
+        <strong>${c} – ${total} Wörter – ${r.label}</strong>
+        <div style="margin-top:6px;padding:8px;background:white;border-radius:8px;border-left:3px solid var(--success)">
+          <div style="font-weight:600;font-size:12px;color:var(--success);margin-bottom:4px">MUSTERLÖSUNG</div>
+          <div><strong>Problem:</strong> ${ms.problem}</div>
+          <div style="margin-top:4px"><strong>Nutzenversprechen:</strong> ${ms.vp}</div>
+          <div style="margin-top:4px"><strong>Beispiel:</strong> ${ms.example}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Exercise 2 feedback
+  const ex2 = [
+    { id: 'ex2q1', label: 'Nutzenversprechen IKEA', ms: modelSolutions.IKEA.nvp },
+    { id: 'ex2q2', label: 'CRM-Instrumente', ms: modelSolutions.IKEA.crm },
+    { id: 'ex2q3', label: 'Marketing-/Verkaufsorientierung', ms: modelSolutions.IKEA.orientation }
+  ];
+  html += '<div class="feedback-item"><h4>Aufgabe 2: IKEA</h4>';
+  ex2.forEach(q => {
+    const val = document.getElementById(q.id)?.value || '';
+    const r = getRating(wordCount(val));
+    html += `<div class="rating-row">
+      <div class="rating-icon ${r.cls}">✓</div>
+      <div class="rating-text">
+        <strong>${q.label} – ${wordCount(val)} Wörter – ${r.label}</strong>
+        <div style="margin-top:6px;padding:8px;background:white;border-radius:8px;border-left:3px solid var(--success)">
+          <div style="font-weight:600;font-size:12px;color:var(--success);margin-bottom:4px">MUSTERLÖSUNG</div>
+          <div>${q.ms}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Exercise 3 feedback
+  const ex3 = [
+    { id: 'ex3q1', label: 'Nutzenversprechen Starbucks', ms: modelSolutions.Starbucks.nvp },
+    { id: 'ex3q2', label: 'Kundenerlebnis', ms: modelSolutions.Starbucks.experience },
+    { id: 'ex3q3', label: 'CRM-Instrumente', ms: modelSolutions.Starbucks.crm1 + ' ' + modelSolutions.Starbucks.crm2 },
+    { id: 'ex3q4', label: 'Service-Dominant Logic', ms: modelSolutions.Starbucks.sdl },
+    { id: 'ex3q5', label: 'Schwierigkeiten in Italien', ms: modelSolutions.Starbucks.italy }
+  ];
+  html += '<div class="feedback-item"><h4>Aufgabe 3: Starbucks</h4>';
+  ex3.forEach(q => {
+    const val = document.getElementById(q.id)?.value || '';
+    const r = getRating(wordCount(val));
+    html += `<div class="rating-row">
+      <div class="rating-icon ${r.cls}">✓</div>
+      <div class="rating-text">
+        <strong>${q.label} – ${wordCount(val)} Wörter – ${r.label}</strong>
+        <div style="margin-top:6px;padding:8px;background:white;border-radius:8px;border-left:3px solid var(--success)">
+          <div style="font-weight:600;font-size:12px;color:var(--success);margin-bottom:4px">MUSTERLÖSUNG</div>
+          <div>${q.ms}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Exercise 4 feedback
+  const ex4 = [
+    { id: 'ex4q1', label: 'Slogan', ms: modelSolutions.Train4U.slogan },
+    { id: 'ex4q2', label: 'Konkrete Maßnahmen', ms: modelSolutions.Train4U.measures },
+    { id: 'ex4q3', label: 'Werbestrategie', ms: modelSolutions.Train4U.strategy }
+  ];
+  html += '<div class="feedback-item"><h4>Aufgabe 4: Train4U</h4>';
+  ex4.forEach(q => {
+    const val = document.getElementById(q.id)?.value || '';
+    const r = getRating(wordCount(val));
+    html += `<div class="rating-row">
+      <div class="rating-icon ${r.cls}">✓</div>
+      <div class="rating-text">
+        <strong>${q.label} – ${wordCount(val)} Wörter – ${r.label}</strong>
+        <div style="margin-top:6px;padding:8px;background:white;border-radius:8px;border-left:3px solid var(--success)">
+          <div style="font-weight:600;font-size:12px;color:var(--success);margin-bottom:4px">MUSTERLÖSUNG</div>
+          <div>${q.ms}</div>
+        </div>
+      </div>
+    </div>`;
+  });
+  html += '</div>';
+
+  // Traffic light legend
+  html += `<div class="traffic-legend">
+    <div class="legend-title">🚦 Bewertungslegende (Ampelsystem):</div>
+    <div class="legend-item"><div class="legend-icon" style="background:var(--success)">●</div><span><strong>Grün:</strong> Mehr als 100 Wörter – Umfassende Antwort</span></div>
+    <div class="legend-item"><div class="legend-icon" style="background:var(--warning)">●</div><span><strong>Gelb:</strong> 50–100 Wörter – Teilweise Antwort</span></div>
+    <div class="legend-item"><div class="legend-icon" style="background:var(--danger)">●</div><span><strong>Rot:</strong> Weniger als 50 Wörter – Zu kurz</span></div>
+  </div>`;
+
   document.getElementById('feedbackSection').innerHTML = html;
 }
 
@@ -466,49 +697,66 @@ function downloadPDF() {
   const pageWidth = doc.internal.pageSize.getWidth();
   const margin = 15;
   const maxWidth = pageWidth - 2 * margin;
+  const pdfFont = 'helvetica';
 
-  function addText(text, isBold = false) {
+  function addText(text, isBold, fontSize) {
     if (yPos > pageHeight - 20) {
       doc.addPage();
       yPos = 20;
     }
-    doc.setFont('Arial', isBold ? 'bold' : 'normal');
-    doc.setFontSize(isBold ? 12 : 10);
-    const lines = doc.splitTextToSize(text, maxWidth);
+    const textFontSize = fontSize || (isBold ? 12 : 10);
+    doc.setFont(pdfFont, isBold ? 'bold' : 'normal');
+    doc.setFontSize(textFontSize);
+    const lines = doc.splitTextToSize(String(text ?? ''), maxWidth);
     doc.text(lines, margin, yPos);
-    yPos += 5 * lines.length + 2;
+    yPos += textFontSize * 0.4 * lines.length + 2;
   }
 
-  addText('Marketing-Übung - Ihre Antworten', true);
-  addText(`Datum: ${new Date().toLocaleDateString('de-DE')}`);
-  yPos += 5;
+  function addSection(title) {
+    yPos += 4;
+    addText(title, true, 13);
+    yPos += 2;
+  }
 
-  addText('AUFGABE 1: Unternehmen', true);
+  function addAnswer(label, value, solution) {
+    addText(label + ':', true);
+    addText(value || '(keine Antwort)');
+    addText('Musterlösung: ' + solution);
+    yPos += 3;
+  }
+
+  addText('Marketing-Übung – unibz', true, 16);
+  addText('Datum: ' + new Date().toLocaleDateString('de-DE'));
+  yPos += 8;
+
+  addSection('AUFGABE 1: Nutzenversprechen');
   const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
   selected.forEach((c, i) => {
-    addText(`${c}:`, true);
-    addText(`Problem: ${document.getElementById(`ex1_${i}_q1`)?.value || '-'}`);
-    addText(`Nutzenversprechen: ${document.getElementById(`ex1_${i}_q2`)?.value || '-'}`);
-    addText(`Beispiel: ${document.getElementById(`ex1_${i}_q3`)?.value || '-'}`);
-    yPos += 3;
+    const ms = modelSolutions[c];
+    addText(c + ':', true);
+    addAnswer('Problem', document.getElementById(`ex1_${i}_q1`)?.value, ms.problem);
+    addAnswer('Nutzenversprechen', document.getElementById(`ex1_${i}_q2`)?.value, ms.vp);
+    addAnswer('Beispiel', document.getElementById(`ex1_${i}_q3`)?.value, ms.example);
   });
 
-  addText('AUFGABE 2: IKEA', true);
-  addText(document.getElementById('ex2q1')?.value || '-');
-  addText(document.getElementById('ex2q2')?.value || '-');
-  addText(document.getElementById('ex2q3')?.value || '-');
+  addSection('AUFGABE 2: IKEA');
+  addAnswer('Nutzenversprechen', document.getElementById('ex2q1')?.value, modelSolutions.IKEA.nvp);
+  addAnswer('CRM-Instrumente', document.getElementById('ex2q2')?.value, modelSolutions.IKEA.crm);
+  addAnswer('Orientierung', document.getElementById('ex2q3')?.value, modelSolutions.IKEA.orientation);
 
-  addText('AUFGABE 3: Starbucks', true);
-  for (let i = 1; i <= 5; i++) {
-    addText(document.getElementById(`ex3q${i}`)?.value || '-');
-  }
+  addSection('AUFGABE 3: Starbucks');
+  addAnswer('Nutzenversprechen', document.getElementById('ex3q1')?.value, modelSolutions.Starbucks.nvp);
+  addAnswer('Kundenerlebnis', document.getElementById('ex3q2')?.value, modelSolutions.Starbucks.experience);
+  addAnswer('CRM', document.getElementById('ex3q3')?.value, modelSolutions.Starbucks.crm1 + ' ' + modelSolutions.Starbucks.crm2);
+  addAnswer('Service-Dominant Logic', document.getElementById('ex3q4')?.value, modelSolutions.Starbucks.sdl);
+  addAnswer('Schwierigkeiten Italien', document.getElementById('ex3q5')?.value, modelSolutions.Starbucks.italy);
 
-  addText('AUFGABE 4: Train4U', true);
-  addText(document.getElementById('ex4q1')?.value || '-');
-  addText(document.getElementById('ex4q2')?.value || '-');
-  addText(document.getElementById('ex4q3')?.value || '-');
+  addSection('AUFGABE 4: Train4U');
+  addAnswer('Slogan', document.getElementById('ex4q1')?.value, modelSolutions.Train4U.slogan);
+  addAnswer('Maßnahmen', document.getElementById('ex4q2')?.value, modelSolutions.Train4U.measures);
+  addAnswer('Werbestrategie', document.getElementById('ex4q3')?.value, modelSolutions.Train4U.strategy);
 
-  doc.save('Marketing-Übung.pdf');
+  doc.save('Marketing-Uebung.pdf');
 }
 </script>
 </body>
