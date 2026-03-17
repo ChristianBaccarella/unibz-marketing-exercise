@@ -65,6 +65,8 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 .btn { flex: 1; padding: 14px; border: none; border-radius: 12px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 .btn-primary { background: #1F7FD4; color: white; }
 .btn-secondary { background: #F3F4F6; color: #111827; }
+.btn-primary:disabled { background: #B0C4DE; color: white; cursor: not-allowed; opacity: 0.6; }
+.error-msg { padding: 12px; background: #FEE2E2; border: 2px solid #EF4444; border-radius: 10px; color: #991B1B; font-size: 14px; font-weight: 600; margin-bottom: 16px; display: none; }
     </style>
 </head>
 <body>
@@ -86,6 +88,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
         </div>
 
         <div id="page1" class="page">
+            <div id="errorMsg" class="error-msg">⚠️ Bitte wählen Sie zwei unterschiedliche Unternehmen aus!</div>
             <div class="task-title">Aufgabe 1 / 4</div>
             <div class="task-h">Nutzenversprechen verschiedener Unternehmen</div>
             <div class="task-desc">Analysieren Sie das Nutzenversprechen der folgenden Unternehmen. Wählen Sie zwei beliebige Unternehmen und analysieren Sie diese ausführlich.</div>
@@ -343,12 +346,38 @@ const slogans = {
 };
 
 document.querySelectorAll('input[name="comp1"]').forEach(r => {
-    r.addEventListener('change', () => document.getElementById('comp1name').textContent = r.value);
+    r.addEventListener('change', () => {
+        document.getElementById('comp1name').textContent = r.value;
+        validatePage1();
+    });
 });
 
 document.querySelectorAll('input[name="comp2"]').forEach(r => {
-    r.addEventListener('change', () => document.getElementById('comp2name').textContent = r.value);
+    r.addEventListener('change', () => {
+        document.getElementById('comp2name').textContent = r.value;
+        validatePage1();
+    });
 });
+
+function validatePage1() {
+    let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
+    let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
+    let errorMsg = document.getElementById('errorMsg');
+    let nextBtn = document.getElementById('nextbtn');
+    
+    if (!c1 || !c2) {
+        nextBtn.disabled = true;
+        return;
+    }
+    
+    if (c1 === c2) {
+        errorMsg.style.display = 'block';
+        nextBtn.disabled = true;
+    } else {
+        errorMsg.style.display = 'none';
+        nextBtn.disabled = false;
+    }
+}
 
 function goToPage(page) {
     currentPage = page;
@@ -363,6 +392,13 @@ function goBack() {
 }
 
 function goNext() {
+    if (currentPage === 1) {
+        validatePage1();
+        if (document.getElementById('nextbtn').disabled) {
+            return;
+        }
+    }
+    
     if (currentPage < 4) {
         currentPage++;
         updateDisplay();
@@ -378,11 +414,13 @@ function updateDisplay() {
     document.getElementById('backbtn').style.display = currentPage > 0 ? 'flex' : 'none';
     document.getElementById('nextbtn').textContent = currentPage === 4 ? '✓ Abschließen' : 'Weiter →';
     document.getElementById('nextbtn').style.display = 'flex';
+    document.getElementById('nextbtn').disabled = false;
     
     if (currentPage === 1) {
         document.getElementById('buttons').classList.add('show');
         document.querySelector('.timer-bar').style.display = 'block';
         startTimer();
+        validatePage1();
     }
     
     window.scrollTo(0, 0);
