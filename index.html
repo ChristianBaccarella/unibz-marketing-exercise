@@ -9,12 +9,12 @@
     <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: #F9FAFB; color: #111827; }
-.container { max-width: 600px; margin: 0 auto; background: white; min-height: 100vh; }
+.container { max-width: 600px; margin: 0 auto; background: white; min-height: 100vh; display: flex; flex-direction: column; }
 .header { padding: 16px; text-align: center; border-bottom: 1px solid #E5E7EB; }
 .logo { font-size: 28px; font-weight: 700; color: #0066CC; }
 .timer-bar { padding: 16px; background: #E8F4FD; border-bottom: 1px solid #E5E7EB; display: none; text-align: center; }
 .timer { font-size: 20px; font-weight: 700; color: #1F7FD4; font-family: monospace; }
-.content { padding: 24px; min-height: 60vh; }
+.content { flex: 1; overflow-y: auto; padding: 24px; }
 .page { display: none; }
 .page.show { display: block; }
 .landing { text-align: center; padding: 80px 20px; }
@@ -70,10 +70,10 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 <div class="container">
     <div class="header"><div class="logo">unibz</div></div>
     <div class="timer-bar"><div class="timer" id="timer">90:00</div></div>
-    <div class="content">
+    <div class="content" id="main-content">
         <div id="landing" class="page show">
             <div class="landing">
-                <div style="font-size:80px;margin-bottom:24px">🎓</div>
+                <div style="font-size:80px;margin-bottom:24px">��</div>
                 <h1>Marketing-Übung</h1>
                 <p><span style="color:#1F7FD4;font-weight:600">Heute probieren wir etwas anderes.</span></p>
                 <p>Bitte die Aufgaben hier lesen und direkt in die App eintragen.</p>
@@ -239,7 +239,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <textarea id="e4q2"></textarea>
             </div>
             <div class="q-group">
-                <div class="q-label">Welche Werbestrategie würden Sie empfehlen?</div>
+                <div class="q-label">Welche Werbestrategie würden Sie empfehlen? Machen Sie einen konkreten Vorschlag.</div>
                 <textarea id="e4q3"></textarea>
             </div>
         </div>
@@ -276,6 +276,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 
 <script>
 let step = 0, time = 5400, timer, gen = {g:'', p:'', v:''};
+let data = {c1problem:'', c1value:'', c1example:'', c2problem:'', c2value:'', c2example:'', e2q1:'', e2q2:'', e2q3:'', e3q1:'', e3q2:'', e3q3:'', e3q4:'', e3q5:'', e4q1:'', e4q2:'', e4q3:''};
 
 const solutions = {
     Apple: {
@@ -380,6 +381,46 @@ function copySlogan(s) {
     document.getElementById('e4q1').value = s;
 }
 
+function saveData() {
+    data.c1problem = document.getElementById('c1problem').value;
+    data.c1value = document.getElementById('c1value').value;
+    data.c1example = document.getElementById('c1example').value;
+    data.c2problem = document.getElementById('c2problem').value;
+    data.c2value = document.getElementById('c2value').value;
+    data.c2example = document.getElementById('c2example').value;
+    data.e2q1 = document.getElementById('e2q1').value;
+    data.e2q2 = document.getElementById('e2q2').value;
+    data.e2q3 = document.getElementById('e2q3').value;
+    data.e3q1 = document.getElementById('e3q1').value;
+    data.e3q2 = document.getElementById('e3q2').value;
+    data.e3q3 = document.getElementById('e3q3').value;
+    data.e3q4 = document.getElementById('e3q4').value;
+    data.e3q5 = document.getElementById('e3q5').value;
+    data.e4q1 = document.getElementById('e4q1').value;
+    data.e4q2 = document.getElementById('e4q2').value;
+    data.e4q3 = document.getElementById('e4q3').value;
+}
+
+function restoreData() {
+    document.getElementById('c1problem').value = data.c1problem;
+    document.getElementById('c1value').value = data.c1value;
+    document.getElementById('c1example').value = data.c1example;
+    document.getElementById('c2problem').value = data.c2problem;
+    document.getElementById('c2value').value = data.c2value;
+    document.getElementById('c2example').value = data.c2example;
+    document.getElementById('e2q1').value = data.e2q1;
+    document.getElementById('e2q2').value = data.e2q2;
+    document.getElementById('e2q3').value = data.e2q3;
+    document.getElementById('e3q1').value = data.e3q1;
+    document.getElementById('e3q2').value = data.e3q2;
+    document.getElementById('e3q3').value = data.e3q3;
+    document.getElementById('e3q4').value = data.e3q4;
+    document.getElementById('e3q5').value = data.e3q5;
+    document.getElementById('e4q1').value = data.e4q1;
+    document.getElementById('e4q2').value = data.e4q2;
+    document.getElementById('e4q3').value = data.e4q3;
+}
+
 function startApp() {
     document.getElementById('landing').classList.remove('show');
     document.getElementById('task1').classList.add('show');
@@ -405,15 +446,18 @@ function updateNav() {
 }
 
 function goBack() {
+    saveData();
     document.getElementById(`task${step}`).classList.remove('show');
     document.getElementById('results').classList.remove('show');
     step--;
     document.getElementById(`task${step}`).classList.add('show');
-    window.scrollTo(0, 0);
+    restoreData();
+    document.getElementById('main-content').scrollTop = 0;
     updateNav();
 }
 
 function goNext() {
+    saveData();
     step++;
     document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
     if (step === 5) {
@@ -421,8 +465,9 @@ function goNext() {
         finish();
     } else {
         document.getElementById(`task${step}`).classList.add('show');
+        restoreData();
     }
-    window.scrollTo(0, 0);
+    document.getElementById('main-content').scrollTop = 0;
     updateNav();
 }
 
@@ -491,7 +536,7 @@ function finish() {
     <div class="rating"><div class="rating-icon ${e4q3 > 100 ? 'green' : e4q3 > 50 ? 'yellow' : 'red'}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}</div></div></div>`;
     
     document.getElementById('fb').innerHTML = html;
-    window.scrollTo(0, 0);
+    document.getElementById('main-content').scrollTop = 0;
 }
 
 function makePDF() {
