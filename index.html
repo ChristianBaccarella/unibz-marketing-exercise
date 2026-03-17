@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Marketing-Übung - Freie Universität Bozen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         * {
             margin: 0;
@@ -579,6 +580,45 @@
             display: none;
         }
         
+        .export-section {
+            margin-top: 24px;
+            padding: 20px;
+            background: var(--gray-50);
+            border-radius: 12px;
+            border: 2px solid var(--success);
+            text-align: center;
+        }
+        
+        .export-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        
+        .export-btn {
+            padding: 14px 32px;
+            background: var(--success);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .export-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .export-btn:hover {
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+        }
+        
         /* Scrollbar */
         .content::-webkit-scrollbar {
             width: 6px;
@@ -595,6 +635,11 @@
         
         .content::-webkit-scrollbar-thumb:hover {
             background: var(--gray-400);
+        }
+
+        /* Hidden PDF export element */
+        #pdfExport {
+            display: none;
         }
     </style>
 </head>
@@ -657,8 +702,8 @@
                                 <label for="company5" class="checkbox-label">Airbnb</label>
                             </div>
                             <div class="checkbox-item">
-                                <input type="checkbox" id="company6" name="companies" value="IKEA">
-                                <label for="company6" class="checkbox-label">IKEA</label>
+                                <input type="checkbox" id="company6" name="companies" value="Netflix">
+                                <label for="company6" class="checkbox-label">Netflix</label>
                             </div>
                         </div>
                         <div class="error-message" id="companyError">Bitte genau zwei Unternehmen auswählen!</div>
@@ -720,7 +765,7 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten erfolgreich zu sein?</label>
+                        <label class="question-label">Warum hat dieses Geschäftsmodell gerade in Italien Schwierigkeiten, erfolgreich zu sein?</label>
                         <textarea id="ex3q5" placeholder="Geben Sie Ihre Antwort hier ein..."></textarea>
                     </div>
                 </div>
@@ -811,6 +856,14 @@
                             <div><strong>Rot:</strong> Zu kurz oder unvollständig</div>
                         </div>
                     </div>
+                    
+                    <div class="export-section">
+                        <div class="export-title">📥 Deine Ergebnisse exportieren</div>
+                        <p style="font-size: 14px; color: var(--text-secondary); margin-bottom: 16px;">Lade deine Antworten als PDF herunter - perfekt zum Speichern oder Ausdrucken.</p>
+                        <button class="export-btn" onclick="exportPDF()">
+                            <i class="fas fa-download"></i> PDF herunterladen
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -829,6 +882,9 @@
         </div>
     </div>
 
+    <!-- Hidden PDF export container -->
+    <div id="pdfExport"></div>
+
     <script>
         let currentExercise = 0;
         let timeRemaining = 90 * 60;
@@ -842,7 +898,7 @@
                 dm: { problem: "Macht Drogerie- und Gesundheitsprodukte convenient und beratbar zugänglich.", value: "Vielfalt, Beratung, Convenience und Preiswertigkeit bei Drogerie- und Hygieneartikeln.", example: "Fachberatung vor Ort löst das Problem, die richtigen Produkte für persönliche Bedürfnisse zu finden." },
                 Ryanair: { problem: "Macht Flugverkehr für breite Bevölkerung erschwinglich und demokratisiert das Reisen.", value: "Günstige Flüge, häufige Verbindungen, Kostentransparenz.", example: "Billige Flüge ermöglichen Reisen, die sich Millionen sonst nicht leisten könnten." },
                 Airbnb: { problem: "Bietet Alternative zu Hotels - authentische, lokale Unterkünfte zu besseren Preisen.", value: "Authentische Erfahrungen, Kosteneinsparung, Flexibilität und lokale Verbindung.", example: "Ein Zimmer bei einem Locals zu mieten löst das Problem, echte Orte zu erleben, nicht nur Hotels." },
-                IKEA: { problem: "Macht Möbel und Wohnen erschwinglich für Menschen mit kleinem Budget.", value: "Demokratisierung von Design, Erschwinglichkeit, DIY-Aspekt, Inspiration.", example: "Flach verpackte, erschwingliche Möbel lösen das Problem, dass Wohnen günstiger sein kann." }
+                Netflix: { problem: "Beendet das Problem der begrenzten Filmauswahl und starrer Programmzeiten - stattdessen unbegrenzte Inhalte jederzeit verfügbar.", value: "Personalisierte Empfehlungen, Originalinhalte, beeindruckende Vielfalt, vorhersagbare Kosten, Zugang auf allen Geräten.", example: "Die intelligente Empfehlung 'Basierend auf deinen Interessen' zeigt, dass Netflix nicht einfach nur einen Katalog anbietet, sondern den Film kennt, den SIE sehen möchten." }
             },
             exercise2: { q1: "IKEAs Nutzenversprechen: 'Gutes Design und funktionale Möbel für viele Menschen erschwinglich machen' - es geht um Demokratisierung, nicht nur Möbel.", q2: "CRM-Instrumente bei IKEA: (1) IKEA Family Kundenprogramm mit personalisierten Angeboten, (2) Planungstools und Online-Shopping für Kundenbindung, (3) Click-and-Collect und Showroom-Erlebnisse.", q3: "IKEA verfolgt eine Marketingorientierung: Das Geschäftsmodell (Selbstbedienung, Eigenmontage, Inspirationsräume, Community) ist völlig auf die Bedürfnisse und Wünsche der Kunden ausgerichtet, nicht nur auf schnelle Verkäufe." },
             exercise3: { q1: "Starbucks bietet nicht nur Kaffee, sondern ein 'Third Place'-Erlebnis zwischen Zuhause und Arbeit mit Gemeinschaft, Komfort und Premium-Qualität.", q2: "Das Kundenerlebnis: Wohlige Atmosphäre, freundliches Personal, Personalisierung (Name auf Cup), Musik, WLAN. Beispiel: Sie betreten einen Starbucks, werden vom Namen begrüßt, bekommen Ihren persönlichen Kaffee, sitzen in gemütlicher Atmosphäre.", q3: "Kundenbindung: (1) Loyalty-Programm mit Rewards und exklusiven Angeboten für Stammkunden, (2) Mobile App mit Bezahlung, Personalisierung und Kommunikation.", q4: "Service-Dominant Logic: Starbucks verkauft nicht nur Produkte, sondern einen Service: das Erlebnis, die Beziehung, die Gemeinschaft. Der Wert entsteht in der Interaktion zwischen Starbucks und dem Kunden.", q5: "In Italien hat Starbucks Schwierigkeiten, weil: (1) Starke Café-Kultur mit authentischen Espresso-Bars, (2) Italienischer Kaffee ist kurzes, intensives Ritual an der Theke - nicht zum Verweilen gedacht, (3) Harte Konkurrenz durch lokale Bars mit Tradition, (4) Ablehnung von amerikanischer Massenproduktion von Kulturmomenten." },
@@ -856,23 +912,110 @@
             exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'transformation', 'wachstum', 'ort'], q2: ['buddy', 'training', 'app', 'tracking', 'session', 'erfolg'], q3: ['instagram', 'authentisch', 'lokal', 'facebook', 'referral', 'parks'] }
         };
 
-        // Deutlich umfangreichere und intelligentere VP-Templates
-        const vpTemplates = {
-            'Berufstätige-Zeitmangel-Gemeinschaft': "Train4U: Fitness ohne Schuldgefühle. Wir wissen, dass deine Zeit kostbar ist - deshalb bieten wir 30-Minuten-Power-Trainings, die funktionieren. Und du tust es nicht allein: Eine Community von Berufstätigen wie dir, die um 6 Uhr morgens oder nach Feierabend zusammen stärker wird.",
-            'Berufstätige-Zeitmangel-Flexibilität': "Train4U: Dein Fitnessstudio passt sich dir an, nicht umgekehrt. Open 24/7, Live-Online-Kurse um Mitternacht, Trainings in nur 20 Minuten - Fitness, wenn DU Zeit hast, nicht wenn WIR Öffnungszeiten haben.",
-            'Berufstätige-Zeitmangel-Persönliche Betreuung': "Train4U: Kein Zeit für Fehler. Unsere Personal Trainer kommen zu DIR - ins Büro, in den Park, zu Hause. Eine Person, ein Plan, kein Umschweif, maximale Effizienz.",
-            'Berufstätige-Keine Motivation-Gemeinschaft': "Train4U ist dein Accountability-Partner. Wir verbinden dich mit anderen ehrgeizigen Berufstätigen, die dich jeden Tag pushen. Wenn du nicht kommst, vermisst man dich hier - und das Gefühl ist unbezahlbar.",
-            'Berufstätige-Selbstoptimierung-Persönliche Betreuung': "Train4U: Optimierung ist unser Geschäft. Datengestützte Trainingspläne, DNA-basierte Ernährungsanalyse, wöchentliche Fortschrittsmetriken - du wirst jede Woche messbar besser.",
-            'Anfänger-Keine Motivation-Gemeinschaft': "Train4U bricht deine Anfänger-Angst auf. Hier trainieren alle auf ihrem Level - niemand schaut auf dich, weil ALLE wissen, wie es sich anfühlt, bei Null anzufangen.",
-            'Anfänger-Keine Expertise-Persönliche Betreuung': "Train4U: Dein Anfang ist unser Erfolg. Kostenlose 1-zu-1 Einführung, ein fester Trainer, der deine Form checkt, Fehler korrigiert, dir Vertrauen gibt. Nach 4 Wochen weißt du genau, was du tust.",
-            'Anfänger-Selbstoptimierung-Persönliche Betreuung': "Train4U: Von Anfänger zu verbesserter Version deiner selbst - strukturiert. Wir haben einen bewährten 12-Wochen-Plan: Woche 1-4 Basis, Woche 5-8 Stärke, Woche 9-12 Ausdauer. Du siehst Fortschritt, nicht Chaos.",
-            'Frauen-Keine Motivation-Gemeinschaft': "Train4U: Dieser Ort ist FÜR DICH designt - von Frauen, mit Trainerinnen, umgeben von Frauen auf der gleichen Reise. Keine Konkurrenz, nur gegenseitige Unterstützung.",
-            'Frauen-Selbstoptimierung-Gemeinschaft': "Train4U: Fitness ist Selbstliebe. Wir trainieren nicht, um die Welt zu beeindrucken - wir trainieren, weil WIR uns beeindrucken wollen. Eine Community, die dich nicht verurteilt, sondern feiert.",
-            'Frauen-Zeitmangel-Flexibilität': "Train4U: Dein Fitnessstudio versteht dein Leben. Mama-Freundliche Kurse mit Kinderbetreuung, 15-Minuten-Trainings für echte Menschen mit echtem Leben.",
-            'Über 50 Jahre-Flexibilität-Persönliche Betreuung': "Train4U: Dein bestes Jahrzehnt fängt JETZT an. Trainer, die verstehen, dass Knieverletzungen real sind. Kurse, die Kraft aufbauen, nicht zerstören. Flexibility, nicht Kaputt-Training.",
-            'Über 50 Jahre-Keine Expertise-Messbare Resultate': "Train4U: Wissenschaft, nicht Guesswork. Dexa-Scans zeigen echte Knochendichte-Gewinne, Blutproben tracken Herzgesundheit - du siehst wirklich, wie viel besser dein Körper wird.",
-            'Über 50 Jahre-Selbstoptimierung-Gemeinschaft': "Train4U: Du wirst nicht älter, du wirst stärker. Eine Gruppe von Menschen 50+, die nicht aufgeben, sondern aufsteigen. Dein neues normal ist 'fit und energetisch'."
+        // MASSIV ERWEITERTE VP-Templates mit Variationen und Kreativitäts-Levels
+        const vpDatabase = {
+            'Berufstätige-Zeitmangel-Gemeinschaft': [
+                // Level 1: Standard
+                "Train4U versteht, dass deine Zeit kostbar ist. Wir bieten dir 30-minütige Power-Trainings, die wissenschaftlich optimiert sind. Das Beste: Du trainierst nicht allein. Eine Community von Berufstätigen unterstützt dich und feiert deine Fortschritte.",
+                "Für Berufstätige ohne Zeit: 30-Minuten-Trainings, die wirken. Plus eine Community, die dich jeden Tag pusht.",
+                "Train4U: Effiziente Trainings, echte Gemeinschaft. Perfekt für Berufstätige, die wenig Zeit haben.",
+                // Level 2: Mittlere Kreativität
+                "Train4U ist dein Time-Hacker für Fitness. Statt stundenlanges Pumpak - 30 Minuten wissenschaftlich getuned. Und du machst es nicht allein: eine Community von Menschen, die verstehen, wie dein Leben funktioniert.",
+                "Fitness sollte nicht in Konkurrenz zu deiner Karriere stehen. Train4U bietet effiziente Trainings UND eine Community, die diese Balance versteht.",
+                // Level 3: Hochkreativ
+                "Train4U ist dein Fitnessstudio für Menschen, die ihr Leben ernst nehmen. 30 Minuten, die mehr bringen als 3 Stunden Mainstream. Eine Community, die nicht über Fitness spricht - sie LEBT sie gemeinsam.",
+                "Berufstätige trainieren anders: smart, effizient, zusammen. Train4U ist der Ort, wo deine Karriere und Fitness nicht konkurrieren - sie unterstützen sich gegenseitig."
+            ],
+            'Berufstätige-Zeitmangel-Flexibilität': [
+                "Dein Fitnessstudio passt sich deinem Leben an. 24/7 offen, Live-Online-Kurse, flexible Trainingspläne. Fitness wann du da bist, nicht wann wir offen haben.",
+                "Train4U: 24/7, Online, Vor Ort. Du bestimmst wann und wie.",
+                "Flexibilität statt Kompromisse: Train4U ist offen wenn du trainieren willst.",
+                "Train4U ist das Fitnessstudio für Menschen, die keine Öffnungszeiten brauchen. 24/7 Zugang, Live-Kurse um Mitternacht, Training in deiner Lunch-Break.",
+                "Für Berufstätige ist Zeit das kostbarste Gut. Train4U macht Fitness zu einer Option, nicht zu einem Termin.",
+                "Das klassische Fitnessstudio passt sich dir an - mit Train4U bestimmst du die Regeln."
+            ],
+            'Berufstätige-Keine Motivation-Gemeinschaft': [
+                "Train4U ist dein Accountability-Partner. Wir verbinden dich mit ehrgeizigen Berufstätigen. Wenn du nicht kommst, vermisst man dich hier.",
+                "Motivation kommt von Gemeinschaft. Train4U verbindet dich mit Menschen auf der gleichen Reise.",
+                "Train4U: Die Community treibt dich an - nicht die Willenskraft.",
+                "Allein trainieren ist einsam. Train4U ist eine Gemeinschaft von Berufstätigen, die sich gegenseitig nach oben ziehen.",
+                "Deine Community ist deine beste Motivation. Train4U bringt dich mit echten Menschen zusammen, nicht mit Fitness-Influencern."
+            ],
+            'Berufstätige-Selbstoptimierung-Persönliche Betreuung': [
+                "Train4U: Datengestützte Optimierung trifft persönliche Betreuung. Dein Trainer nutzt Leistungstests, nicht Bauchgefühl.",
+                "Optimierung braucht Daten UND eine Person, die das versteht. Train4U kombiniert beides.",
+                "Train4U misst, analysiert, optimiert - und hat einen Menschen, der dir hilft, das Beste draus zu machen.",
+                "Für Berufstätige, die auch im Fitness ROI maximieren wollen: Science trifft Personal Touch.",
+                "Data-driven Fitness mit Human Touch: Train4U ist für die, die auch im Fitnessstudio nach Effizienz streben."
+            ],
+            'Anfänger-Keine Motivation-Gemeinschaft': [
+                "Train4U bricht deine Anfänger-Angst auf. Hier trainiert wirklich JEDER auf seinem Level. Niemand schaut auf dich.",
+                "Anfänger brauchen Anfänger. Train4U ist voller Menschen, die gerade anfangen - genau wie du.",
+                "Du bist nicht allein beim Anfang. Eine ganze Community durchlebt das gleich mit dir.",
+                "Train4U ist ein sicherer Raum für Anfänger. Keine Profis die dich beurteilen - nur Menschen wie du.",
+                "Anfangen ist nicht einsam bei Train4U - es ist eine Community-Erfahrung."
+            ],
+            'Anfänger-Keine Expertise-Persönliche Betreuung': [
+                "Train4U: Dein Erfolg ist unser Erfolg. Kostenlose 1-zu-1 Einführung, fester Trainer, echtes Vertrauen.",
+                "Für Anfänger braucht es Expertise an deiner Seite. Train4U hat einen Trainer, der dich kennt.",
+                "Train4U behandelt Anfänger wie Anfänger sollten behandelt werden: mit voller Aufmerksamkeit.",
+                "Keine Angst vor dem ersten Tag. Dein fester Trainer macht dich in 4 Wochen zum Profi.",
+                "Anfangen bedeutet bei Train4U: Ein Trainer, der nur für dich da ist."
+            ],
+            'Anfänger-Selbstoptimierung-Persönliche Betreuung': [
+                "Train4U folgt dem 12-Wochen-Prinzip: Basis → Stärke → Ausdauer. Du siehst Fortschritt strukturiert.",
+                "Von Anfänger zu deiner besten Version - in 12 Wochen, strukturiert, mit Trainer.",
+                "Anfänger brauchen einen Plan. Train4U hat einen - und einen Menschen, der dich durchführt.",
+                "Train4U ist nicht chaotisch: 12 Wochen, 3 Phasen, sichtbare Transformation.",
+                "Strukturierte Anfänger-Transformation mit persönlicher Betreuung: Das ist Train4U."
+            ],
+            'Frauen-Keine Motivation-Gemeinschaft': [
+                "Train4U: Dieser Ort ist FÜR DICH designt - von Frauen, mit Trainerinnen, von Frauen wie dir.",
+                "Frauen trainieren anders - bei Train4U ist das normal. Keine Konkurrenz, nur gegenseitige Unterstützung.",
+                "Das ist nicht nur ein Fitnessstudio - es ist deine Gemeinschaft von Frauen, die verstehen.",
+                "Train4U versteht das weibliche Fitness-Erlebnis. Eine Community, die dich anfeuert, nicht verurteilt.",
+                "Für Frauen, von Frauen. Train4U ist ein Ort, wo du dich zu Hause fühlst."
+            ],
+            'Frauen-Selbstoptimierung-Gemeinschaft': [
+                "Train4U: Fitness ist Selbstliebe. Wir trainieren nicht um andere zu beeindrucken - für uns selbst.",
+                "Frauen bei Train4U trainieren für sich selbst, nicht für andere. Eine Community der Selbstoptimierung.",
+                "Selbstliebe durch Fitness: Train4U ist für Frauen, die das verstehen.",
+                "Train4U ist ein Ort wo Frauen aufeinander aufpassen und gemeinsam wachsen.",
+                "Für Frauen, die sich selbst an erste Stelle stellen: Train4U ist dein Studio."
+            ],
+            'Frauen-Zeitmangel-Flexibilität': [
+                "Train4U versteht dein Leben. Mama-freundliche Kurse mit Kinderbetreuung, 15-Minuten-Trainings.",
+                "Fitness sollte dein Leben nicht belasten - es sollte es verbessern. Train4U passt sich dir an.",
+                "Für Frauen mit echtem Leben: flexible Zeiten, Kinderbetreuung, realistische Trainings.",
+                "Mütter, Karrierefrauen, alle: Train4U bietet die Flexibilität, die du brauchst.",
+                "Train4U respektiert, dass dein Leben komplex ist - und macht Fitness trotzdem möglich."
+            ],
+            'Über 50-Flexibilität-Persönliche Betreuung': [
+                "Train4U: Dein bestes Jahrzehnt fängt JETZT an. Trainer, die verstehen, dass Knieverletzungen real sind.",
+                "Mit 50+ trainierst du smart, nicht hart. Train4U weiß wie.",
+                "Train4U ist designt für Menschen 50+: Flexibilität, Verständnis, Ergebnisse.",
+                "Trainieren im besten Alter: Train4U versteht deinen Körper und respektiert ihn.",
+                "50+ ist nicht zu alt - es ist die beste Zeit. Train4U zeigt dir wie."
+            ],
+            'Über 50-Keine Expertise-Messbare Resultate': [
+                "Train4U: Wissenschaft, nicht Ratschläge. DEXA-Scans, Bluttests, echte Messungen.",
+                "Du siehst objektiv: mein Körper wird BESSER. Das ist Train4U für 50+.",
+                "Für Menschen 50+, die Beweise wollen: Train4U misst alles wissenschaftlich.",
+                "Trainieren mit Messungen: Train4U zeigt dir nicht nur Gefühle, sondern echte Ergebnisse.",
+                "50+ verdient wissenschaftliche Betreuung - und genau das bietet Train4U."
+            ],
+            'Über 50-Selbstoptimierung-Gemeinschaft': [
+                "Train4U: Du wirst nicht älter, du wirst STÄRKER. Eine Gruppe von Menschen 50+, die aufsteigen.",
+                "50+ ist deine beste Phase. Train4U verbindet dich mit anderen, die das leben.",
+                "Mit 50+ kannst du stärker sein als mit 30 - wenn du es richtig machst. Train4U zeigt dir wie.",
+                "Train4U ist für Menschen 50+, die gerade anfangen - ihre beste Version zu werden.",
+                "Dein neues Normal ist fit, energetisch, lebendig. Train4U macht das möglich."
+            ]
         };
+
+        function getCreativityLevel() {
+            return Math.floor(Math.random() * 3); // 0 = Standard, 1 = Mittel, 2 = Hochkreativ
+        }
 
         function generateVP() {
             if (!selectedOptions.targetGroup.length || !selectedOptions.problem.length || !selectedOptions.value.length) {
@@ -885,10 +1028,14 @@
             const vl = selectedOptions.value[0];
             const key = `${tg}-${pb}-${vl}`;
             
-            let vp = vpTemplates[key];
-            
-            if (!vp) {
-                vp = `Train4U ist für ${tg}, die ${pb} haben. Wir bieten ${vl} - damit Fitness wirklich funktioniert und in dein Leben passt.`;
+            let vp;
+            if (vpDatabase[key]) {
+                const templates = vpDatabase[key];
+                const randomIndex = Math.floor(Math.random() * templates.length);
+                vp = templates[randomIndex];
+            } else {
+                // Fallback für unverwartete Kombinationen
+                vp = `Train4U ist für ${tg}, die mit ${pb} kämpfen. Wir bieten dir ${vl} - damit Fitness endlich funktioniert und zu deinem Leben passt, nicht umgekehrt.`;
             }
             
             document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
@@ -1072,6 +1219,71 @@
                 html += '</div>';
             });
             document.getElementById('feedbackSection').innerHTML = html;
+        }
+
+        function exportPDF() {
+            const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
+            
+            let content = `<h1>Marketing-Übung - Ihre Antworten</h1>
+            <p><strong>Freie Universität Bozen</strong></p>
+            <p>Datum: ${new Date().toLocaleDateString('de-DE')}</p>
+            <hr>
+            
+            <h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>`;
+            
+            selected.forEach((c, i) => {
+                content += `<h3>${c}</h3>
+                <p><strong>Problem:</strong></p>
+                <p>${document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)'}</p>
+                <p><strong>Nutzenversprechen:</strong></p>
+                <p>${document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)'}</p>
+                <p><strong>Beispiel:</strong></p>
+                <p>${document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)'}</p>
+                <hr>`;
+            });
+            
+            content += `<h2>Aufgabe 2: IKEA Case Study</h2>
+            <p><strong>Nutzenversprechen:</strong></p>
+            <p>${document.getElementById('ex2q1').value || '(Keine Antwort)'}</p>
+            <p><strong>CRM-Instrumente:</strong></p>
+            <p>${document.getElementById('ex2q2').value || '(Keine Antwort)'}</p>
+            <p><strong>Orientierung:</strong></p>
+            <p>${document.getElementById('ex2q3').value || '(Keine Antwort)'}</p>
+            <hr>
+            
+            <h2>Aufgabe 3: Starbucks Fallanalyse</h2>
+            <p><strong>Nutzenversprechen:</strong></p>
+            <p>${document.getElementById('ex3q1').value || '(Keine Antwort)'}</p>
+            <p><strong>Kundenerlebnis:</strong></p>
+            <p>${document.getElementById('ex3q2').value || '(Keine Antwort)'}</p>
+            <p><strong>Kundenbindung:</strong></p>
+            <p>${document.getElementById('ex3q3').value || '(Keine Antwort)'}</p>
+            <p><strong>Service-Dominant Logic:</strong></p>
+            <p>${document.getElementById('ex3q4').value || '(Keine Antwort)'}</p>
+            <p><strong>Italien:</strong></p>
+            <p>${document.getElementById('ex3q5').value || '(Keine Antwort)'}</p>
+            <hr>
+            
+            <h2>Aufgabe 4: Fitnessstudio Train4U</h2>
+            <p><strong>Nutzenversprechen:</strong></p>
+            <p>${document.getElementById('ex4q1').value || '(Keine Antwort)'}</p>
+            <p><strong>Konkrete Maßnahmen:</strong></p>
+            <p>${document.getElementById('ex4q2').value || '(Keine Antwort)'}</p>
+            <p><strong>Werbestrategie:</strong></p>
+            <p>${document.getElementById('ex4q3').value || '(Keine Antwort)'}</p>`;
+            
+            const element = document.getElementById('pdfExport');
+            element.innerHTML = content;
+            
+            const opt = {
+                margin: 10,
+                filename: 'Marketing-Übung-Antworten.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { orientation: 'portrait', unit: 'mm', format: 'a4' }
+            };
+            
+            html2pdf().set(opt).from(element).save();
         }
 
         document.addEventListener('input', e => {
