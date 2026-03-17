@@ -47,11 +47,7 @@
             top: 0;
             z-index: 100;
         }
-        .header-logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: #0066CC;
-        }
+        .header-logo { font-size: 28px; font-weight: 700; color: #0066CC; }
         .timer-bar {
             padding: 16px 20px;
             background: var(--primary-light);
@@ -60,18 +56,8 @@
             align-items: center;
             justify-content: space-between;
         }
-        .timer-label {
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--primary);
-            text-transform: uppercase;
-        }
-        .timer {
-            font-size: 18px;
-            font-weight: 700;
-            color: var(--primary);
-            font-family: 'Courier New', monospace;
-        }
+        .timer-label { font-size: 12px; font-weight: 600; color: var(--primary); text-transform: uppercase; }
+        .timer { font-size: 18px; font-weight: 700; color: var(--primary); font-family: 'Courier New', monospace; }
         .content { flex: 1; overflow-y: auto; }
         .content-inner { padding: 24px 20px 40px; }
         .landing-page {
@@ -83,11 +69,7 @@
             text-align: center;
             min-height: 100%;
         }
-        .landing-icon {
-            font-size: 80px;
-            margin-bottom: 24px;
-            animation: float 3s ease-in-out infinite;
-        }
+        .landing-icon { font-size: 80px; margin-bottom: 24px; animation: float 3s ease-in-out infinite; }
         @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
         .landing-page h1 { font-size: 32px; font-weight: 700; margin-bottom: 12px; }
         .landing-page p { font-size: 16px; color: var(--text-secondary); margin-bottom: 12px; }
@@ -107,13 +89,7 @@
         .exercise { display: none; animation: fadeIn 0.3s ease-in; }
         .exercise.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-        .task-counter {
-            font-size: 12px;
-            font-weight: 700;
-            color: var(--primary);
-            text-transform: uppercase;
-            margin-bottom: 24px;
-        }
+        .task-counter { font-size: 12px; font-weight: 700; color: var(--primary); text-transform: uppercase; margin-bottom: 24px; }
         .exercise h2 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
         .exercise-description {
             font-size: 15px;
@@ -177,12 +153,7 @@
             margin-bottom: 20px;
             border: 1px solid var(--gray-200);
         }
-        .generator-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--primary);
-            margin-bottom: 12px;
-        }
+        .generator-title { font-size: 14px; font-weight: 600; color: var(--primary); margin-bottom: 12px; }
         textarea {
             width: 100%;
             padding: 14px;
@@ -265,32 +236,11 @@
         .score-icon { font-size: 64px; margin-bottom: 20px; }
         .score-section h2 { font-size: 28px; font-weight: 700; margin-bottom: 8px; }
         .score-section p { font-size: 15px; color: var(--text-secondary); margin-bottom: 24px; }
-        .feedback-section {
-            margin-top: 32px;
-            padding-top: 32px;
-            border-top: 1px solid var(--gray-200);
-            text-align: left;
-        }
+        .feedback-section { margin-top: 32px; padding-top: 32px; border-top: 1px solid var(--gray-200); text-align: left; }
         .feedback-title { font-size: 18px; font-weight: 700; margin-bottom: 20px; }
-        .feedback-item {
-            margin-bottom: 24px;
-            padding: 16px;
-            background: var(--gray-50);
-            border-radius: 12px;
-        }
-        .feedback-item h4 {
-            font-size: 14px;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
-        .rating-row {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 16px;
-        }
+        .feedback-item { margin-bottom: 24px; padding: 16px; background: var(--gray-50); border-radius: 12px; }
+        .feedback-item h4 { font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; }
+        .rating-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; }
         .rating-icon {
             width: 32px;
             height: 32px;
@@ -306,29 +256,11 @@
         .rating-icon.green { background: var(--success); }
         .rating-icon.yellow { background: var(--warning); }
         .rating-icon.red { background: var(--danger); }
-        .rating-text strong {
-            color: var(--text-primary);
-            display: block;
-            margin-bottom: 4px;
-        }
-        .rating-text {
-            color: var(--text-secondary);
-            font-size: 13px;
-            line-height: 1.5;
-        }
-        .traffic-legend {
-            margin-top: 24px;
-            padding: 16px;
-            background: var(--gray-50);
-            border-radius: 12px;
-        }
+        .rating-text strong { color: var(--text-primary); display: block; margin-bottom: 4px; }
+        .rating-text { color: var(--text-secondary); font-size: 13px; line-height: 1.5; }
+        .traffic-legend { margin-top: 24px; padding: 16px; background: var(--gray-50); border-radius: 12px; }
         .legend-title { font-size: 14px; font-weight: 700; margin-bottom: 12px; }
-        .legend-item {
-            display: flex;
-            gap: 12px;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
+        .legend-item { display: flex; gap: 12px; margin-bottom: 8px; font-size: 13px; }
         .legend-icon {
             width: 20px;
             height: 20px;
@@ -341,35 +273,10 @@
             font-weight: 700;
             color: white;
         }
-        .error-message {
-            color: var(--danger);
-            font-size: 13px;
-            font-weight: 600;
-            margin-top: 8px;
-            display: none;
-        }
-        .export-section {
-            margin-top: 24px;
-            padding: 20px;
-            background: var(--gray-50);
-            border-radius: 12px;
-            border: 2px solid var(--success);
-            text-align: center;
-        }
+        .error-message { color: var(--danger); font-size: 13px; font-weight: 600; margin-top: 8px; display: none; }
+        .export-section { margin-top: 24px; padding: 20px; background: var(--gray-50); border-radius: 12px; border: 2px solid var(--success); text-align: center; }
         .export-title { font-size: 16px; font-weight: 700; margin-bottom: 12px; }
-        .export-btn {
-            padding: 14px 32px;
-            background: var(--success);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .export-btn { padding: 14px 32px; background: var(--success); color: white; border: none; border-radius: 10px; font-size: 16px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
@@ -507,7 +414,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
-                                <div class="generator-options">
+                                <div class="generator-options" id="tg-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Berufstätige</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Anfänger</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'tg')">Frauen</div>
@@ -517,7 +424,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welches Problem?</div>
-                                <div class="generator-options">
+                                <div class="generator-options" id="pb-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Zeitmangel</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Motivation</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'pb')">Keine Expertise</div>
@@ -527,7 +434,7 @@
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; margin-bottom: 8px;">Welcher Mehrwert?</div>
-                                <div class="generator-options">
+                                <div class="generator-options" id="vl-options">
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Gemeinschaft</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Flexibilität</div>
                                     <div class="generator-option" onclick="selectGenOption(this, 'vl')">Personal Trainer</div>
@@ -606,169 +513,41 @@
         let timerInterval;
         let genOptions = { tg: '', pb: '', vl: '' };
 
-        // SLOGANS DATENBANK
         const vpLibrary = {
-            'Berufstätige-Zeitmangel-Gemeinschaft': [
-                "30 Minuten. Maximale Ergebnisse. Mit deinem Team.",
-                "Effizient trainiert. Zusammen stärker.",
-                "Kurz und kraftvoll – trainieren mit Sinn für Zeit.",
-                "Für Profis: Fitness, die in deinen Zeitplan passt.",
-                "Train schnell. Train smart. Train gemeinsam.",
-                "Der schnellste Weg zum Erfolg. Zusammen.",
-                "Kompakt trainiert. Gemeinsam gewonnen."
-            ],
-            'Berufstätige-Zeitmangel-Flexibilität': [
-                "24/7 Fitness für dein Leben – nicht umgekehrt.",
-                "Trainiere um 5 Uhr oder nachts. Hier geht beides.",
-                "Dein Fitnessstudio funktioniert, wenn du es brauchst.",
-                "Flexible Zeiten. Echte Ergebnisse.",
-                "Keine Ausreden mehr: Wir sind immer da."
-            ],
-            'Berufstätige-Zeitmangel-PersonalTrainer': [
-                "Effizienz trainiert sich nicht allein – mit deinem Trainer.",
-                "30 Minuten mit dem richtigen Plan machen den Unterschied.",
-                "Professionelle Trainings für professionelle Menschen.",
-                "Keine Zeit für Umschweife. Dein Trainer weiß, wie es geht."
-            ],
-            'Berufstätige-Zeitmangel-GarantierteErgebnisse': [
-                "Kurz trainiert. Schnell Erfolg. Lange Motivation.",
-                "30 Minuten täglich = messbare Veränderung.",
-                "Train4U: Effizienz, die zählt.",
-                "Sichtbare Ergebnisse in kurzer Zeit."
-            ],
-            'Berufstätige-Motivationsmangel-Gemeinschaft': [
-                "Allein trainieren ist einsam. Bei Train4U nicht.",
-                "Mit der richtigen Gruppe trainiert sich's leichter.",
-                "Deine Fitness-Community wartet.",
-                "Zusammen zum Ziel. Zusammen am stärksten."
-            ],
-            'Berufstätige-Motivationsmangel-Flexibilität': [
-                "Trainiere, wenn die Motivation da ist – bei uns immer möglich.",
-                "Keine Öffnungszeiten-Frustration mehr. 24/7 Zugang.",
-                "Wann immer du bereit bist. Wir sind bereit."
-            ],
-            'Berufstätige-Motivationsmangel-PersonalTrainer': [
-                "Motivation braucht Expertise. Dein Trainer hat beides.",
-                "Mit einem Trainer wird Unwille zu Willenskraft.",
-                "Ein Trainer, der an dich glaubt. Das ändert alles."
-            ],
-            'Berufstätige-Motivationsmangel-GarantierteErgebnisse': [
-                "Erfolg motiviert stärker als jede Rede.",
-                "Messbare Ergebnisse = messbare Motivation.",
-                "Erste kleine Erfolge führen zu großem Durchhaltevermögen."
-            ],
-            'Anfänger-Zeitmangel-Gemeinschaft': [
-                "Anfangen passt in jeden Zeitplan – mit der richtigen Gruppe.",
-                "Deine Anfänger-Crew wartet auf dich.",
-                "Mit anderen Anfängern verlierst du die Angst."
-            ],
-            'Anfänger-Zeitmangel-Flexibilität': [
-                "Anfangen bedeutet nicht in ein enges Zeitfenster passen.",
-                "Flexible Zeiten für flexibles Anfangen.",
-                "24/7 verfügbar für deinen perfekten Anfang."
-            ],
-            'Anfänger-Zeitmangel-PersonalTrainer': [
-                "Mit einem Trainer anfangen = Fehler vermeiden.",
-                "Professionelle Anleitung vom ersten Tag.",
-                "Ein Trainer, der Anfänger versteht."
-            ],
-            'Anfänger-Zeitmangel-GarantierteErgebnisse': [
-                "Schnell anfangen. Schnell Erfolg sehen. Weitermachen.",
-                "Erste Erfolge in 2 Wochen. Garantiert.",
-                "Train4U: Erfolg vom ersten Trainingstag."
-            ],
-            'Frauen-Zeitmangel-Gemeinschaft': [
-                "Kurz trainiert. Mit Frauen, die dich verstehen.",
-                "Für Frauen von Frauen: Zeit + Gemeinschaft.",
-                "Mit der richtigen Frauengruppe macht Zeit mehr aus."
-            ],
-            'Frauen-Zeitmangel-Flexibilität': [
-                "Mama-Zeit. Karriere-Zeit. Fitness-Zeit. Alles möglich.",
-                "Für Frauen mit echtem Leben.",
-                "Flexibilität, die Frauen-Leben respektiert."
-            ],
-            'Frauen-Zeitmangel-PersonalTrainer': [
-                "Mit einer Trainerin, die versteht – wird Zeitdruck zu Effizienz.",
-                "Deine Trainerin ist selbst Mama und Profi.",
-                "Eine Trainerin, die dein Leben kennt."
-            ],
-            'Frauen-Zeitmangel-GarantierteErgebnisse': [
-                "Kurz trainiert. Schnell Erfolg. Endlich Zeit für DICH.",
-                "15 Minuten pro Tag = Veränderung.",
-                "Wenn Frauen Ergebnisse sehen, hören sie nicht auf."
-            ],
-            '50plus-Zeitmangel-Gemeinschaft': [
-                "Mit 50+ wird Zeit kostbar. Hier wird sie sinnvoll genutzt.",
-                "Mit Gleichgesinnten 50+ noch stärker.",
-                "Mit 50+: Zusammen trainiert es sich besser."
-            ],
-            '50plus-Zeitmangel-Flexibilität': [
-                "Mit 50+ kennt man seinen Rhythmus. Hier passt sich Fitness an.",
-                "24/7 verfügbar für 50+ Lebensrhythmus.",
-                "Trainiere in deiner besten Tageszeit."
-            ],
-            '50plus-Zeitmangel-PersonalTrainer': [
-                "Mit 50+: Ein Trainer, der deinen Körper KENNT.",
-                "Dein Trainer versteht 50+ Biomechanik.",
-                "Ein Trainer, der 50+ kennt und respektiert."
-            ],
-            '50plus-Zeitmangel-GarantierteErgebnisse': [
-                "Mit 50+ sind Zahlen wichtig – hier siehst du sie.",
-                "Kurzes Training. Echte Ergebnisse. Messbar.",
-                "Sichtbare Erfolge mit 50+."
-            ]
+            'Berufstätige-Zeitmangel-Gemeinschaft': ["30 Minuten. Maximale Ergebnisse. Mit deinem Team.", "Effizient trainiert. Zusammen stärker.", "Kurz und kraftvoll – trainieren mit Sinn für Zeit.", "Für Profis: Fitness, die in deinen Zeitplan passt."],
+            'Berufstätige-Zeitmangel-Flexibilität': ["24/7 Fitness für dein Leben – nicht umgekehrt.", "Trainiere um 5 Uhr oder nachts. Hier geht beides.", "Dein Fitnessstudio funktioniert, wenn du es brauchst."],
+            'Berufstätige-Zeitmangel-PersonalTrainer': ["Effizienz trainiert sich nicht allein.", "30 Minuten mit dem richtigen Plan.", "Professionelle Trainings für Profis."],
+            'Berufstätige-Zeitmangel-GarantierteErgebnisse': ["Kurz trainiert. Schnell Erfolg.", "30 Minuten täglich = messbare Veränderung."],
+            'Berufstätige-Motivationsmangel-Gemeinschaft': ["Allein trainieren ist einsam. Bei Train4U nicht.", "Mit der richtigen Gruppe trainiert sich's leichter."],
+            'Berufstätige-Motivationsmangel-Flexibilität': ["Trainiere, wenn die Motivation da ist.", "24/7 Zugang für deine Motivation."],
+            'Berufstätige-Motivationsmangel-PersonalTrainer': ["Motivation braucht Expertise.", "Mit einem Trainer wird Unwille zu Willenskraft."],
+            'Berufstätige-Motivationsmangel-GarantierteErgebnisse': ["Erfolg motiviert stärker.", "Messbare Ergebnisse = Motivation."],
+            'Anfänger-Zeitmangel-Gemeinschaft': ["Anfangen mit der richtigen Gruppe.", "Deine Anfänger-Crew wartet."],
+            'Anfänger-Zeitmangel-Flexibilität': ["Flexible Zeiten für dein Anfangen.", "24/7 für deinen Start."],
+            'Anfänger-Zeitmangel-PersonalTrainer': ["Mit Trainer anfangen = sicherer Start.", "Professionelle Anleitung."],
+            'Anfänger-Zeitmangel-GarantierteErgebnisse': ["Erste Erfolge in 2 Wochen.", "Erfolg vom ersten Trainingstag."],
+            'Frauen-Zeitmangel-Gemeinschaft': ["Mit Frauen, die dich verstehen.", "Frauenpower in kompakter Form."],
+            'Frauen-Zeitmangel-Flexibilität': ["Mama + Karriere + Fitness = möglich.", "Für Frauen mit echtem Leben."],
+            'Frauen-Zeitmangel-PersonalTrainer': ["Trainerin, die dein Leben kennt.", "Von Frau zu Frau."],
+            'Frauen-Zeitmangel-GarantierteErgebnisse': ["Schnell Erfolg. Endlich Zeit für DICH.", "Messbarer Erfolg."],
+            '50plus-Zeitmangel-Gemeinschaft': ["Mit 50+ wird Zeit kostbar.", "Mit Gleichgesinnten 50+ stärker."],
+            '50plus-Zeitmangel-Flexibilität': ["24/7 für 50+ Lebensrhythmus.", "Trainiere in deiner besten Zeit."],
+            '50plus-Zeitmangel-PersonalTrainer': ["Trainer, der 50+ kennt.", "Expertise, die 50+ respektiert."],
+            '50plus-Zeitmangel-GarantierteErgebnisse': ["Mit 50+ sind Zahlen wichtig.", "Sichtbare Erfolge mit 50+."]
         };
 
         const feedbackData = {
             exercise1: {
-                Apple: {
-                    problem: "Apple löst das Problem der technologischen Komplexität – indem es intuitive Geräte schafft.",
-                    value: "Premium-Design, Ökosystem-Integration, Status und Innovation.",
-                    example: "Das iPhone vereinfacht Technologie durch klare Bedienung."
-                },
-                Spotify: {
-                    problem: "Spotify löst Musikverfügbarkeit – statt CDs zu kaufen, Zugang zu Millionen Songs.",
-                    value: "Unbegrenzter Musikzugang, personalisierte Empfehlungen.",
-                    example: "Discover Weekly zeigt: Spotify versteht, was du liebst."
-                },
-                dm: {
-                    problem: "dm macht Drogerie-Produkte zugänglich und beratbar.",
-                    value: "Vielfalt, Fachberatung vor Ort, Convenience.",
-                    example: "Beratung vor Ort löst: Welches Produkt passt zu MIR?"
-                },
-                Ryanair: {
-                    problem: "Ryanair demokratisiert Flugverkehr – Menschen können reisen.",
-                    value: "Ultra-günstige Flüge, häufige Verbindungen.",
-                    example: "50€ Flüge ermöglichen echte Mobilität."
-                },
-                Airbnb: {
-                    problem: "Airbnb bietet echte, lokale Erfahrungen.",
-                    value: "Authentische Erlebnisse, bessere Preise, Flexibilität.",
-                    example: "Echte Person = echtes Erlebnis, nicht nur Unterkunft."
-                },
-                Netflix: {
-                    problem: "Netflix endet starre Programmzeiten – unbegrenzte Inhalte, jederzeit.",
-                    value: "Personalisierte Empfehlungen, Original-Content, überall.",
-                    example: "Netflix weiß WAS du schauen möchtest."
-                }
+                Apple: { problem: "Apple löst das Problem der technologischen Komplexität.", value: "Premium-Design, Ökosystem, Innovation.", example: "iPhone vereinfacht Technologie." },
+                Spotify: { problem: "Spotify löst Musikverfügbarkeit.", value: "Unbegrenzter Zugang, Personalisierung.", example: "Discover Weekly zeigt Verständnis." },
+                dm: { problem: "dm macht Produkte zugänglich.", value: "Vielfalt, Beratung, Convenience.", example: "Beratung vor Ort." },
+                Ryanair: { problem: "Ryanair demokratisiert Flugverkehr.", value: "Ultra-günstig, häufig.", example: "50€ Flüge." },
+                Airbnb: { problem: "Airbnb bietet echte Erfahrungen.", value: "Authentisch, preiswert, flexibel.", example: "Echte Person." },
+                Netflix: { problem: "Netflix endet starre Programmzeiten.", value: "Personalisiert, Original, überall.", example: "Netflix weiß deine Vorlieben." }
             },
-            exercise2: {
-                q1: "IKEA demokratisiert Design – hochwertige Möbel erschwinglich für breite Bevölkerung.",
-                q2: "CRM: (1) IKEA Family Programm (2) Planungstools + Online-Shopping (3) Showroom-Erlebnisse",
-                q3: "IKEA verfolgt Marketingorientierung – Geschäftsmodell ausgerichtet auf Kundenbedürfnisse."
-            },
-            exercise3: {
-                q1: "Starbucks verkauft nicht nur Kaffee – den 'Third Place' zwischen Zuhause und Arbeit.",
-                q2: "Erlebnis: Wohlige Atmosphäre, Personal, Personalisierung, Musik, WLAN.",
-                q3: "Kundenbindung: (1) Loyalty-Programm (2) Mobile App mit personalisierten Offers",
-                q4: "Service-Dominant Logic: Wert entsteht in der Interaktion, nicht nur im Produkt.",
-                q5: "Italien: Starke Café-Kultur, anderes Ritual, lokale Bars mit Tradition."
-            },
-            exercise4: {
-                q1: "Ein Fitnessstudio-Erlebnis: Transformation mit Betreuung und Erfolg.",
-                q2: "Maßnahmen: (1) Buddy-System (2) Sessions (3) Challenges (4) App (5) Flexible Zeiten",
-                q3: "Strategie: Authentische Stories, lokale Kampagnen, Micro-Influencer."
-            }
+            exercise2: { q1: "IKEA demokratisiert Design.", q2: "CRM: Familie, Tools, Showrooms", q3: "IKEA: Marketingorientierung." },
+            exercise3: { q1: "Starbucks = Third Place", q2: "Erlebnis: Atmosphäre, Personal, Personalisierung", q3: "Loyalty-Programm + App", q4: "Service-Dominant: Wert in Interaktion", q5: "Italien: Lokale Café-Kultur" },
+            exercise4: { q1: "Transformation mit Betreuung", q2: "Buddy-System, Sessions, Challenges", q3: "Authentische Stories, lokale Kampagnen" }
         };
 
         function handleCompanyChange() {
@@ -781,10 +560,17 @@
         }
 
         function selectGenOption(elem, category) {
-            const container = elem.parentElement;
+            // Entferne selected von ALLEN Optionen in dieser Kategorie
+            const categoryMap = { 'tg': 'tg-options', 'pb': 'pb-options', 'vl': 'vl-options' };
+            const container = document.getElementById(categoryMap[category]);
             container.querySelectorAll('.generator-option').forEach(el => el.classList.remove('selected'));
+            
+            // Füge selected zum geklickten Element hinzu
             elem.classList.add('selected');
             genOptions[category] = elem.textContent.trim();
+            
+            // Lösche den alten Slogan
+            document.getElementById('generatedVP').innerHTML = '';
         }
 
         function generateVP() {
@@ -986,7 +772,6 @@
         function downloadPDF() {
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
-            
             let yPos = 20;
             const pageHeight = doc.internal.pageSize.getHeight();
             const pageWidth = doc.internal.pageSize.getWidth();
