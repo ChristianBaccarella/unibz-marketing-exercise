@@ -262,6 +262,47 @@
             color: var(--primary);
             font-weight: 600;
         }
+
+        /* Radio Group (für Single-Select) */
+        .radio-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        
+        .radio-item {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .radio-item input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .radio-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 2px solid var(--gray-200);
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            transition: var(--transition);
+            background: white;
+            cursor: pointer;
+        }
+        
+        .radio-item input[type="radio"]:checked + .radio-label {
+            border-color: var(--primary);
+            background: var(--primary-light);
+            color: var(--primary);
+            font-weight: 600;
+        }
         
         /* Textarea */
         textarea {
@@ -640,6 +681,14 @@
         /* Hidden PDF export element */
         #pdfExport {
             display: none;
+            position: absolute;
+            left: -10000px;
+            width: 210mm;
+            height: 297mm;
+            padding: 20px;
+            background: white;
+            font-size: 12px;
+            line-height: 1.5;
         }
     </style>
 </head>
@@ -779,42 +828,78 @@
                     </div>
                     
                     <div class="question-group">
-                        <label class="question-label">Wie könnte das Nutzenversprechen dieses Fitnessstudios lauten?</label>
+                        <label class="question-label">Wie könnte der Slogan dieses Fitnessstudios lauten? Nutzen Sie den Generator und passen Sie die Antwort an, wenn Sie wollen.</label>
                         
                         <div class="generator-section">
-                            <div class="generator-title">💡 Value Proposition Generator</div>
+                            <div class="generator-title">💡 Slogan-Generator</div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Wer ist die Zielgruppe?</div>
                                 <div class="generator-options" id="targetGroup">
-                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Berufstätige</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Anfänger</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Frauen</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'targetGroup')">Über 50 Jahre</div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="tg1" name="targetGroup" value="Berufstätige" onchange="toggleOption(this, 'targetGroup')">
+                                        <label for="tg1" class="radio-label">Berufstätige</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="tg2" name="targetGroup" value="Anfänger" onchange="toggleOption(this, 'targetGroup')">
+                                        <label for="tg2" class="radio-label">Anfänger</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="tg3" name="targetGroup" value="Frauen" onchange="toggleOption(this, 'targetGroup')">
+                                        <label for="tg3" class="radio-label">Frauen</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="tg4" name="targetGroup" value="Über 50 Jahre" onchange="toggleOption(this, 'targetGroup')">
+                                        <label for="tg4" class="radio-label">Über 50 Jahre</label>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welches Problem löst das Studio?</div>
                                 <div class="generator-options" id="problem">
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Zeitmangel</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Motivation</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Selbstoptimierung</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'problem')">Keine Expertise</div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="pb1" name="problem" value="Zeitmangel" onchange="toggleOption(this, 'problem')">
+                                        <label for="pb1" class="radio-label">Zeitmangel</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="pb2" name="problem" value="Keine Motivation" onchange="toggleOption(this, 'problem')">
+                                        <label for="pb2" class="radio-label">Keine Motivation</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="pb3" name="problem" value="Selbstoptimierung" onchange="toggleOption(this, 'problem')">
+                                        <label for="pb3" class="radio-label">Selbstoptimierung</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="pb4" name="problem" value="Keine Expertise" onchange="toggleOption(this, 'problem')">
+                                        <label for="pb4" class="radio-label">Keine Expertise</label>
+                                    </div>
                                 </div>
                             </div>
                             
                             <div style="margin-bottom: 12px;">
                                 <div style="font-size: 12px; font-weight: 600; color: var(--text-primary); margin-bottom: 8px;">Welcher Mehrwert?</div>
                                 <div class="generator-options" id="value">
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Gemeinschaft</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Flexibilität</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Persönliche Betreuung</div>
-                                    <div class="generator-option" onclick="toggleOption(this, 'value')">Messbare Resultate</div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="vl1" name="value" value="Gemeinschaft" onchange="toggleOption(this, 'value')">
+                                        <label for="vl1" class="radio-label">Gemeinschaft</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="vl2" name="value" value="Flexibilität" onchange="toggleOption(this, 'value')">
+                                        <label for="vl2" class="radio-label">Flexibilität</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="vl3" name="value" value="Persönliche Betreuung" onchange="toggleOption(this, 'value')">
+                                        <label for="vl3" class="radio-label">Persönliche Betreuung</label>
+                                    </div>
+                                    <div class="radio-item">
+                                        <input type="radio" id="vl4" name="value" value="Messbare Resultate" onchange="toggleOption(this, 'value')">
+                                        <label for="vl4" class="radio-label">Messbare Resultate</label>
+                                    </div>
                                 </div>
                             </div>
                             
-                            <button class="generate-btn" onclick="generateVP()">🎯 Nutzenversprechen generieren</button>
+                            <button class="generate-btn" onclick="generateVP()">🎯 Slogan generieren</button>
                             <div id="generatedVP"></div>
                         </div>
                         
@@ -912,17 +997,14 @@
             exercise4: { q1: ['fitnessstudio', 'train4u', 'gemeinschaft', 'transformation', 'wachstum', 'ort'], q2: ['buddy', 'training', 'app', 'tracking', 'session', 'erfolg'], q3: ['instagram', 'authentisch', 'lokal', 'facebook', 'referral', 'parks'] }
         };
 
-        // MASSIV ERWEITERTE VP-Templates mit Variationen und Kreativitäts-Levels
+        // MASSIV ERWEITERTE VP-Templates
         const vpDatabase = {
             'Berufstätige-Zeitmangel-Gemeinschaft': [
-                // Level 1: Standard
                 "Train4U versteht, dass deine Zeit kostbar ist. Wir bieten dir 30-minütige Power-Trainings, die wissenschaftlich optimiert sind. Das Beste: Du trainierst nicht allein. Eine Community von Berufstätigen unterstützt dich und feiert deine Fortschritte.",
                 "Für Berufstätige ohne Zeit: 30-Minuten-Trainings, die wirken. Plus eine Community, die dich jeden Tag pusht.",
                 "Train4U: Effiziente Trainings, echte Gemeinschaft. Perfekt für Berufstätige, die wenig Zeit haben.",
-                // Level 2: Mittlere Kreativität
                 "Train4U ist dein Time-Hacker für Fitness. Statt stundenlanges Pumpak - 30 Minuten wissenschaftlich getuned. Und du machst es nicht allein: eine Community von Menschen, die verstehen, wie dein Leben funktioniert.",
                 "Fitness sollte nicht in Konkurrenz zu deiner Karriere stehen. Train4U bietet effiziente Trainings UND eine Community, die diese Balance versteht.",
-                // Level 3: Hochkreativ
                 "Train4U ist dein Fitnessstudio für Menschen, die ihr Leben ernst nehmen. 30 Minuten, die mehr bringen als 3 Stunden Mainstream. Eine Community, die nicht über Fitness spricht - sie LEBT sie gemeinsam.",
                 "Berufstätige trainieren anders: smart, effizient, zusammen. Train4U ist der Ort, wo deine Karriere und Fitness nicht konkurrieren - sie unterstützen sich gegenseitig."
             ],
@@ -1013,13 +1095,18 @@
             ]
         };
 
-        function getCreativityLevel() {
-            return Math.floor(Math.random() * 3); // 0 = Standard, 1 = Mittel, 2 = Hochkreativ
+        function toggleOption(element, category) {
+            document.querySelectorAll(`input[name="${element.name}"]`).forEach(radio => {
+                radio.checked = false;
+            });
+            element.checked = true;
+            const value = element.value;
+            selectedOptions[category] = [value];
         }
 
         function generateVP() {
             if (!selectedOptions.targetGroup.length || !selectedOptions.problem.length || !selectedOptions.value.length) {
-                alert('Bitte wählen Sie aus jeder Kategorie mindestens eine Option aus!');
+                alert('Bitte wählen Sie aus jeder Kategorie eine Option aus!');
                 return;
             }
 
@@ -1034,19 +1121,10 @@
                 const randomIndex = Math.floor(Math.random() * templates.length);
                 vp = templates[randomIndex];
             } else {
-                // Fallback für unverwartete Kombinationen
                 vp = `Train4U ist für ${tg}, die mit ${pb} kämpfen. Wir bieten dir ${vl} - damit Fitness endlich funktioniert und zu deinem Leben passt, nicht umgekehrt.`;
             }
             
             document.getElementById('generatedVP').innerHTML = `<div class="generated-vp">"${vp}"<button class="copy-btn" onclick="copyToTextarea('ex4q1', '${vp.replace(/"/g, '\\"')}')">📋 In Antwort kopieren</button></div>`;
-        }
-
-        function toggleOption(element, category) {
-            element.classList.toggle('selected');
-            const text = element.textContent.trim();
-            const index = selectedOptions[category].indexOf(text);
-            if (index > -1) selectedOptions[category].splice(index, 1);
-            else selectedOptions[category].push(text);
         }
 
         function copyToTextarea(id, text) {
@@ -1224,53 +1302,53 @@
         function exportPDF() {
             const selected = Array.from(document.querySelectorAll('input[name="companies"]:checked')).map(cb => cb.value);
             
-            let content = `<h1>Marketing-Übung - Ihre Antworten</h1>
-            <p><strong>Freie Universität Bozen</strong></p>
-            <p>Datum: ${new Date().toLocaleDateString('de-DE')}</p>
-            <hr>
+            let content = '<h1>Marketing-Übung - Ihre Antworten</h1>';
+            content += '<p><strong>Freie Universität Bozen</strong></p>';
+            content += '<p>Datum: ' + new Date().toLocaleDateString('de-DE') + '</p>';
+            content += '<hr>';
             
-            <h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>`;
+            content += '<h2>Aufgabe 1: Nutzenversprechen verschiedener Unternehmen</h2>';
             
             selected.forEach((c, i) => {
-                content += `<h3>${c}</h3>
-                <p><strong>Problem:</strong></p>
-                <p>${document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)'}</p>
-                <p><strong>Nutzenversprechen:</strong></p>
-                <p>${document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)'}</p>
-                <p><strong>Beispiel:</strong></p>
-                <p>${document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)'}</p>
-                <hr>`;
+                content += '<h3>' + c + '</h3>';
+                content += '<p><strong>Problem:</strong></p>';
+                content += '<p>' + (document.getElementById(`ex1_${i}_q1`).value || '(Keine Antwort)') + '</p>';
+                content += '<p><strong>Nutzenversprechen:</strong></p>';
+                content += '<p>' + (document.getElementById(`ex1_${i}_q2`).value || '(Keine Antwort)') + '</p>';
+                content += '<p><strong>Beispiel:</strong></p>';
+                content += '<p>' + (document.getElementById(`ex1_${i}_q3`).value || '(Keine Antwort)') + '</p>';
+                content += '<hr>';
             });
             
-            content += `<h2>Aufgabe 2: IKEA Case Study</h2>
-            <p><strong>Nutzenversprechen:</strong></p>
-            <p>${document.getElementById('ex2q1').value || '(Keine Antwort)'}</p>
-            <p><strong>CRM-Instrumente:</strong></p>
-            <p>${document.getElementById('ex2q2').value || '(Keine Antwort)'}</p>
-            <p><strong>Orientierung:</strong></p>
-            <p>${document.getElementById('ex2q3').value || '(Keine Antwort)'}</p>
-            <hr>
+            content += '<h2>Aufgabe 2: IKEA Case Study</h2>';
+            content += '<p><strong>Nutzenversprechen:</strong></p>';
+            content += '<p>' + (document.getElementById('ex2q1').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>CRM-Instrumente:</strong></p>';
+            content += '<p>' + (document.getElementById('ex2q2').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Orientierung:</strong></p>';
+            content += '<p>' + (document.getElementById('ex2q3').value || '(Keine Antwort)') + '</p>';
+            content += '<hr>';
             
-            <h2>Aufgabe 3: Starbucks Fallanalyse</h2>
-            <p><strong>Nutzenversprechen:</strong></p>
-            <p>${document.getElementById('ex3q1').value || '(Keine Antwort)'}</p>
-            <p><strong>Kundenerlebnis:</strong></p>
-            <p>${document.getElementById('ex3q2').value || '(Keine Antwort)'}</p>
-            <p><strong>Kundenbindung:</strong></p>
-            <p>${document.getElementById('ex3q3').value || '(Keine Antwort)'}</p>
-            <p><strong>Service-Dominant Logic:</strong></p>
-            <p>${document.getElementById('ex3q4').value || '(Keine Antwort)'}</p>
-            <p><strong>Italien:</strong></p>
-            <p>${document.getElementById('ex3q5').value || '(Keine Antwort)'}</p>
-            <hr>
+            content += '<h2>Aufgabe 3: Starbucks Fallanalyse</h2>';
+            content += '<p><strong>Nutzenversprechen:</strong></p>';
+            content += '<p>' + (document.getElementById('ex3q1').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Kundenerlebnis:</strong></p>';
+            content += '<p>' + (document.getElementById('ex3q2').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Kundenbindung:</strong></p>';
+            content += '<p>' + (document.getElementById('ex3q3').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Service-Dominant Logic:</strong></p>';
+            content += '<p>' + (document.getElementById('ex3q4').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Italien:</strong></p>';
+            content += '<p>' + (document.getElementById('ex3q5').value || '(Keine Antwort)') + '</p>';
+            content += '<hr>';
             
-            <h2>Aufgabe 4: Fitnessstudio Train4U</h2>
-            <p><strong>Nutzenversprechen:</strong></p>
-            <p>${document.getElementById('ex4q1').value || '(Keine Antwort)'}</p>
-            <p><strong>Konkrete Maßnahmen:</strong></p>
-            <p>${document.getElementById('ex4q2').value || '(Keine Antwort)'}</p>
-            <p><strong>Werbestrategie:</strong></p>
-            <p>${document.getElementById('ex4q3').value || '(Keine Antwort)'}</p>`;
+            content += '<h2>Aufgabe 4: Fitnessstudio Train4U</h2>';
+            content += '<p><strong>Slogan:</strong></p>';
+            content += '<p>' + (document.getElementById('ex4q1').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Konkrete Maßnahmen:</strong></p>';
+            content += '<p>' + (document.getElementById('ex4q2').value || '(Keine Antwort)') + '</p>';
+            content += '<p><strong>Werbestrategie:</strong></p>';
+            content += '<p>' + (document.getElementById('ex4q3').value || '(Keine Antwort)') + '</p>';
             
             const element = document.getElementById('pdfExport');
             element.innerHTML = content;
