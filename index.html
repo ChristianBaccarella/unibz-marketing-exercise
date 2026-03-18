@@ -41,8 +41,8 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
 .gen-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
 .gen-opt { padding: 10px; background: white; border: 2px solid #E5E7EB; border-radius: 10px; text-align: center; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.3s; }
 .gen-opt.sel { background: #1F7FD4; border-color: #1F7FD4; color: white; }
-.gen-btn { width: 100%; padding: 12px; background: #1F7FD4; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-bottom: 12px; }
-.slogan-box { padding: 14px; background: white; border-left: 4px solid #10B981; border-radius: 10px; margin-bottom: 12px; }
+.gen-btn { width: 100%; padding: 12px; background: #1F7FD4; color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer; margin-bottom: 12px; font-size: 14px; }
+.slogan-box { padding: 14px; background: white; border-left: 4px solid #10B981; border-radius: 10px; margin-bottom: 12px; font-style: italic; font-size: 14px; line-height: 1.6; }
 .copy-btn { width: 100%; padding: 10px; background: #10B981; color: white; border: none; border-radius: 8px; font-size: 13px; font-weight: 600; cursor: pointer; margin-top: 8px; }
 .result { display: none; text-align: center; padding: 40px 20px; }
 .result.show { display: block; }
@@ -229,7 +229,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                         </div>
                     </div>
                     
-                    <button class="gen-btn" onclick="makeSlogan()">��� Slogan generieren!</button>
+                    <button class="gen-btn" onclick="makeSlogan()">Slogan generieren</button>
                     <div id="sloganbox"></div>
                 </div>
                 <div class="q-label" style="margin-top:16px">Ihre Slogan-Idee:</div>
@@ -258,7 +258,7 @@ textarea:focus { outline: none; border-color: #1F7FD4; box-shadow: 0 0 0 3px rgb
                 <div style="display:flex;gap:12px;font-size:13px"><div style="display:flex;align-items:center;gap:8px"><div style="width:20px;height:20px;border-radius:50%;background:#EF4444;flex-shrink:0"></div><strong>Rot (<50%):</strong> Ähnlichkeit zur Musterlösung gering</div></div>
             </div>
             <div class="export">
-                <button class="export-btn" onclick="makePDF()">📥 PDF herunterladen</button>
+                <button class="export-btn" onclick="makePDF()">PDF herunterladen</button>
             </div>
         </div>
     </div>
@@ -328,34 +328,30 @@ const task4Solutions = {
 };
 
 const slogans = {
-    'Berufstätige-Zeitmangel-Gemeinschaft': ['30 Minuten. Maximale Ergebnisse. Mit deinem Team.', 'Effizient trainiert. Zusammen stärker. Train4U.', 'Kurz trainieren. Lang motiviert. Mit deinem Team.', 'Deine Mittagspause. Dein Studio. Dein Erfolg.', 'Weniger Zeit. Bessere Ergebnisse. Mit Freunden.'],
-    'Berufstätige-Zeitmangel-Motivation': ['Mit deinem Trainer. Effizient stark.', 'Professionell. Schnell. Motiviert.', 'Ein Coach. Ein Plan. Ein Ziel.', 'Trainiere wie ein Pro. In deiner Zeit.', 'Mit Trainer zum Erfolg. Schnell.'],
-    'Berufstätige-Zeitmangel-Expertise': ['Mit Experte. Richtig trainieren.', 'Professionell. Sicher. Effektiv.', 'Dein Trainer. Dein Plan. Dein Erfolg.', 'Expertenwissen in 30 Minuten.', 'Richtig trainieren. Sicher ankommen.'],
-    'Berufstätige-Zeitmangel-Erfolg': ['Kurz trainiert. Schnell Erfolg.', '30 Minuten = Veränderung.', 'Sichtbare Erfolge in wenigen Wochen.', 'Trainiere effizient. Sehe Ergebnisse.', 'Kleine Zeit. Großer Erfolg.'],
-    'Anfänger-Zeitmangel-Gemeinschaft': ['Mit der Gruppe anfangen.', 'Deine Anfänger-Crew wartet.', 'Zusammen ist Anfangen leichter.', 'Dein Anfang. Deine Crew. Dein Erfolg.', 'Kein Scham. Viel Spaß. Gemeinsam.'],
-    'Anfänger-Zeitmangel-Motivation': ['Mit Trainer. Sicher starten.', 'Von Tag 1. Richtig anfangen.', 'Trainer zeigt dir den Weg.', 'Anfänger? Kein Problem. Mit uns.', 'Dein Trainer. Dein Start. Dein Weg.'],
-    'Anfänger-Zeitmangel-Expertise': ['Mit Experte. Richtig starten.', 'Professionell. Sicher. Anfänger-freundlich.', 'Richtige Technik von Anfang an.', 'Expert:innen-Wissen für Anfänger.', 'Sicher starten mit Experten.'],
-    'Anfänger-Zeitmangel-Erfolg': ['Schnell anfangen. Schnell Erfolg.', 'Erfolge in 2 Wochen.', 'Erste Erfolge. Erste Motivation.', 'Anfänger? Erste Erfolge garantiert.', 'Schnell anfangen. Lang erfolgreich.'],
-    'Frauen-Zeitmangel-Gemeinschaft': ['Mit Frauen, die dich verstehen.', 'Für Frauen von Frauen.', 'Mit deinen Frauen. Für dich.', 'Frauen für Frauen. Stark zusammen.', 'Deine Schwestern. Deine Stärke.'],
-    'Frauen-Zeitmangel-Motivation': ['Mit Trainerin, die versteht.', 'Eine Trainerin für dich.', 'Deine Trainerin. Dein Plan. Dein Erfolg.', 'Frau trainiert Frau. Stark.', 'Mit Trainerin. Verstanden. Motiviert.'],
-    'Frauen-Zeitmangel-Expertise': ['Mit Expertin. Richtig.', 'Trainerin. Verständnisvoll. Professionell.', 'Frauentraining von Frauenexperte.', 'Kompetente Trainer:innen für dich.', 'Expertin weiß, was du brauchst.'],
-    'Frauen-Zeitmangel-Erfolg': ['Kurz. Sichtbar. Für dich.', 'Messbarer Erfolg. Messbare Freude.', 'Schnelle Erfolge. Lange Motivation.', 'Erfolg ist sichtbar. Bei dir.', 'Trainiere. Transformiere. Triumphiere.'],
-    '50+-Zeitmangel-Gemeinschaft': ['Mit 50+ wird Zeit kostbar.', 'Mit Gleichgesinnten 50+ stärker.', 'Mit deinen Leuten. Zeitlos stark.', 'Gemeinsam fit. Gemeinsam jung.', 'Deine Altersgruppe. Deine Kraft.'],
-    '50+-Zeitmangel-Motivation': ['Mit Trainer 50+. Der versteht.', 'Ein Trainer, der dich kennt.', 'Trainer 50+. Verständnis 100%.', 'Mit Trainer in deinem Alter.', 'Trainer weiß, was 50+ ist.'],
-    '50+-Zeitmangel-Expertise': ['Mit Experte 50+. Sicher.', 'Ein Trainer, der respektiert.', 'Expertise für 50+. Spezialisiert.', 'Trainer kennt 50+ Körper.', 'Sicher trainieren. Mit 50+.'],
-    '50+-Zeitmangel-Erfolg': ['Mit 50+ sind Zahlen wichtig.', 'Sichtbare Erfolge mit 50+.', 'Messbarer Erfolg. Ab 50+.', 'Mit 50+. Mit Erfolg.', 'Altersgerecht. Erfolgreich. Nachhaltig.']
+    'Berufstätige-Zeitmangel-Gemeinschaft': ['Gemeinsam stark: 30 Min zum Erfolg', 'Train4U: Dein Team, dein Triumph', 'Mittags trainieren, abends feiern – gemeinsam', 'Fitness-Crew statt Fitness-Solo', 'Kurz, knackig, zusammen – das ist Train4U'],
+    'Berufstätige-Zeitmangel-Motivation': ['Dein Trainer. Deine Zeit. Dein Sieg.', 'In 30 Minuten zum neuen Ich', 'Keine Zeit für Ausreden – nur für Erfolg', 'Busy? Das war gestern. Train4U macht\'s möglich.', 'Effizient trainieren. Endlich Ergebnisse sehen.'],
+    'Berufstätige-Zeitmangel-Expertise': ['Wissenschaftlich trainieren. Beruflich erfolgen.', 'Richtig trainieren, nicht lange trainieren', 'Experte an deiner Seite. Immer.', 'Keine Zeit für falsche Techniken', 'Smart trainieren: 30 Min mit Maximal-Effekt'],
+    'Berufstätige-Zeitmangel-Erfolg': ['Sichtbar fit in 8 Wochen – garantiert', 'Ergebnisse, nicht Ausreden', 'Dein neuer Body wartet – Train4U', 'Erfolg ist messbar. Bei Train4U.', 'Von Nichtzuhause-Geher zu Trainingsfan'],
+    'Anfänger-Zeitmangel-Gemeinschaft': ['Dein erster Tag war mein bester Tag', 'Anfänger? Aber nicht allein – gemeinsam', 'Die beste Trainingsgruppe findet sich hier', 'Nervös? Wir alle waren es mal. Willkommen!', 'Anfangen mit Leuten, die dich verstehen'],
+    'Anfänger-Zeitmangel-Motivation': ['Von Angst zu Aktion in 5 Minuten', 'Dein Trainer, dein Buddy, dein Coach', 'Der erste Schritt ist der wichtigste – wir gehen ihn zusammen', 'Anfänger-Freitag statt Freitags-Frust', 'Sichere erste Schritte. Echte Fortschritte.'],
+    'Anfänger-Zeitmangel-Expertise': ['Anfänger trainieren richtig – bei Train4U', 'Falsche Technik war gestern. Jetzt trainieren wir richtig.', 'Expert-Wissen für Anfänger-Körper', 'Keine Angst vor Fehlern – Trainer zeigt dir\'s', 'Richtig anfangen, richtig durchziehen'],
+    'Anfänger-Zeitmangel-Erfolg': ['Erste Erfolge nach zwei Wochen – garantiert', 'Vom Anfänger zum Erfolgstyp', 'Anfänger? Nach 4 Wochen sieht\'s anders aus.', 'Messbare Fortschritte für echte Motivation', 'Erfolg macht süchtig – dein neues Laster'],
+    'Frauen-Zeitmangel-Gemeinschaft': ['Frauenpower: Gemeinsam zur Traumfigur', 'Für Frauen, von Frauen, mit Frauen', 'Schwestern im Schweiß – Train4U', 'Frau gegen Frau? Nein. Frauen mit Frauen!', 'Deine Schwesternschaft wächst hier'],
+    'Frauen-Zeitmangel-Motivation': ['Mit deiner Trainerin zum echten Erfolg', 'Frauen trainieren anders – Train4U weiß wie', 'Verstanden von einer Frau, trainiert von einer Frau', 'Keine Zuschauerinnen. Nur Siegerin.', 'Sie versteht dich – weil sie eine Frau ist'],
+    'Frauen-Zeitmangel-Expertise': ['Frauenkörper verstanden. Train4U macht\'s richtig.', 'Von Frauen für Frauen: echte Expertise', 'Hormonzyklus verstanden. Training angepasst.', 'Nicht "für Frauen". Einfach die beste Methode für dich.', 'Frauentraining auf wissenschaftlicher Basis'],
+    'Frauen-Zeitmangel-Erfolg': ['Sichtbar schöner in 6 Wochen', 'Von unsicher zu selbstbewusst', 'Erfolg, der glücklich macht, nicht nur sichtbar', 'Dein Traum-Body wird real. Hier. Jetzt.', 'Frauen trainieren: Andere Ziele. Bessere Ergebnisse.'],
+    '50+-Zeitmangel-Gemeinschaft': ['Fit mit 50+: Gemeinsam geht\'s besser', 'Deine Altersgruppe. Deine Pace. Dein Triumph.', 'Nicht alt. Nicht jung. Einfach fit.', 'Mit Gleichgesinnten trainieren – ohne Druck', 'Gemeinsam 50+. Gemeinsam stark.'],
+    '50+-Zeitmangel-Motivation': ['Mit 50+ die beste Form deines Lebens', 'Trainer versteht 50+ Körper – weil er einer ist', 'Nicht bremsen. Gas geben. Mit 50+.', 'Neubeginn mit 50+? Train4U sei dein Start.', 'Fit bleiben ist eine Haltung – egal wie alt'],
+    '50+-Zeitmangel-Expertise': ['Mit 50+ und medizinischem Know-How trainieren', 'Gelenke schonen. Kraft steigern. Gesund altern.', 'Spezialisiert auf 50+ Anatomie und Ziele', 'Richtig trainieren mit 50+: Das ist der Trick.', 'Dein Alter ist Vorteil, nicht Hindernis'],
+    '50+-Zeitmangel-Erfolg': ['Fitter mit 50+ als mit 30 – möglich', 'Mit 50+ in die beste Form seit Jahrzehnten', 'Messbare Kraft. Messbare Lebensqualität.', 'Wieder lebendig fühlen mit 50+', '50+ Fitness ist ein Momentum – bei Train4U']
 };
 
-// Funktion zur Berechnung der Ähnlichkeit zwischen zwei Texten
 function calculateSimilarity(userText, solutionText) {
     if (!userText || userText.trim().length === 0) return 0;
-    
     const normalize = (text) => text.toLowerCase().trim().split(/\s+/).filter(w => w.length > 2);
     const userWords = normalize(userText);
     const solutionWords = normalize(solutionText);
-    
     if (solutionWords.length === 0) return 0;
-    
     let matches = 0;
     userWords.forEach(word => {
         solutionWords.forEach(sWord => {
@@ -364,12 +360,10 @@ function calculateSimilarity(userText, solutionText) {
             }
         });
     });
-    
     const similarity = (matches / Math.max(userWords.length, solutionWords.length)) * 100;
     return Math.min(similarity, 100);
 }
 
-// Funktion zur Bestimmung der Farbe basierend auf Ähnlichkeit
 function getSimilarityColor(percentage) {
     if (percentage >= 80) return 'green';
     if (percentage >= 50) return 'yellow';
@@ -395,12 +389,10 @@ function validatePage1() {
     let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
     let errorMsg = document.getElementById('errorMsg');
     let nextBtn = document.getElementById('nextbtn');
-    
     if (!c1 || !c2) {
         nextBtn.disabled = true;
         return;
     }
-    
     if (c1 === c2) {
         errorMsg.style.display = 'block';
         nextBtn.disabled = true;
@@ -429,7 +421,6 @@ function goNext() {
             return;
         }
     }
-    
     if (currentPage < 4) {
         currentPage++;
         updateDisplay();
@@ -441,19 +432,16 @@ function goNext() {
 function updateDisplay() {
     document.querySelectorAll('.page').forEach(p => p.classList.remove('show'));
     document.getElementById('page' + currentPage).classList.add('show');
-    
     document.getElementById('backbtn').style.display = currentPage > 0 ? 'flex' : 'none';
     document.getElementById('nextbtn').textContent = currentPage === 4 ? '✓ Abschließen' : 'Weiter →';
     document.getElementById('nextbtn').style.display = 'flex';
     document.getElementById('nextbtn').disabled = false;
-    
     if (currentPage === 1) {
         document.getElementById('buttons').classList.add('show');
         document.querySelector('.timer-bar').style.display = 'block';
         startTimer();
         validatePage1();
     }
-    
     window.scrollTo(0, 0);
 }
 
@@ -482,9 +470,9 @@ function makeSlogan() {
         return;
     }
     let k = `${gen.g}-${gen.p}-${gen.v}`;
-    let arr = slogans[k] || ['Train4U: Fitness, die funktioniert.'];
+    let arr = slogans[k] || ['Train4U: Dein Weg zu Erfolg'];
     let s = arr[Math.floor(Math.random() * arr.length)];
-    document.getElementById('sloganbox').innerHTML = `<div class="slogan-box">"${s}"<button class="copy-btn" onclick="copySlogan('${s.replace(/'/g, "\\'")}')">📋 Kopieren</button></div>`;
+    document.getElementById('sloganbox').innerHTML = `<div class="slogan-box">"${s}"<button class="copy-btn" onclick="copySlogan('${s.replace(/'/g, "\\'")}')">Kopieren</button></div>`;
 }
 
 function copySlogan(s) {
@@ -506,44 +494,31 @@ function finish() {
         let p1Sim = calculateSimilarity(document.getElementById('c1problem').value, solutions[c1].p);
         let v1Sim = calculateSimilarity(document.getElementById('c1value').value, solutions[c1].v);
         let e1Sim = calculateSimilarity(document.getElementById('c1example').value, solutions[c1].e);
-        
         html += `<strong>${c1}</strong><div class="rating"><div class="rating-icon ${getSimilarityColor(p1Sim)}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c1].p}<div class="score">Ähnlichkeit: ${p1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(v1Sim)}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c1].v}<div class="score">Ähnlichkeit: ${v1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e1Sim)}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c1].e}<div class="score">Ähnlichkeit: ${e1Sim.toFixed(0)}%</div></div></div>`;
     }
     if (c2 && solutions[c2]) {
         let p2Sim = calculateSimilarity(document.getElementById('c2problem').value, solutions[c2].p);
         let v2Sim = calculateSimilarity(document.getElementById('c2value').value, solutions[c2].v);
         let e2Sim = calculateSimilarity(document.getElementById('c2example').value, solutions[c2].e);
-        
         html += `<strong>${c2}</strong><div class="rating"><div class="rating-icon ${getSimilarityColor(p2Sim)}">●</div><div class="rating-text"><strong>Problem:</strong> ${solutions[c2].p}<div class="score">Ähnlichkeit: ${p2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(v2Sim)}">●</div><div class="rating-text"><strong>Kunde:</strong> ${solutions[c2].v}<div class="score">Ähnlichkeit: ${v2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e2Sim)}">●</div><div class="rating-text"><strong>Besonderheit:</strong> ${solutions[c2].e}<div class="score">Ähnlichkeit: ${e2Sim.toFixed(0)}%</div></div></div>`;
     }
     html += '</div>';
-    
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 2 - IKEA</div>';
     let e2q1Sim = calculateSimilarity(document.getElementById('e2q1').value, task2Solutions.q1);
     let e2q2Sim = calculateSimilarity(document.getElementById('e2q2').value, task2Solutions.q2);
     let e2q3Sim = calculateSimilarity(document.getElementById('e2q3').value, task2Solutions.q3);
-    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e2q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}<div class="score">Ähnlichkeit: ${e2q1Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e2q2Sim)}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}<div class="score">Ähnlichkeit: ${e2q2Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e2q3Sim)}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}<div class="score">Ähnlichkeit: ${e2q3Sim.toFixed(0)}%</div></div></div></div>`;
-    
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e2q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task2Solutions.q1}<div class="score">Ähnlichkeit: ${e2q1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e2q2Sim)}">●</div><div class="rating-text"><strong>CRM-Instrumente:</strong> ${task2Solutions.q2}<div class="score">Ähnlichkeit: ${e2q2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e2q3Sim)}">●</div><div class="rating-text"><strong>Orientierung:</strong> ${task2Solutions.q3}<div class="score">Ähnlichkeit: ${e2q3Sim.toFixed(0)}%</div></div></div></div>`;
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 3 - Starbucks</div>';
     let e3q1Sim = calculateSimilarity(document.getElementById('e3q1').value, task3Solutions.q1);
     let e3q2Sim = calculateSimilarity(document.getElementById('e3q2').value, task3Solutions.q2);
     let e3q3Sim = calculateSimilarity(document.getElementById('e3q3').value, task3Solutions.q3);
     let e3q4Sim = calculateSimilarity(document.getElementById('e3q4').value, task3Solutions.q4);
-    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e3q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}<div class="score">Ähnlichkeit: ${e3q1Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q2Sim)}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}<div class="score">Ähnlichkeit: ${e3q2Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q3Sim)}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q3}<div class="score">Ähnlichkeit: ${e3q3Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e3q4Sim)}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q4}<div class="score">Ähnlichkeit: ${e3q4Sim.toFixed(0)}%</div></div></div></div>`;
-    
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e3q1Sim)}">●</div><div class="rating-text"><strong>Nutzenversprechen:</strong> ${task3Solutions.q1}<div class="score">Ähnlichkeit: ${e3q1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e3q2Sim)}">●</div><div class="rating-text"><strong>Kundenerlebnis:</strong> ${task3Solutions.q2}<div class="score">Ähnlichkeit: ${e3q2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e3q3Sim)}">●</div><div class="rating-text"><strong>Service-Dominant Logic:</strong> ${task3Solutions.q3}<div class="score">Ähnlichkeit: ${e3q3Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e3q4Sim)}">●</div><div class="rating-text"><strong>Probleme in Italien:</strong> ${task3Solutions.q4}<div class="score">Ähnlichkeit: ${e3q4Sim.toFixed(0)}%</div></div></div></div>`;
     html += '<div class="fb-item"><div class="fb-h">Aufgabe 4 - Train4U</div>';
     let e4q1Sim = calculateSimilarity(document.getElementById('e4q1').value, task4Solutions.q1);
     let e4q2Sim = calculateSimilarity(document.getElementById('e4q2').value, task4Solutions.q2);
     let e4q3Sim = calculateSimilarity(document.getElementById('e4q3').value, task4Solutions.q3);
-    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e4q1Sim)}">●</div><div class="rating-text"><strong>Slogan:</strong> ${task4Solutions.q1}<div class="score">Ähnlichkeit: ${e4q1Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e4q2Sim)}">●</div><div class="rating-text"><strong>Maßnahmen:</strong> ${task4Solutions.q2}<div class="score">Ähnlichkeit: ${e4q2Sim.toFixed(0)}%</div></div></div>
-    <div class="rating"><div class="rating-icon ${getSimilarityColor(e4q3Sim)}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}<div class="score">Ähnlichkeit: ${e4q3Sim.toFixed(0)}%</div></div></div></div>`;
-    
+    html += `<div class="rating"><div class="rating-icon ${getSimilarityColor(e4q1Sim)}">●</div><div class="rating-text"><strong>Slogan:</strong> ${task4Solutions.q1}<div class="score">Ähnlichkeit: ${e4q1Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e4q2Sim)}">●</div><div class="rating-text"><strong>Maßnahmen:</strong> ${task4Solutions.q2}<div class="score">Ähnlichkeit: ${e4q2Sim.toFixed(0)}%</div></div></div><div class="rating"><div class="rating-icon ${getSimilarityColor(e4q3Sim)}">●</div><div class="rating-text"><strong>Werbestrategie:</strong> ${task4Solutions.q3}<div class="score">Ähnlichkeit: ${e4q3Sim.toFixed(0)}%</div></div></div></div>`;
     document.getElementById('fb').innerHTML = html;
 }
 
@@ -554,7 +529,6 @@ function makePDF() {
     const h = doc.internal.pageSize.getHeight();
     const w = doc.internal.pageSize.getWidth();
     const m = 15, max = w - 2 * m;
-    
     function add(txt, bold = false) {
         if (y > h - 20) { doc.addPage(); y = 20; }
         doc.setFont('Arial', bold ? 'bold' : 'normal');
@@ -563,14 +537,11 @@ function makePDF() {
         doc.text(lines, m, y);
         y += 5 * lines.length + 2;
     }
-    
     add('Marketing-Übung - Ihre Antworten', true);
     add(new Date().toLocaleDateString('de-DE'));
     y += 5;
-    
     let c1 = document.querySelector('input[name="comp1"]:checked')?.value;
     let c2 = document.querySelector('input[name="comp2"]:checked')?.value;
-    
     add('Aufgabe 1', true);
     if (c1) {
         add(c1 + ':', true);
@@ -584,23 +555,19 @@ function makePDF() {
         add(document.getElementById('c2value').value || '-');
         add(document.getElementById('c2example').value || '-');
     }
-    
     add('Aufgabe 2: IKEA', true);
     add(document.getElementById('e2q1').value || '-');
     add(document.getElementById('e2q2').value || '-');
     add(document.getElementById('e2q3').value || '-');
-    
     add('Aufgabe 3: Starbucks', true);
     add(document.getElementById('e3q1').value || '-');
     add(document.getElementById('e3q2').value || '-');
     add(document.getElementById('e3q3').value || '-');
     add(document.getElementById('e3q4').value || '-');
-    
     add('Aufgabe 4: Train4U', true);
     add(document.getElementById('e4q1').value || '-');
     add(document.getElementById('e4q2').value || '-');
     add(document.getElementById('e4q3').value || '-');
-    
     doc.save('Marketing-Übung.pdf');
 }
 
