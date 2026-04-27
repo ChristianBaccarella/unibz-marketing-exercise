@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Silicon Samples – unibz Marketing</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --blue: #1F7FD4;
+      --blue-light: #E8F4FD;
+      --green: #10B981;
+      --red: #EF4444;
+      --amber: #F59E0B;
+      --gray-100: #F9FAFB;
+      --gray-200: #E5E7EB;
+      --gray-400: #9CA3AF;
+      --gray-600: #6B7280;
+      --gray-900: #111827;
+      --radius: 12px;
+    }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; background: var(--gray-100); color: var(--gray-900); }
+
+    /* ── Layout ── */
+    .app-header { background: white; border-bottom: 1px solid var(--gray-200); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .app-header .logo { font-size: 22px; font-weight: 700; color: var(--blue); text-decoration: none; }
+    .app-header h1 { font-size: 16px; font-weight: 600; color: var(--gray-600); }
+
+    .layout { display: grid; grid-template-columns: 340px 1fr; gap: 24px; max-width: 1400px; margin: 24px auto; padding: 0 24px; }
+    @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+
+    /* ── Panels ── */
+    .panel { background: white; border-radius: var(--radius); border: 1px solid var(--gray-200); overflow: hidden; }
+    .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 10px; }
+    .panel-header h2 { font-size: 15px; font-weight: 700; }
+    .panel-header .badge { font-size: 11px; background: var(--blue-light); color: var(--blue); padding: 3px 8px; border-radius: 20px; font-weight: 600; }
+    .panel-body { padding: 20px; }
+
+    /* ── Form elements ── */
+    .field { margin-bottom: 16px; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; color: var(--gray-900); }
+    label .hint { font-weight: 400; color: var(--gray-400); margin-left: 4px; }
+    select, input[type=number], input[type=text] {
+      width: 100%; padding: 9px 12px; border: 1.5px solid var(--gray-200); border-radius: 8px;
+      font-size: 14px; font-family: inherit; background: white; color: var(--gray-900);
+      transition: border-color 0.2s;
+    }
+    select:focus, input:focus { outline: none; border-color: var(--blue); box-shadow: 0 0 0 3px rgba(31,127,212,0.1); }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { padding: 6px 12px; border: 1.5px solid var(--gray-200); border-radius: 20px; font-size: 12px; font-weight: 500; cursor: pointer; transition: all 0.2s; background: white; user-select: none; }
+    .chip.sel { background: var(--blue); border-color: var(--blue); color: white; }
+
+    .range-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; }
+    .range-row span { text-align: center; font-size: 12px; color: var(--gray-400); }
+
+    .section-title { font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--blue); letter-spacing: 0.5px; margin: 20px 0 12px; }
+
+    .gen-btn { width: 100%; padding: 13px; background: var(--blue); color: white; border: none; border-radius: var(--radius); font-size: 15px; font-weight: 700; cursor: pointer; margin-top: 4px; transition: background 0.2s; }
+    .gen-btn:hover { background: #1668b0; }
+    .gen-btn:disabled { background: #B0C4DE; cursor: not-allowed; }
+
+    /* ── Stats row ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 700px) { .stats-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px; text-align: center; }
+    .stat-card .num { font-size: 26px; font-weight: 700; color: var(--blue); }
+    .stat-card .lbl { font-size: 12px; color: var(--gray-600); margin-top: 4px; }
+
+    /* ── Charts ── */
+    .charts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+    @media (max-width: 700px) { .charts-grid { grid-template-columns: 1fr; } }
+    .chart-panel { background: white; border: 1px solid var(--gray-200); border-radius: var(--radius); padding: 16px; }
+    .chart-panel h3 { font-size: 13px; font-weight: 700; margin-bottom: 12px; color: var(--gray-600); }
+    .chart-panel canvas { max-height: 220px; }
+
+    /* ── Table ── */
+    .table-wrap { overflow-x: auto; border-radius: var(--radius); border: 1px solid var(--gray-200); }
+    table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    thead th { background: var(--gray-100); padding: 10px 12px; text-align: left; font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--gray-600); white-space: nowrap; border-bottom: 1px solid var(--gray-200); }
+    tbody tr:nth-child(even) td { background: var(--gray-100); }
+    tbody td { padding: 9px 12px; border-bottom: 1px solid var(--gray-200); white-space: nowrap; }
+    tbody tr:last-child td { border-bottom: none; }
+
+    .pill { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+    .pill-green { background: #D1FAE5; color: #065F46; }
+    .pill-red { background: #FEE2E2; color: #991B1B; }
+    .pill-amber { background: #FEF3C7; color: #92400E; }
+    .pill-blue { background: var(--blue-light); color: #1e40af; }
+    .pill-purple { background: #EDE9FE; color: #5B21B6; }
+
+    /* ── Action bar ── */
+    .action-bar { display: flex; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; align-items: center; }
+    .action-bar .count { font-size: 13px; color: var(--gray-600); flex: 1; }
+    .btn-outline { padding: 9px 18px; border: 1.5px solid var(--gray-200); border-radius: 8px; background: white; font-size: 13px; font-weight: 600; cursor: pointer; display: flex; align-items: center; gap: 6px; transition: border-color 0.2s; }
+    .btn-outline:hover { border-color: var(--blue); color: var(--blue); }
+    .btn-outline.active { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+
+    /* ── Empty state ── */
+    .empty { text-align: center; padding: 60px 20px; color: var(--gray-400); }
+    .empty .icon { font-size: 48px; margin-bottom: 12px; }
+    .empty p { font-size: 14px; }
+
+    /* ── Tooltip ── */
+    [data-tip] { position: relative; }
+    [data-tip]:hover::after {
+      content: attr(data-tip); position: absolute; bottom: calc(100% + 6px); left: 50%; transform: translateX(-50%);
+      background: var(--gray-900); color: white; font-size: 11px; padding: 4px 8px; border-radius: 6px; white-space: nowrap; z-index: 200;
+    }
+
+    .toast { position: fixed; bottom: 24px; right: 24px; background: var(--gray-900); color: white; padding: 12px 20px; border-radius: 10px; font-size: 14px; font-weight: 500; opacity: 0; transform: translateY(8px); transition: all 0.3s; pointer-events: none; z-index: 999; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    .filter-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .filter-row select { width: auto; flex: 1; min-width: 120px; }
+
+    .behavior-bar { display: flex; align-items: center; gap: 8px; }
+    .behavior-bar .bar-bg { flex: 1; height: 6px; background: var(--gray-200); border-radius: 3px; overflow: hidden; }
+    .behavior-bar .bar-fill { height: 100%; border-radius: 3px; transition: width 0.3s; }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <a class="logo" href="index.html">unibz</a>
+  <h1>🧬 Silicon Samples — Synthetic Consumer Data</h1>
+  <span style="font-size:12px;color:var(--gray-400)">Marketing Research Tool</span>
+</header>
+
+<div class="layout">
+
+  <!-- ════ LEFT: Configuration Panel ════ -->
+  <aside>
+    <div class="panel">
+      <div class="panel-header">
+        <span>⚙️</span>
+        <h2>Persona Template</h2>
+        <span class="badge">Configure</span>
+      </div>
+      <div class="panel-body">
+
+        <div class="section-title">Sample Size</div>
+        <div class="field">
+          <label>Number of synthetic respondents <span class="hint">(1–500)</span></label>
+          <input type="number" id="cfgN" value="50" min="1" max="500">
+        </div>
+
+        <div class="section-title">Demographics</div>
+        <div class="field">
+          <label>Age range</label>
+          <div class="range-row">
+            <input type="number" id="cfgAgeMin" value="18" min="0" max="99" placeholder="Min">
+            <span>to</span>
+            <input type="number" id="cfgAgeMax" value="55" min="0" max="99" placeholder="Max">
+          </div>
+        </div>
+        <div class="field">
+          <label>Gender distribution</label>
+          <select id="cfgGender">
+            <option value="mixed">Mixed (50/50)</option>
+            <option value="female">Mostly female (70%)</option>
+            <option value="male">Mostly male (70%)</option>
+            <option value="female_only">Female only</option>
+            <option value="male_only">Male only</option>
+            <option value="diverse">Diverse (40/40/20)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Income level</label>
+          <select id="cfgIncome">
+            <option value="all">All income levels</option>
+            <option value="low">Low income (&lt;€25k)</option>
+            <option value="mid">Middle income (€25k–€60k)</option>
+            <option value="high">High income (&gt;€60k)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Education</label>
+          <select id="cfgEdu">
+            <option value="all">All education levels</option>
+            <option value="school">Secondary school</option>
+            <option value="vocational">Vocational training</option>
+            <option value="university">University degree</option>
+            <option value="postgrad">Postgraduate</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Location type</label>
+          <select id="cfgLocation">
+            <option value="all">All (urban + rural)</option>
+            <option value="urban">Urban</option>
+            <option value="suburban">Suburban</option>
+            <option value="rural">Rural</option>
+          </select>
+        </div>
+
+        <div class="section-title">Psychographics</div>
+        <div class="field">
+          <label>Lifestyle</label>
+          <div class="chips" id="chipsLifestyle">
+            <div class="chip sel" data-val="Active">🏃 Active</div>
+            <div class="chip sel" data-val="Family-oriented">👨‍👩‍👧 Family</div>
+            <div class="chip" data-val="Career-focused">💼 Career</div>
+            <div class="chip" data-val="Social">🎉 Social</div>
+            <div class="chip" data-val="Eco-conscious">🌿 Eco</div>
+            <div class="chip" data-val="Budget-savvy">💰 Budget</div>
+            <div class="chip" data-val="Tech-savvy">📱 Tech</div>
+            <div class="chip" data-val="Creative">🎨 Creative</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Values</label>
+          <div class="chips" id="chipsValues">
+            <div class="chip sel" data-val="Quality">⭐ Quality</div>
+            <div class="chip sel" data-val="Convenience">⚡ Convenience</div>
+            <div class="chip" data-val="Sustainability">♻️ Sustainability</div>
+            <div class="chip" data-val="Price">🏷️ Price</div>
+            <div class="chip" data-val="Brand prestige">👑 Prestige</div>
+            <div class="chip" data-val="Authenticity">🤝 Authenticity</div>
+            <div class="chip" data-val="Innovation">🚀 Innovation</div>
+          </div>
+        </div>
+
+        <div class="section-title">Behavioral Attributes</div>
+        <div class="field">
+          <label>Price sensitivity</label>
+          <select id="cfgPriceSens">
+            <option value="all">Full range</option>
+            <option value="low">Low (willing to pay premium)</option>
+            <option value="medium">Medium</option>
+            <option value="high">High (very price-conscious)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Brand loyalty tendency</label>
+          <select id="cfgLoyalty">
+            <option value="all">Full range</option>
+            <option value="low">Low (frequent switchers)</option>
+            <option value="medium">Medium</option>
+            <option value="high">High (loyal customers)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Primary purchase channel</label>
+          <select id="cfgChannel">
+            <option value="all">All channels</option>
+            <option value="online">Online dominant</option>
+            <option value="instore">In-store dominant</option>
+            <option value="mobile">Mobile app dominant</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Social media influence</label>
+          <select id="cfgSocial">
+            <option value="all">Full range</option>
+            <option value="low">Low (not influenced by social media)</option>
+            <option value="medium">Medium</option>
+            <option value="high">High (heavily influenced)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Product category interest</label>
+          <select id="cfgCategory">
+            <option value="General retail">General retail</option>
+            <option value="Fashion &amp; Apparel">Fashion &amp; Apparel</option>
+            <option value="Consumer electronics">Consumer electronics</option>
+            <option value="Food &amp; Beverage">Food &amp; Beverage</option>
+            <option value="Health &amp; Wellness">Health &amp; Wellness</option>
+            <option value="Travel &amp; Hospitality">Travel &amp; Hospitality</option>
+            <option value="Financial services">Financial services</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Automotive">Automotive</option>
+            <option value="Home &amp; Furniture">Home &amp; Furniture</option>
+          </select>
+        </div>
+
+        <button class="gen-btn" id="generateBtn" onclick="generateSamples()">🧬 Generate Silicon Samples</button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ════ RIGHT: Output Panel ════ -->
+  <main>
+    <div id="emptyState" class="panel" style="margin-bottom:0">
+      <div class="empty">
+        <div class="icon">🧬</div>
+        <p><strong>No samples generated yet.</strong></p>
+        <p style="margin-top:8px">Configure your persona template on the left<br>and click <strong>Generate Silicon Samples</strong>.</p>
+      </div>
+    </div>
+
+    <div id="outputState" style="display:none">
+
+      <!-- Stats row -->
+      <div class="stats-row" id="statsRow"></div>
+
+      <!-- Charts -->
+      <div class="charts-grid">
+        <div class="chart-panel"><h3>Age Distribution</h3><canvas id="chartAge"></canvas></div>
+        <div class="chart-panel"><h3>Gender Split</h3><canvas id="chartGender"></canvas></div>
+        <div class="chart-panel"><h3>Purchase Channel</h3><canvas id="chartChannel"></canvas></div>
+        <div class="chart-panel"><h3>Price Sensitivity</h3><canvas id="chartPriceSens"></canvas></div>
+      </div>
+
+      <!-- Table -->
+      <div class="panel">
+        <div class="panel-header">
+          <span>📋</span>
+          <h2>Sample Data</h2>
+          <span class="badge" id="tableCount"></span>
+        </div>
+        <div style="padding:16px 20px 0">
+          <div class="action-bar">
+            <span class="count" id="rowCount"></span>
+            <button class="btn-outline" onclick="exportCSV()">⬇ Export CSV</button>
+            <button class="btn-outline" onclick="exportJSON()">⬇ Export JSON</button>
+            <button class="btn-outline" id="btnAddSample" onclick="addOneSample()">+ Add sample</button>
+          </div>
+          <div class="filter-row">
+            <select id="filterGender" onchange="applyFilters()"><option value="">All genders</option></select>
+            <select id="filterChannel" onchange="applyFilters()"><option value="">All channels</option></select>
+            <select id="filterIncome" onchange="applyFilters()"><option value="">All income</option></select>
+            <select id="filterPriceSens" onchange="applyFilters()"><option value="">All price sensitivity</option></select>
+          </div>
+        </div>
+        <div class="table-wrap" id="tableWrap"></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ══════════════════════════════════════════════
+//  DATA DICTIONARIES
+// ══════════════════════════════════════════════
+const FIRST_NAMES_F = ['Emma','Lena','Julia','Laura','Anna','Sophie','Maria','Hannah','Sara','Claudia','Elena','Martina','Giulia','Chiara','Franziska','Luisa','Valentina','Mia','Lisa','Petra','Sabine','Andrea','Nina','Katharina'];
+const FIRST_NAMES_M = ['Luca','Matteo','Max','Jonas','Felix','Thomas','Stefan','Michael','David','Jan','Marco','Alexander','Simon','Tobias','Daniel','Klaus','Peter','Andreas','Christian','Sebastian','Lucas','Julian','Paul','Leon'];
+const FIRST_NAMES_D = ['Alex','Robin','Kim','Jamie','Taylor','Jordan','Morgan','Sam','Casey','Riley','Avery','Drew','Blake','Charlie','Sage','Quinn'];
+const LAST_NAMES = ['Müller','Schmidt','Schneider','Fischer','Weber','Meyer','Wagner','Becker','Schulz','Hoffmann','Rossi','Ferrari','Bauer','Koch','Richter','Klein','Wolf','Schröder','Neumann','Schwarz','Braun','Zimmermann','Krüger','Hartmann','Lange'];
+
+const LOCATIONS_URBAN = ['Berlin','Munich','Vienna','Milan','Hamburg','Rome','Cologne','Barcelona','Amsterdam','Brussels','Stuttgart','Frankfurt','Zurich','Turin','Düsseldorf'];
+const LOCATIONS_SUBURBAN = ['Innsbruck','Klagenfurt','Linz','Graz','Bolzano','Trento','Regensburg','Augsburg','Mainz','Freiburg','Paderborn','Erfurt','Bozen','Merano','Brixen'];
+const LOCATIONS_RURAL = ['Bruneck','Sterzing','Schlanders','Kaltern','Eppan','Latsch','Mühlbach','Burgeis','Glurns','Prettau','Steinhaus','Ahrntal','Sexten','Taufers','Vintl'];
+
+const CHANNELS = ['Online','In-store','Mobile app','Social commerce','Catalog / direct mail'];
+const PRICE_SENS_OPTS = ['Low','Medium','High'];
+const LOYALTY_OPTS = ['Low','Medium','High'];
+const SOCIAL_OPTS = ['Low','Medium','High'];
+const INCOME_BANDS = { low: ['<€15k','€15k–25k'], mid: ['€25k–40k','€40k–60k'], high: ['€60k–90k','€90k–120k','>€120k'] };
+const EDU_MAP = { school: 'Secondary school', vocational: 'Vocational training', university: 'University degree', postgrad: 'Postgraduate' };
+const ALL_INCOMES = ['<€15k','€15k–25k','€25k–40k','€40k–60k','€60k–90k','€90k–120k','>€120k'];
+const ALL_EDUS = ['Secondary school','Vocational training','University degree','Postgraduate'];
+const INTERESTS_POOL = ['Sport & fitness','Music','Travel','Cooking','Technology','Fashion','Gaming','Reading','Photography','Sustainability','Cinema','DIY & crafts','Art & culture','Outdoor activities','Social causes'];
+const TOUCHPOINTS = ['TV','Instagram','YouTube','TikTok','Search engine','Friend/referral','In-store display','Newsletter','Podcast','LinkedIn','Facebook','Print media'];
+
+// ══════════════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════════════
+let samples = [];
+let filteredSamples = [];
+let charts = {};
+
+// ══════════════════════════════════════════════
+//  CHIP TOGGLE
+// ══════════════════════════════════════════════
+document.querySelectorAll('.chips').forEach(group => {
+  group.querySelectorAll('.chip').forEach(chip => {
+    chip.addEventListener('click', () => chip.classList.toggle('sel'));
+  });
+});
+
+function getChipValues(id) {
+  return [...document.querySelectorAll(`#${id} .chip.sel`)].map(c => c.dataset.val);
+}
+
+// ══════════════════════════════════════════════
+//  RNG HELPERS
+// ══════════════════════════════════════════════
+function rInt(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min; }
+function rFloat(min, max, dp = 1) { return parseFloat((Math.random() * (max - min) + min).toFixed(dp)); }
+function rChoice(arr) { return arr[rInt(0, arr.length - 1)]; }
+function rChoices(arr, n) {
+  const s = [...arr]; const out = [];
+  for (let i = 0; i < n && s.length; i++) { const idx = rInt(0, s.length - 1); out.push(s.splice(idx, 1)[0]); }
+  return out;
+}
+function rWeighted(items, weights) {
+  const total = weights.reduce((a, b) => a + b, 0);
+  let r = Math.random() * total;
+  for (let i = 0; i < items.length; i++) { r -= weights[i]; if (r <= 0) return items[i]; }
+  return items[items.length - 1];
+}
+
+// ══════════════════════════════════════════════
+//  GENERATE ONE SAMPLE
+// ══════════════════════════════════════════════
+function buildOneSample(cfg, id) {
+  // Gender
+  let gender;
+  const gd = cfg.gender;
+  if (gd === 'female_only') gender = 'Female';
+  else if (gd === 'male_only') gender = 'Male';
+  else if (gd === 'female') gender = rWeighted(['Female','Male'],[70,30]);
+  else if (gd === 'male') gender = rWeighted(['Female','Male'],[30,70]);
+  else if (gd === 'diverse') gender = rWeighted(['Female','Male','Non-binary'],[40,40,20]);
+  else gender = rWeighted(['Female','Male'],[50,50]);
+
+  // Name
+  const firstNames = gender === 'Female' ? FIRST_NAMES_F : gender === 'Male' ? FIRST_NAMES_M : FIRST_NAMES_D;
+  const name = rChoice(firstNames) + ' ' + rChoice(LAST_NAMES);
+
+  // Age
+  const age = rInt(cfg.ageMin, cfg.ageMax);
+
+  // Location
+  let locPool;
+  if (cfg.location === 'urban') locPool = LOCATIONS_URBAN;
+  else if (cfg.location === 'suburban') locPool = LOCATIONS_SUBURBAN;
+  else if (cfg.location === 'rural') locPool = LOCATIONS_RURAL;
+  else locPool = [...LOCATIONS_URBAN, ...LOCATIONS_SUBURBAN, ...LOCATIONS_RURAL];
+  const location = rChoice(locPool);
+
+  // Income
+  let incomePool;
+  if (cfg.income === 'low') incomePool = INCOME_BANDS.low;
+  else if (cfg.income === 'mid') incomePool = INCOME_BANDS.mid;
+  else if (cfg.income === 'high') incomePool = INCOME_BANDS.high;
+  else incomePool = ALL_INCOMES;
+  const income = rChoice(incomePool);
+
+  // Education
+  const edu = cfg.edu === 'all' ? rChoice(ALL_EDUS) : EDU_MAP[cfg.edu];
+
+  // Lifestyle & values (biased toward selected chips)
+  const lifestyle = cfg.lifestyles.length ? rChoice(cfg.lifestyles) : rChoice(['Active','Family-oriented','Career-focused','Social','Eco-conscious','Budget-savvy','Tech-savvy','Creative']);
+  const primaryValue = cfg.values.length ? rChoice(cfg.values) : rChoice(['Quality','Convenience','Sustainability','Price','Brand prestige','Authenticity','Innovation']);
+
+  // Price sensitivity
+  let psBias;
+  if (cfg.priceSens === 'low') psBias = [50,35,15];
+  else if (cfg.priceSens === 'medium') psBias = [25,50,25];
+  else if (cfg.priceSens === 'high') psBias = [15,35,50];
+  else psBias = [33,34,33];
+  const priceSensitivity = rWeighted(PRICE_SENS_OPTS, psBias);
+
+  // Brand loyalty
+  let loyBias;
+  if (cfg.loyalty === 'low') loyBias = [50,35,15];
+  else if (cfg.loyalty === 'medium') loyBias = [25,50,25];
+  else if (cfg.loyalty === 'high') loyBias = [15,35,50];
+  else loyBias = [33,34,33];
+  const brandLoyalty = rWeighted(LOYALTY_OPTS, loyBias);
+
+  // Channel
+  let chBias;
+  if (cfg.channel === 'online') chBias = [55,15,20,5,5];
+  else if (cfg.channel === 'instore') chBias = [15,50,15,10,10];
+  else if (cfg.channel === 'mobile') chBias = [20,15,55,5,5];
+  else chBias = [30,30,25,10,5];
+  const purchaseChannel = rWeighted(CHANNELS, chBias);
+
+  // Social media influence
+  let smBias;
+  if (cfg.social === 'low') smBias = [50,35,15];
+  else if (cfg.social === 'medium') smBias = [25,50,25];
+  else if (cfg.social === 'high') smBias = [15,35,50];
+  else smBias = [33,34,33];
+  const socialInfluence = rWeighted(SOCIAL_OPTS, smBias);
+
+  // Behavioral scores (0-100)
+  const engagementScore = rInt(20, 100);
+  const nps = rInt(0, 10);
+  const avgSpend = rFloat(15, 500, 0);
+  const purchaseFreq = rChoice(['Daily','Weekly','Monthly','Quarterly','Rarely']);
+  const interests = rChoices(INTERESTS_POOL, rInt(2, 4)).join(', ');
+  const touchpoints = rChoices(TOUCHPOINTS, rInt(2, 4)).join(', ');
+  const churnRisk = rWeighted(['Low','Medium','High'], brandLoyalty === 'High' ? [60,30,10] : brandLoyalty === 'Medium' ? [30,45,25] : [15,35,50]);
+
+  return { id, name, age, gender, location, income, edu, lifestyle, primaryValue, priceSensitivity, brandLoyalty, purchaseChannel, socialInfluence, engagementScore, nps, avgSpend, purchaseFreq, interests, touchpoints, churnRisk, category: cfg.category };
+}
+
+// ══════════════════════════════════════════════
+//  GENERATE ALL SAMPLES
+// ══════════════════════════════════════════════
+function generateSamples() {
+  const n = Math.max(1, Math.min(500, parseInt(document.getElementById('cfgN').value) || 50));
+  const ageMin = parseInt(document.getElementById('cfgAgeMin').value) || 18;
+  const ageMax = parseInt(document.getElementById('cfgAgeMax').value) || 55;
+
+  const cfg = {
+    n,
+    ageMin: Math.min(ageMin, ageMax),
+    ageMax: Math.max(ageMin, ageMax),
+    gender: document.getElementById('cfgGender').value,
+    income: document.getElementById('cfgIncome').value,
+    edu: document.getElementById('cfgEdu').value,
+    location: document.getElementById('cfgLocation').value,
+    lifestyles: getChipValues('chipsLifestyle'),
+    values: getChipValues('chipsValues'),
+    priceSens: document.getElementById('cfgPriceSens').value,
+    loyalty: document.getElementById('cfgLoyalty').value,
+    channel: document.getElementById('cfgChannel').value,
+    social: document.getElementById('cfgSocial').value,
+    category: document.getElementById('cfgCategory').value,
+  };
+
+  samples = Array.from({ length: n }, (_, i) => buildOneSample(cfg, i + 1));
+  filteredSamples = [...samples];
+
+  populateFilters();
+  renderOutput();
+  showToast(`✅ ${n} silicon samples generated`);
+}
+
+function addOneSample() {
+  if (!samples.length) { showToast('Generate samples first'); return; }
+  // Rebuild cfg from last run – approximate by just reusing the last sample's category
+  const lastId = samples.length ? Math.max(...samples.map(s => s.id)) + 1 : 1;
+  // Minimal cfg mirroring current UI
+  const cfg = {
+    ageMin: parseInt(document.getElementById('cfgAgeMin').value) || 18,
+    ageMax: parseInt(document.getElementById('cfgAgeMax').value) || 55,
+    gender: document.getElementById('cfgGender').value,
+    income: document.getElementById('cfgIncome').value,
+    edu: document.getElementById('cfgEdu').value,
+    location: document.getElementById('cfgLocation').value,
+    lifestyles: getChipValues('chipsLifestyle'),
+    values: getChipValues('chipsValues'),
+    priceSens: document.getElementById('cfgPriceSens').value,
+    loyalty: document.getElementById('cfgLoyalty').value,
+    channel: document.getElementById('cfgChannel').value,
+    social: document.getElementById('cfgSocial').value,
+    category: document.getElementById('cfgCategory').value,
+  };
+  const s = buildOneSample(cfg, lastId);
+  samples.push(s);
+  filteredSamples = [...samples];
+  populateFilters();
+  renderOutput();
+  showToast('+ 1 sample added');
+}
+
+// ══════════════════════════════════════════════
+//  FILTERS
+// ══════════════════════════════════════════════
+function populateFilters() {
+  fillFilter('filterGender', [...new Set(samples.map(s => s.gender))], 'All genders');
+  fillFilter('filterChannel', [...new Set(samples.map(s => s.purchaseChannel))], 'All channels');
+  fillFilter('filterIncome', [...new Set(samples.map(s => s.income))], 'All income');
+  fillFilter('filterPriceSens', [...new Set(samples.map(s => s.priceSensitivity))], 'All price sensitivity');
+}
+
+function fillFilter(id, values, placeholder) {
+  const el = document.getElementById(id);
+  const cur = el.value;
+  el.innerHTML = `<option value="">${placeholder}</option>` + values.map(v => `<option value="${v}"${v === cur ? ' selected' : ''}>${v}</option>`).join('');
+}
+
+function applyFilters() {
+  const g = document.getElementById('filterGender').value;
+  const ch = document.getElementById('filterChannel').value;
+  const inc = document.getElementById('filterIncome').value;
+  const ps = document.getElementById('filterPriceSens').value;
+  filteredSamples = samples.filter(s =>
+    (!g || s.gender === g) &&
+    (!ch || s.purchaseChannel === ch) &&
+    (!inc || s.income === inc) &&
+    (!ps || s.priceSensitivity === ps)
+  );
+  renderOutput();
+}
+
+// ══════════════════════════════════════════════
+//  RENDER
+// ══════════════════════════════════════════════
+function renderOutput() {
+  document.getElementById('emptyState').style.display = 'none';
+  document.getElementById('outputState').style.display = 'block';
+  renderStats();
+  renderCharts();
+  renderTable();
+}
+
+function renderStats() {
+  const fs = filteredSamples;
+  const avgAge = fs.length ? (fs.reduce((a, s) => a + s.age, 0) / fs.length).toFixed(1) : '–';
+  const avgNPS = fs.length ? (fs.reduce((a, s) => a + s.nps, 0) / fs.length).toFixed(1) : '–';
+  const avgSpend = fs.length ? '€' + (fs.reduce((a, s) => a + parseFloat(s.avgSpend), 0) / fs.length).toFixed(0) : '–';
+  const topChannel = fs.length ? mode(fs.map(s => s.purchaseChannel)) : '–';
+  document.getElementById('statsRow').innerHTML = `
+    <div class="stat-card"><div class="num">${fs.length}</div><div class="lbl">Samples (filtered)</div></div>
+    <div class="stat-card"><div class="num">${avgAge}</div><div class="lbl">Avg Age</div></div>
+    <div class="stat-card"><div class="num">${avgNPS}</div><div class="lbl">Avg NPS (0–10)</div></div>
+    <div class="stat-card"><div class="num" style="font-size:18px">${topChannel}</div><div class="lbl">Top Channel</div></div>
+  `;
+}
+
+function mode(arr) {
+  const freq = {};
+  arr.forEach(v => freq[v] = (freq[v] || 0) + 1);
+  return Object.entries(freq).sort((a, b) => b[1] - a[1])[0]?.[0] || '–';
+}
+
+function count(arr, val) { return arr.filter(v => v === val).length; }
+
+function renderCharts() {
+  destroyCharts();
+  const fs = filteredSamples;
+  if (!fs.length) return;
+
+  // Age distribution (histogram buckets)
+  const ageBuckets = ['<20','20–29','30–39','40–49','50–59','60+'];
+  const ageCounts = [0,0,0,0,0,0];
+  fs.forEach(s => {
+    if (s.age < 20) ageCounts[0]++;
+    else if (s.age < 30) ageCounts[1]++;
+    else if (s.age < 40) ageCounts[2]++;
+    else if (s.age < 50) ageCounts[3]++;
+    else if (s.age < 60) ageCounts[4]++;
+    else ageCounts[5]++;
+  });
+  charts.age = new Chart(document.getElementById('chartAge'), {
+    type: 'bar',
+    data: { labels: ageBuckets, datasets: [{ data: ageCounts, backgroundColor: '#1F7FD4', borderRadius: 6 }] },
+    options: { plugins: { legend: { display: false } }, scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } } }
+  });
+
+  // Gender pie
+  const genders = [...new Set(fs.map(s => s.gender))];
+  charts.gender = new Chart(document.getElementById('chartGender'), {
+    type: 'doughnut',
+    data: { labels: genders, datasets: [{ data: genders.map(g => count(fs.map(s => s.gender), g)), backgroundColor: ['#1F7FD4','#10B981','#F59E0B','#EF4444'] }] },
+    options: { plugins: { legend: { position: 'right' } } }
+  });
+
+  // Channel bar
+  const channels = [...new Set(fs.map(s => s.purchaseChannel))];
+  charts.channel = new Chart(document.getElementById('chartChannel'), {
+    type: 'bar',
+    data: { labels: channels, datasets: [{ data: channels.map(c => count(fs.map(s => s.purchaseChannel), c)), backgroundColor: '#10B981', borderRadius: 6 }] },
+    options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true } } }
+  });
+
+  // Price sensitivity pie
+  charts.priceSens = new Chart(document.getElementById('chartPriceSens'), {
+    type: 'pie',
+    data: { labels: PRICE_SENS_OPTS, datasets: [{ data: PRICE_SENS_OPTS.map(p => count(fs.map(s => s.priceSensitivity), p)), backgroundColor: ['#10B981','#F59E0B','#EF4444'] }] },
+    options: { plugins: { legend: { position: 'right' } } }
+  });
+}
+
+function destroyCharts() {
+  Object.values(charts).forEach(c => c.destroy());
+  charts = {};
+}
+
+function pricePill(v) {
+  if (v === 'Low') return `<span class="pill pill-green">Low</span>`;
+  if (v === 'Medium') return `<span class="pill pill-amber">Medium</span>`;
+  return `<span class="pill pill-red">High</span>`;
+}
+function loyaltyPill(v) {
+  if (v === 'High') return `<span class="pill pill-green">High</span>`;
+  if (v === 'Medium') return `<span class="pill pill-amber">Medium</span>`;
+  return `<span class="pill pill-red">Low</span>`;
+}
+function churnPill(v) {
+  if (v === 'Low') return `<span class="pill pill-green">Low</span>`;
+  if (v === 'Medium') return `<span class="pill pill-amber">Medium</span>`;
+  return `<span class="pill pill-red">High</span>`;
+}
+function npsColor(n) { if (n >= 9) return '#10B981'; if (n >= 7) return '#F59E0B'; return '#EF4444'; }
+function channelPill(v) { return `<span class="pill pill-blue">${v}</span>`; }
+function socialPill(v) {
+  if (v === 'High') return `<span class="pill pill-purple">High</span>`;
+  if (v === 'Medium') return `<span class="pill pill-amber">Medium</span>`;
+  return `<span class="pill" style="background:#F3F4F6;color:#6B7280">Low</span>`;
+}
+
+function renderTable() {
+  document.getElementById('tableCount').textContent = filteredSamples.length + ' rows';
+  document.getElementById('rowCount').textContent = `Showing ${filteredSamples.length} of ${samples.length} samples`;
+  const cols = ['ID','Name','Age','Gender','Location','Income','Education','Lifestyle','Core Value','Price Sens.','Brand Loyalty','Channel','Social Influence','Engagement','NPS','Avg Spend','Freq.','Churn Risk','Interests','Touchpoints'];
+  const thead = `<thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead>`;
+  const tbody = `<tbody>${filteredSamples.map(s => `<tr>
+    <td style="color:var(--gray-400);font-size:11px">#${s.id}</td>
+    <td><strong>${s.name}</strong></td>
+    <td>${s.age}</td>
+    <td>${s.gender}</td>
+    <td>${s.location}</td>
+    <td>${s.income}</td>
+    <td>${s.edu}</td>
+    <td>${s.lifestyle}</td>
+    <td>${s.primaryValue}</td>
+    <td>${pricePill(s.priceSensitivity)}</td>
+    <td>${loyaltyPill(s.brandLoyalty)}</td>
+    <td>${channelPill(s.purchaseChannel)}</td>
+    <td>${socialPill(s.socialInfluence)}</td>
+    <td>
+      <div class="behavior-bar">
+        <div class="bar-bg"><div class="bar-fill" style="width:${s.engagementScore}%;background:var(--blue)"></div></div>
+        <span style="font-size:11px;color:var(--gray-600);width:26px;text-align:right">${s.engagementScore}</span>
+      </div>
+    </td>
+    <td><strong style="color:${npsColor(s.nps)}">${s.nps}</strong></td>
+    <td>€${s.avgSpend}</td>
+    <td>${s.purchaseFreq}</td>
+    <td>${churnPill(s.churnRisk)}</td>
+    <td style="font-size:11px;color:var(--gray-600)">${s.interests}</td>
+    <td style="font-size:11px;color:var(--gray-600)">${s.touchpoints}</td>
+  </tr>`).join('')}</tbody>`;
+  document.getElementById('tableWrap').innerHTML = `<table>${thead}${tbody}</table>`;
+}
+
+// ══════════════════════════════════════════════
+//  EXPORT
+// ══════════════════════════════════════════════
+function exportCSV() {
+  if (!filteredSamples.length) { showToast('No data to export'); return; }
+  const headers = Object.keys(filteredSamples[0]);
+  const rows = filteredSamples.map(s => headers.map(h => `"${String(s[h]).replace(/"/g, '""')}"`).join(','));
+  const csv = [headers.join(','), ...rows].join('\n');
+  downloadFile('silicon-samples.csv', csv, 'text/csv');
+  showToast('✅ CSV exported');
+}
+
+function exportJSON() {
+  if (!filteredSamples.length) { showToast('No data to export'); return; }
+  downloadFile('silicon-samples.json', JSON.stringify(filteredSamples, null, 2), 'application/json');
+  showToast('✅ JSON exported');
+}
+
+function downloadFile(filename, content, type) {
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([content], { type }));
+  a.download = filename;
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
+
+// ══════════════════════════════════════════════
+//  TOAST
+// ══════════════════════════════════════════════
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2500);
+}
+</script>
+</body>
+</html>
